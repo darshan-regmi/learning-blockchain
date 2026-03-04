@@ -1,0 +1,2817 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Learn Blockchain | Smart Contracts and EVM</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous" />
+
+    <style>
+      code[class*="language-"],
+      pre[class*="language-"] {
+        color: #333;
+        background: 0 0;
+        font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        line-height: 1.4;
+        -moz-tab-size: 8;
+        -o-tab-size: 8;
+        tab-size: 8;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+      pre[class*="language-"] {
+        padding: 0.8em;
+        overflow: auto;
+        border-radius: 3px;
+        background: #f5f5f5;
+      }
+      :not(pre) > code[class*="language-"] {
+        padding: 0.1em;
+        border-radius: 0.3em;
+        white-space: normal;
+        background: #f5f5f5;
+      }
+      .token.blockquote,
+      .token.comment {
+        color: #969896;
+      }
+      .token.cdata {
+        color: #183691;
+      }
+      .token.doctype,
+      .token.macro.property,
+      .token.punctuation,
+      .token.variable {
+        color: #333;
+      }
+      .token.builtin,
+      .token.important,
+      .token.keyword,
+      .token.operator,
+      .token.rule {
+        color: #a71d5d;
+      }
+      .token.attr-value,
+      .token.regex,
+      .token.string,
+      .token.url {
+        color: #183691;
+      }
+      .token.atrule,
+      .token.boolean,
+      .token.code,
+      .token.command,
+      .token.constant,
+      .token.entity,
+      .token.number,
+      .token.property,
+      .token.symbol {
+        color: #0086b3;
+      }
+      .token.prolog,
+      .token.selector,
+      .token.tag {
+        color: #63a35c;
+      }
+      .token.attr-name,
+      .token.class,
+      .token.class-name,
+      .token.function,
+      .token.id,
+      .token.namespace,
+      .token.pseudo-class,
+      .token.pseudo-element,
+      .token.url-reference .token.variable {
+        color: #795da3;
+      }
+      .token.entity {
+        cursor: help;
+      }
+      .token.title,
+      .token.title .token.punctuation {
+        font-weight: 700;
+        color: #1d3e81;
+      }
+      .token.list {
+        color: #ed6a43;
+      }
+      .token.inserted {
+        background-color: #eaffea;
+        color: #55a532;
+      }
+      .token.deleted {
+        background-color: #ffecec;
+        color: #bd2c00;
+      }
+      .token.bold {
+        font-weight: 700;
+      }
+      .token.italic {
+        font-style: italic;
+      }
+      .language-json .token.property {
+        color: #183691;
+      }
+      .language-markup .token.tag .token.punctuation {
+        color: #333;
+      }
+      .language-css .token.function,
+      code.language-css {
+        color: #0086b3;
+      }
+      .language-yaml .token.atrule {
+        color: #63a35c;
+      }
+      code.language-yaml {
+        color: #183691;
+      }
+      .language-ruby .token.function {
+        color: #333;
+      }
+      .language-markdown .token.url {
+        color: #795da3;
+      }
+      .language-makefile .token.symbol {
+        color: #795da3;
+      }
+      .language-makefile .token.variable {
+        color: #183691;
+      }
+      .language-makefile .token.builtin {
+        color: #0086b3;
+      }
+      .language-bash .token.keyword {
+        color: #0086b3;
+      }
+      pre[data-line] {
+        position: relative;
+        padding: 1em 0 1em 3em;
+      }
+      pre[data-line] .line-highlight-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: transparent;
+        display: block;
+        width: 100%;
+      }
+      pre[data-line] .line-highlight {
+        position: absolute;
+        left: 0;
+        right: 0;
+        padding: inherit 0;
+        margin-top: 1em;
+        background: hsla(24, 20%, 50%, 0.08);
+        background: linear-gradient(
+          to right,
+          hsla(24, 20%, 50%, 0.1) 70%,
+          hsla(24, 20%, 50%, 0)
+        );
+        pointer-events: none;
+        line-height: inherit;
+        white-space: pre;
+      }
+      pre[data-line] .line-highlight:before,
+      pre[data-line] .line-highlight[data-end]:after {
+        content: attr(data-start);
+        position: absolute;
+        top: 0.4em;
+        left: 0.6em;
+        min-width: 1em;
+        padding: 0 0.5em;
+        background-color: hsla(24, 20%, 50%, 0.4);
+        color: #f4f1ef;
+        font: bold 65%/1.5 sans-serif;
+        text-align: center;
+        vertical-align: 0.3em;
+        border-radius: 999px;
+        text-shadow: none;
+        box-shadow: 0 1px #fff;
+      }
+      pre[data-line] .line-highlight[data-end]:after {
+        content: attr(data-end);
+        top: auto;
+        bottom: 0.4em;
+      }
+      html body {
+        font-family:
+          "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+        background-color: #fff;
+        overflow: initial;
+        box-sizing: border-box;
+        word-wrap: break-word;
+      }
+      html body > :first-child {
+        margin-top: 0;
+      }
+      html body h1,
+      html body h2,
+      html body h3,
+      html body h4,
+      html body h5,
+      html body h6 {
+        line-height: 1.2;
+        margin-top: 1em;
+        margin-bottom: 16px;
+        color: #000;
+      }
+      html body h1 {
+        font-size: 2.25em;
+        font-weight: 300;
+        padding-bottom: 0.3em;
+      }
+      html body h2 {
+        font-size: 1.75em;
+        font-weight: 400;
+        padding-bottom: 0.3em;
+      }
+      html body h3 {
+        font-size: 1.5em;
+        font-weight: 500;
+      }
+      html body h4 {
+        font-size: 1.25em;
+        font-weight: 600;
+      }
+      html body h5 {
+        font-size: 1.1em;
+        font-weight: 600;
+      }
+      html body h6 {
+        font-size: 1em;
+        font-weight: 600;
+      }
+      html body h1,
+      html body h2,
+      html body h3,
+      html body h4,
+      html body h5 {
+        font-weight: 600;
+      }
+      html body h5 {
+        font-size: 1em;
+      }
+      html body h6 {
+        color: #5c5c5c;
+      }
+      html body strong {
+        color: #000;
+      }
+      html body del {
+        color: #5c5c5c;
+      }
+      html body a:not([href]) {
+        color: inherit;
+        text-decoration: none;
+      }
+      html body a {
+        color: #08c;
+        text-decoration: none;
+      }
+      html body a:hover {
+        color: #00a3f5;
+        text-decoration: none;
+      }
+      html body img {
+        max-width: 100%;
+      }
+      html body > p {
+        margin-top: 0;
+        margin-bottom: 16px;
+        word-wrap: break-word;
+      }
+      html body > ol,
+      html body > ul {
+        margin-bottom: 16px;
+      }
+      html body ol,
+      html body ul {
+        padding-left: 2em;
+      }
+      html body ol.no-list,
+      html body ul.no-list {
+        padding: 0;
+        list-style-type: none;
+      }
+      html body ol ol,
+      html body ol ul,
+      html body ul ol,
+      html body ul ul {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      html body li {
+        margin-bottom: 0;
+      }
+      html body li.task-list-item {
+        list-style: none;
+      }
+      html body li > p {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      html body .task-list-item-checkbox {
+        margin: 0 0.2em 0.25em -1.8em;
+        vertical-align: middle;
+      }
+      html body .task-list-item-checkbox:hover {
+        cursor: pointer;
+      }
+      html body blockquote {
+        margin: 16px 0;
+        font-size: inherit;
+        padding: 0 15px;
+        color: #5c5c5c;
+        background-color: #f0f0f0;
+        border-left: 4px solid #d6d6d6;
+      }
+      html body blockquote > :first-child {
+        margin-top: 0;
+      }
+      html body blockquote > :last-child {
+        margin-bottom: 0;
+      }
+      html body hr {
+        height: 4px;
+        margin: 32px 0;
+        background-color: #d6d6d6;
+        border: 0 none;
+      }
+      html body table {
+        margin: 10px 0 15px 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        width: 100%;
+        overflow: auto;
+        word-break: normal;
+        word-break: keep-all;
+      }
+      html body table th {
+        font-weight: 700;
+        color: #000;
+      }
+      html body table td,
+      html body table th {
+        border: 1px solid #d6d6d6;
+        padding: 6px 13px;
+      }
+      html body dl {
+        padding: 0;
+      }
+      html body dl dt {
+        padding: 0;
+        margin-top: 16px;
+        font-size: 1em;
+        font-style: italic;
+        font-weight: 700;
+      }
+      html body dl dd {
+        padding: 0 16px;
+        margin-bottom: 16px;
+      }
+      html body code {
+        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        font-size: 0.85em;
+        color: #000;
+        background-color: #f0f0f0;
+        border-radius: 3px;
+        padding: 0.2em 0;
+      }
+      html body code::after,
+      html body code::before {
+        letter-spacing: -0.2em;
+        content: "\00a0";
+      }
+      html body pre > code {
+        padding: 0;
+        margin: 0;
+        word-break: normal;
+        white-space: pre;
+        background: 0 0;
+        border: 0;
+      }
+      html body .highlight {
+        margin-bottom: 16px;
+      }
+      html body .highlight pre,
+      html body pre {
+        padding: 1em;
+        overflow: auto;
+        line-height: 1.45;
+        border: #d6d6d6;
+        border-radius: 3px;
+      }
+      html body .highlight pre {
+        margin-bottom: 0;
+        word-break: normal;
+      }
+      html body pre code,
+      html body pre tt {
+        display: inline;
+        max-width: initial;
+        padding: 0;
+        margin: 0;
+        overflow: initial;
+        line-height: inherit;
+        word-wrap: normal;
+        background-color: transparent;
+        border: 0;
+      }
+      html body pre code:after,
+      html body pre code:before,
+      html body pre tt:after,
+      html body pre tt:before {
+        content: normal;
+      }
+      html body blockquote,
+      html body dl,
+      html body ol,
+      html body p,
+      html body pre,
+      html body ul {
+        margin-top: 0;
+        margin-bottom: 16px;
+      }
+      html body kbd {
+        color: #000;
+        border: 1px solid #d6d6d6;
+        border-bottom: 2px solid #c7c7c7;
+        padding: 2px 4px;
+        background-color: #f0f0f0;
+        border-radius: 3px;
+      }
+      @media print {
+        html body {
+          background-color: #fff;
+        }
+        html body h1,
+        html body h2,
+        html body h3,
+        html body h4,
+        html body h5,
+        html body h6 {
+          color: #000;
+          page-break-after: avoid;
+        }
+        html body blockquote {
+          color: #5c5c5c;
+        }
+        html body pre {
+          page-break-inside: avoid;
+        }
+        html body table {
+          display: table;
+        }
+        html body img {
+          display: block;
+          max-width: 100%;
+          max-height: 100%;
+        }
+        html body code,
+        html body pre {
+          word-wrap: break-word;
+          white-space: pre;
+        }
+      }
+      .markdown-preview {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      .markdown-preview ul {
+        list-style: disc;
+      }
+      .markdown-preview ul ul {
+        list-style: circle;
+      }
+      .markdown-preview ul ul ul {
+        list-style: square;
+      }
+      .markdown-preview ol {
+        list-style: decimal;
+      }
+      .markdown-preview ol ol,
+      .markdown-preview ul ol {
+        list-style-type: lower-roman;
+      }
+      .markdown-preview ol ol ol,
+      .markdown-preview ol ul ol,
+      .markdown-preview ul ol ol,
+      .markdown-preview ul ul ol {
+        list-style-type: lower-alpha;
+      }
+      .markdown-preview .newpage,
+      .markdown-preview .pagebreak {
+        page-break-before: always;
+      }
+      .markdown-preview pre.line-numbers {
+        position: relative;
+        padding-left: 3.8em;
+        counter-reset: linenumber;
+      }
+      .markdown-preview pre.line-numbers > code {
+        position: relative;
+      }
+      .markdown-preview pre.line-numbers .line-numbers-rows {
+        position: absolute;
+        pointer-events: none;
+        top: 1em;
+        font-size: 100%;
+        left: 0;
+        width: 3em;
+        letter-spacing: -1px;
+        border-right: 1px solid #999;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .markdown-preview pre.line-numbers .line-numbers-rows > span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+      }
+      .markdown-preview pre.line-numbers .line-numbers-rows > span:before {
+        content: counter(linenumber);
+        color: #999;
+        display: block;
+        padding-right: 0.8em;
+        text-align: right;
+      }
+      .markdown-preview .mathjax-exps .MathJax_Display {
+        text-align: center !important;
+      }
+      .markdown-preview:not([data-for="preview"])
+        .code-chunk
+        .code-chunk-btn-group {
+        display: none;
+      }
+      .markdown-preview:not([data-for="preview"]) .code-chunk .status {
+        display: none;
+      }
+      .markdown-preview:not([data-for="preview"]) .code-chunk .output-div {
+        margin-bottom: 16px;
+      }
+      .markdown-preview .md-toc {
+        padding: 0;
+      }
+      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link {
+        display: inline;
+        padding: 0.25rem 0;
+      }
+      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,
+      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p {
+        display: inline;
+      }
+      .markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link {
+        font-weight: 800;
+      }
+      .scrollbar-style::-webkit-scrollbar {
+        width: 8px;
+      }
+      .scrollbar-style::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: transparent;
+      }
+      .scrollbar-style::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgba(150, 150, 150, 0.66);
+        border: 4px solid rgba(150, 150, 150, 0.66);
+        background-clip: content-box;
+      }
+      html body[for="html-export"]:not([data-presentation-mode]) {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode])
+        .markdown-preview {
+        position: relative;
+        top: 0;
+        min-height: 100vh;
+      }
+      @media screen and (min-width: 914px) {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          .markdown-preview {
+          padding: 2em calc(50% - 457px + 2em);
+        }
+      }
+      @media screen and (max-width: 914px) {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          .markdown-preview {
+          padding: 2em;
+        }
+      }
+      @media screen and (max-width: 450px) {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          .markdown-preview {
+          font-size: 14px !important;
+          padding: 1em;
+        }
+      }
+      @media print {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          #sidebar-toc-btn {
+          display: none;
+        }
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode])
+        #sidebar-toc-btn {
+        position: fixed;
+        bottom: 8px;
+        left: 8px;
+        font-size: 28px;
+        cursor: pointer;
+        color: inherit;
+        z-index: 99;
+        width: 32px;
+        text-align: center;
+        opacity: 0.4;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        #sidebar-toc-btn {
+        opacity: 1;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 300px;
+        height: 100%;
+        padding: 32px 0 48px 0;
+        font-size: 14px;
+        box-shadow: 0 0 4px rgba(150, 150, 150, 0.33);
+        box-sizing: border-box;
+        overflow: auto;
+        background-color: inherit;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc::-webkit-scrollbar {
+        width: 8px;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: transparent;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgba(150, 150, 150, 0.66);
+        border: 4px solid rgba(150, 150, 150, 0.66);
+        background-clip: content-box;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        a {
+        text-decoration: none;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc {
+        padding: 0 16px;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper
+        .md-toc-link {
+        display: inline;
+        padding: 0.25rem 0;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper
+        .md-toc-link
+        div,
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper
+        .md-toc-link
+        p {
+        display: inline;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper.highlighted
+        .md-toc-link {
+        font-weight: 800;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .markdown-preview {
+        left: 300px;
+        width: calc(100% - 300px);
+        padding: 2em calc(50% - 457px - 300px / 2);
+        margin: 0;
+        box-sizing: border-box;
+      }
+      @media screen and (max-width: 1274px) {
+        html
+          body[for="html-export"]:not(
+            [data-presentation-mode]
+          )[html-show-sidebar-toc]
+          .markdown-preview {
+          padding: 2em;
+        }
+      }
+      @media screen and (max-width: 450px) {
+        html
+          body[for="html-export"]:not(
+            [data-presentation-mode]
+          )[html-show-sidebar-toc]
+          .markdown-preview {
+          width: 100%;
+        }
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode]):not(
+          [html-show-sidebar-toc]
+        )
+        .markdown-preview {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode]):not(
+          [html-show-sidebar-toc]
+        )
+        .md-sidebar-toc {
+        display: none;
+      }
+      /* Please visit the URL below for more information: */
+      /*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+    </style>
+    <!-- The content below will be included at the end of the <head> element. -->
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function () {
+        // your code here
+      });
+    </script>
+  </head>
+  <body for="html-export">
+    <div class="crossnote markdown-preview">
+      <h1 id="stage-3--smart-contracts-and-the-evm">
+        Stage 3 — Smart Contracts and the EVM
+      </h1>
+      <p><code>Stage 3 of 6</code> · Estimated 6–8 weeks</p>
+      <h2 id="stage-overview">Stage Overview</h2>
+      <h3 id="what-this-stage-builds">What This Stage Builds</h3>
+      <p>
+        This stage transforms you from a blockchain observer into a blockchain
+        programmer. You will understand the Ethereum Virtual Machine at the
+        instruction level, master Solidity as an engineering language (not a
+        scripting tool), design and test production-grade smart contracts, and
+        develop the security mindset essential for writing code that holds
+        financial value. By the end, you will be capable of reading and auditing
+        arbitrary Solidity code, reasoning about gas costs, and identifying
+        vulnerabilities before they are exploited.
+      </p>
+      <h3 id="why-this-stage-is-critical">Why This Stage Is Critical</h3>
+      <p>
+        Smart contracts are the programmable layer of blockchain infrastructure.
+        They govern trillions of dollars of assets across DeFi, NFTs, DAOs, and
+        bridges. A bug in a smart contract is permanent and often exploitable —
+        there are no patches once deployed to the canonical chain. This is the
+        stage where engineering discipline becomes non-negotiable.
+      </p>
+      <h3 id="competence-at-the-end-of-this-stage">
+        Competence at the End of This Stage
+      </h3>
+      <p>
+        You can write, test, and deploy production-quality Solidity contracts.
+        You understand what the EVM executes at the opcode level. You can
+        estimate gas costs analytically. You can identify all major
+        vulnerability classes in a given contract. You can write a full test
+        suite with unit tests, fuzz tests, and invariant tests. You can reason
+        about contract upgradeability and access control.
+      </p>
+      <hr />
+      <h2 id="conceptual-map">Conceptual Map</h2>
+      <pre
+        data-role="codeBlock"
+        data-info="text"
+        class="language-text text"
+      ><code>EVM Architecture
+├── Stack, memory, storage, calldata
+├── Opcodes and execution
+├── Contract creation (initcode vs runtime code)
+└── The call stack (CALL, DELEGATECALL, STATICCALL, CREATE2)
+        │
+        ▼
+Gas Model
+├── Opcode costs
+├── Storage costs (cold vs warm)
+├── Refunds and EIP-3529
+├── Gas optimization patterns
+└── Gas griefing attacks
+        │
+        ▼
+Solidity Engineering
+├── Types and encoding (ABI)
+├── Control flow and functions
+├── Contract structure and inheritance
+├── Modifiers and events
+├── Interfaces and abstract contracts
+├── Libraries (internal vs external)
+├── Error handling (require, revert, custom errors)
+└── Assembly (Yul/inline assembly)
+        │
+        ▼
+Contract Architecture Patterns
+├── Ownable, Access Control
+├── Proxy patterns (Transparent, UUPS, Beacon)
+├── Factory pattern
+├── Pull-over-push payments
+└── Checks-Effects-Interactions
+        │
+        ▼
+Testing and Debugging
+├── Foundry (forge test, fuzz, invariant)
+├── Hardhat
+├── Unit testing patterns
+├── Fuzz testing
+├── Invariant (property-based) testing
+└── On-chain debugging with traces
+        │
+        ▼
+Security Vulnerabilities
+├── Reentrancy (classic, cross-function, cross-contract, read-only)
+├── Integer overflow/underflow
+├── Access control failures
+├── Front-running and MEV
+├── Oracle manipulation
+├── Flash loan attacks
+├── Delegatecall and storage collisions
+├── Signature replay
+├── Denial of service
+└── Phishing (tx.origin)
+</code></pre>
+      <hr />
+      <h2 id="topic-1-evm-architecture">Topic 1: EVM Architecture</h2>
+      <h3 id="explanation">Explanation</h3>
+      <p>
+        The Ethereum Virtual Machine is a quasi-Turing-complete, stack-based
+        virtual machine that executes bytecode. "Quasi" because execution is
+        bounded by gas — preventing infinite loops.
+      </p>
+      <p><strong>Data Locations</strong></p>
+      <p>
+        The EVM has four distinct data locations, each with different cost and
+        persistence characteristics:
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Location</th>
+            <th>Persistence</th>
+            <th>Access</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Storage</strong></td>
+            <td>Permanent (on-chain)</td>
+            <td>Keyed (32-byte slots)</td>
+            <td>
+              Highest (SLOAD: 2100 gas cold, 100 gas warm; SSTORE: 20,000 for
+              zero→nonzero)
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Memory</strong></td>
+            <td>Transaction-scoped</td>
+            <td>Linear (byte-addressed)</td>
+            <td>Quadratic above 724 bytes</td>
+          </tr>
+          <tr>
+            <td><strong>Stack</strong></td>
+            <td>Expression-scoped</td>
+            <td>LIFO, max 1024 elements</td>
+            <td>Cheapest</td>
+          </tr>
+          <tr>
+            <td><strong>Calldata</strong></td>
+            <td>Read-only, transaction-scoped</td>
+            <td>Byte-indexed</td>
+            <td>Cheaper than memory (used for function arguments)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>The Stack Machine</strong></p>
+      <p>
+        The EVM executes instructions that push and pop 32-byte words onto a
+        stack. Most opcodes consume their operands from the stack and push
+        results. Example sequence:
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="text"
+        class="language-text text"
+      ><code>PUSH1 0x03   // Stack: [3]
+PUSH1 0x05   // Stack: [5, 3]
+ADD          // Stack: [8]
+</code></pre>
+      <p><strong>Key Opcodes</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Opcodes</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Arithmetic</td>
+            <td>ADD, SUB, MUL, DIV, MOD, EXP</td>
+            <td>
+              256-bit arithmetic. Overflow wraps silently (Solidity &lt;0.8 had
+              this risk).
+            </td>
+          </tr>
+          <tr>
+            <td>Comparison</td>
+            <td>LT, GT, EQ, ISZERO</td>
+            <td>Push 1 (true) or 0 (false).</td>
+          </tr>
+          <tr>
+            <td>Bitwise</td>
+            <td>AND, OR, XOR, SHL, SHR</td>
+            <td>Bitwise ops.</td>
+          </tr>
+          <tr>
+            <td>Storage</td>
+            <td>SLOAD, SSTORE</td>
+            <td>Read/write persistent storage.</td>
+          </tr>
+          <tr>
+            <td>Memory</td>
+            <td>MLOAD, MSTORE, MSTORE8</td>
+            <td>Read/write memory.</td>
+          </tr>
+          <tr>
+            <td>Control</td>
+            <td>JUMP, JUMPI, JUMPDEST</td>
+            <td>Unconditional/conditional jumps (must land on JUMPDEST).</td>
+          </tr>
+          <tr>
+            <td>Call</td>
+            <td>CALL, DELEGATECALL, STATICCALL, CALLCODE</td>
+            <td>Inter-contract calls.</td>
+          </tr>
+          <tr>
+            <td>Create</td>
+            <td>CREATE, CREATE2</td>
+            <td>Deploy new contracts.</td>
+          </tr>
+          <tr>
+            <td>Context</td>
+            <td>CALLER, CALLVALUE, CALLDATALOAD, TIMESTAMP, BLOCKHASH</td>
+            <td>Environmental information.</td>
+          </tr>
+          <tr>
+            <td>Log</td>
+            <td>LOG0, LOG1, LOG2, LOG3, LOG4</td>
+            <td>Emit events.</td>
+          </tr>
+          <tr>
+            <td>Termination</td>
+            <td>RETURN, REVERT, SELFDESTRUCT, STOP</td>
+            <td>End execution.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Contract Lifecycle</strong></p>
+      <ol>
+        <li>
+          <strong>Deployment</strong>: A transaction with empty
+          <code>to</code> field and <code>data</code> containing
+          <strong>initcode</strong> is sent.
+        </li>
+        <li>
+          <strong>Constructor execution</strong>: EVM runs initcode as a regular
+          transaction. Constructor arguments are ABI-encoded after the bytecode.
+        </li>
+        <li>
+          <strong>Runtime code storage</strong>: The constructor returns the
+          <strong>runtime bytecode</strong> (via the RETURN opcode), which is
+          stored at the contract address.
+        </li>
+        <li>
+          <strong>Calls</strong>: Future transactions to the contract address
+          execute the runtime bytecode.
+        </li>
+      </ol>
+      <p><strong>CALL vs DELEGATECALL</strong></p>
+      <ul>
+        <li>
+          <code>CALL(target, gas, value, args)</code>: Executes target's code in
+          target's <strong>context</strong> (target's storage,
+          <code>address(this)</code> is the target). Most common form of
+          inter-contract call.
+        </li>
+        <li>
+          <code>DELEGATECALL(target, gas, args)</code>: Executes target's code
+          in the <strong>caller's context</strong> (caller's storage,
+          <code>address(this)</code> is the caller, <code>msg.sender</code> is
+          preserved). Used in proxy patterns. Dangerous if target address is not
+          trusted.
+        </li>
+        <li>
+          <code>STATICCALL(target, gas, args)</code>: Like CALL but disallows
+          state modification (SSTORE, LOG, etc.). Used for read-only calls and
+          Solidity's <code>view</code> functions.
+        </li>
+      </ul>
+      <p><strong>CREATE vs CREATE2</strong></p>
+      <ul>
+        <li>
+          <code>CREATE</code>: Contract address =
+          <code>keccak256(deployer_address, nonce)</code>.
+        </li>
+        <li>
+          <code>CREATE2</code>: Contract address =
+          <code
+            >keccak256(0xff, deployer_address, salt, keccak256(initcode))</code
+          >. <strong>Deterministic</strong> — address is known before
+          deployment. Enables counterfactual instantiation (open channels, safe
+          factory patterns).
+        </li>
+      </ul>
+      <h3 id="why-it-matters">Why It Matters</h3>
+      <p>
+        Every Solidity construct compiles to EVM opcodes. Understanding the EVM
+        means you can reason about gas costs precisely, understand why certain
+        patterns are dangerous, and read decompiled bytecode. Proxy patterns
+        (DELEGATECALL) power the upgradeable contract ecosystem — and power its
+        most insidious bugs. CREATE2 enables counterfactual deployment patterns
+        used by state channels and account abstraction.
+      </p>
+      <h3 id="real-world-context">Real-World Context</h3>
+      <ul>
+        <li>
+          The Parity multisig hack (2017, $150M) resulted from an incorrect
+          DELEGATECALL that allowed anyone to call the library's
+          <code>initWallet</code> function and become owner.
+        </li>
+        <li>
+          CREATE2 is used by Uniswap V2 to deploy pools with deterministic
+          addresses (computed from token pairs), enabling off-chain address
+          calculation.
+        </li>
+        <li>
+          The Ethereum Yellow Paper formally defines EVM semantics. Client
+          implementations (Geth, Nethermind, Besu) must all agree on the same
+          execution results.
+        </li>
+        <li>
+          EVM object format (EOF, EIP-3540+) is an ongoing Ethereum upgrade to
+          add better structure to bytecode.
+        </li>
+      </ul>
+      <h3 id="tools--technologies">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>evm.codes</code></td>
+            <td>
+              Interactive EVM opcode reference with gas costs and stack traces
+            </td>
+          </tr>
+          <tr>
+            <td><code>ethervm.io</code></td>
+            <td>Online decompiler for EVM bytecode</td>
+          </tr>
+          <tr>
+            <td><code>foundry cast disassemble</code></td>
+            <td>Disassemble bytecode to opcodes</td>
+          </tr>
+          <tr>
+            <td><code>hevm</code></td>
+            <td>Haskell EVM implementation, used for symbolic execution</td>
+          </tr>
+          <tr>
+            <td><code>pyrometer</code></td>
+            <td>Rust-based Ethereum bytecode analysis</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Why does the EVM use 32-byte (256-bit) words as its native data type?
+          What does this enable cryptographically?
+        </li>
+        <li>
+          Trace the execution of <code>uint256 x = 5 + 3;</code> through the EVM
+          opcode level. What does the stack look like after each opcode?
+        </li>
+        <li>
+          Why is SLOAD so expensive (2100 gas cold)? What does "cold" vs "warm"
+          mean in EIP-2929?
+        </li>
+        <li>
+          Explain exactly what happens when Contract A does
+          <code>DELEGATECALL</code> to Contract B. Whose storage is modified?
+          Who is <code>msg.sender</code> inside B's code?
+        </li>
+        <li>
+          Why can you send ETH to a contract via <code>SELFDESTRUCT</code> even
+          if the contract has no receive/fallback function?
+        </li>
+        <li>
+          What is the difference between the <code>initcode</code> and the
+          <code>runtime code</code>? What happens if the constructor reverts?
+        </li>
+        <li>
+          How does CREATE2 enable counterfactual instantiation? Give a concrete
+          example (state channels).
+        </li>
+        <li>
+          Why are <code>TIMESTAMP</code> and <code>BLOCKHASH</code> considered
+          unreliable sources of randomness?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Opcode tracing</strong>: Write a minimal Solidity contract
+          (just <code>return a + b</code>). Compile it with
+          <code>solc --opcodes</code>. Read the opcode output and explain what
+          each instruction does.
+        </li>
+        <li>
+          <strong>DELEGATECALL experiment</strong>: Write two contracts — a
+          proxy and a logic contract. Call the logic contract's function via
+          delegatecall from the proxy. Verify that the proxy's storage is
+          modified, not the logic contract's.
+        </li>
+        <li>
+          <strong>CREATE2 address prediction</strong>: Given deployer address,
+          salt, and initcode hash, compute the CREATE2 address off-chain using
+          keccak256. Deploy and verify the address matches.
+        </li>
+        <li>
+          <strong>Bytecode analysis</strong>: Take any deployed ERC-20 contract
+          from Etherscan. Fetch its deployed bytecode. Disassemble it with
+          <code>cast disassemble</code>. Identify: the function dispatcher, the
+          SLOAD/SSTORE calls.
+        </li>
+      </ol>
+      <h3 id="mini-build-task">Mini Build Task</h3>
+      <p>
+        <strong>Build an EVM Instruction Tracer.</strong> Using
+        <code>ethereumjs-vm</code> (JavaScript) or <code>py-evm</code> (Python),
+        execute simple bytecode manually. For each opcode executed, log: current
+        opcode, gas remaining, stack state, and memory state. This gives you a
+        window into the exact execution of any Ethereum computation.
+      </p>
+      <hr />
+      <h2 id="topic-2-gas-and-the-execution-model">
+        Topic 2: Gas and the Execution Model
+      </h2>
+      <h3 id="explanation-1">Explanation</h3>
+      <p>
+        Gas is the metering system that prevents the halting problem — infinite
+        loops — from being exploitable. Every EVM opcode has a defined gas cost.
+        Transaction execution consumes gas; when gas is exhausted, the
+        transaction reverts (all state changes rolled back) but the gas fee is
+        still paid to the block producer.
+      </p>
+      <p><strong>Gas Cost Structure</strong></p>
+      <ul>
+        <li><strong>Base fee</strong>: 21,000 gas for any transaction.</li>
+        <li>
+          <strong>Calldata</strong>: 4 gas per zero byte, 16 gas per non-zero
+          byte (post EIP-2028). This is why ABI encoding matters for gas.
+        </li>
+        <li>
+          <strong>Opcodes</strong>: Each opcode has a fixed cost.
+          Computationally intensive operations (EXP, SHA3, ECRECOVER) cost more.
+        </li>
+        <li>
+          <strong>Storage</strong>: Most expensive operations. Writing to a
+          previously-zero storage slot costs 20,000 gas. Writing to a non-zero
+          slot costs 2,900 gas (warm) or 5,000 gas (cold after EIP-2929).
+          Clearing a slot (setting nonzero to zero) previously gave a refund;
+          refunds were reduced in EIP-3529 (London, 2021).
+        </li>
+      </ul>
+      <p><strong>Gas Optimization Patterns</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Pattern</th>
+            <th>Savings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pack multiple <code>uint</code>s into one storage slot</td>
+            <td>Up to 15,000 gas per eliminated SSTORE</td>
+          </tr>
+          <tr>
+            <td>
+              Use <code>unchecked</code> arithmetic in Solidity 0.8+ when
+              overflow is provably impossible
+            </td>
+            <td>~200 gas per arithmetic op</td>
+          </tr>
+          <tr>
+            <td>
+              Use <code>calldata</code> instead of <code>memory</code> for
+              read-only function parameters
+            </td>
+            <td>3–5x cheaper</td>
+          </tr>
+          <tr>
+            <td>Cache storage reads in memory variables</td>
+            <td>2100 gas saved per additional read beyond the first</td>
+          </tr>
+          <tr>
+            <td>
+              Use custom errors instead of <code>require</code> with strings
+            </td>
+            <td>Variable savings (~50+ gas per revert)</td>
+          </tr>
+          <tr>
+            <td>Short-circuit conditionals (cheapest check first)</td>
+            <td>Variable</td>
+          </tr>
+          <tr>
+            <td>
+              Use <code>immutable</code> instead of <code>constant</code> for
+              non-compile-time values
+            </td>
+            <td>~200 gas per read vs SLOAD</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Gas Limit and the 63/64 Rule</strong></p>
+      <p>
+        When Contract A calls Contract B, A can specify the gas passed. EIP-150
+        introduced the 63/64 rule: Ethereum withholds 1/64 of the remaining gas
+        for the calling frame even if the caller specifies "pass all gas." This
+        ensures the caller has enough gas to handle the return and any cleanup.
+      </p>
+      <p><strong>Gas Griefing</strong></p>
+      <p>
+        An attack where a malicious callee intentionally uses up all forwarded
+        gas to prevent the caller from completing. Defense: use Pull-over-Push
+        payment patterns and avoid arbitrary external calls in critical paths.
+      </p>
+      <h3 id="why-it-matters-1">Why It Matters</h3>
+      <p>
+        Gas is not just a fee mechanism — it is the entire security model
+        preventing computational abuse. Gas optimization directly impacts user
+        experience (lower fees) and protocol competitiveness. Gas griefing is a
+        real attack vector in multi-contract systems. Understanding the 63/64
+        rule is essential for safe inter-contract call design.
+      </p>
+      <h3 id="real-world-context-1">Real-World Context</h3>
+      <ul>
+        <li>
+          Uniswap V2 swap functions were heavily optimized (~130,000 gas per
+          swap). Uniswap V3 improved to ~100,000 gas with more complex math.
+        </li>
+        <li>
+          The Istanbul upgrade (2019) increased SLOAD cost from 200 to 800 gas,
+          breaking some existing contracts that relied on the old costs.
+        </li>
+        <li>
+          The 2016 Shanghai DDoS attacks exploited cheap EXTCODESIZE and BALANCE
+          opcodes to spam the network with computationally expensive
+          transactions.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-1">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>foundry</code> gas reports</td>
+            <td>Automatic gas benchmarking per function</td>
+          </tr>
+          <tr>
+            <td><code>hardhat-gas-reporter</code></td>
+            <td>Gas analysis plugin for Hardhat</td>
+          </tr>
+          <tr>
+            <td><code>evmdiff.com</code></td>
+            <td>Compare opcodes and gas costs across EVM versions</td>
+          </tr>
+          <tr>
+            <td><code>evm.codes</code></td>
+            <td>Per-opcode gas cost breakdown</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-1">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Why does storing a <code>uint128</code> and a <code>uint128</code> in
+          separate storage slots cost twice as much as packing them into one
+          <code>uint256</code> slot? What exactly happens at the EVM level?
+        </li>
+        <li>
+          Explain the 63/64 rule. In a deep call chain (A → B → C → D → E), how
+          much of A's original gas reaches E?
+        </li>
+        <li>
+          Why did EIP-3529 remove gas refunds for clearing storage? What was the
+          attack vector enabled by the old refund system?
+        </li>
+        <li>
+          A function reads from a storage variable 5 times in a loop. How much
+          total gas is spent on SLOAD? How would you optimize it?
+        </li>
+        <li>
+          Why are zero bytes in calldata cheaper than non-zero bytes? What does
+          this imply for transaction encoding optimization?
+        </li>
+        <li>
+          What is a "gas bomb" attack, and how does the
+          <code>gasleft()</code> check defend against it in a contract that
+          processes deposits?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-1">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Gas comparison</strong>: Write a function that reads a storage
+          variable in a loop 10 times — once without caching, once with a memory
+          cache. Measure gas difference using Foundry.
+        </li>
+        <li>
+          <strong>Slot packing</strong>: Write a contract with four
+          <code>uint64</code> variables. First, declare them individually (four
+          separate slots). Then, declare them in one
+          <code>uint64[4]</code> stored in a struct. Measure the gas cost
+          difference for reading and writing all four.
+        </li>
+        <li>
+          <strong>Custom error optimization</strong>: Write a function with
+          <code>require(condition, "Long error string")</code>. Convert to a
+          custom error. Measure the gas savings on successful calls and on
+          reverts.
+        </li>
+        <li>
+          <strong>Calldata vs memory</strong>: Write a function that takes a
+          large array parameter, once as <code>memory</code> and once as
+          <code>calldata</code>. Measure gas on the call.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-1">Mini Build Task</h3>
+      <p>
+        <strong>Gas Benchmark Suite.</strong> Write 10 pairs of "naive" and
+        "optimized" implementations of common operations (e.g., array traversal,
+        accumulation, token transfer). For each pair, write a Foundry test that
+        compares the gas cost. Produce a report showing the gas savings of each
+        optimization and explain the EVM-level reason.
+      </p>
+      <hr />
+      <h2 id="topic-3-solidity-engineering">Topic 3: Solidity Engineering</h2>
+      <h3 id="explanation-2">Explanation</h3>
+      <p>
+        Solidity is a statically-typed, compiled language with Rust-like
+        ownership semantics for data locations and EVM-specific behaviors that
+        make it unlike any other language.
+      </p>
+      <p><strong>Type System</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>uint256</code>, <code>int256</code></td>
+            <td>
+              Default integer type. Arithmetic is checked (overflow reverts) in
+              &gt;=0.8.
+            </td>
+          </tr>
+          <tr>
+            <td><code>address</code>, <code>address payable</code></td>
+            <td>
+              20-byte Ethereum address. Only <code>address payable</code> can
+              receive ETH via <code>transfer</code>/<code>send</code>.
+            </td>
+          </tr>
+          <tr>
+            <td><code>bytes32</code>, <code>bytes</code></td>
+            <td>
+              Fixed and dynamic byte arrays. <code>bytes32</code> is value type
+              (stored in one slot).
+            </td>
+          </tr>
+          <tr>
+            <td><code>string</code></td>
+            <td>Dynamic, UTF-8 encoded. Expensive to manipulate on-chain.</td>
+          </tr>
+          <tr>
+            <td><code>bool</code></td>
+            <td>ABI-encoded as a 32-byte word (not 1 bit) — no packing.</td>
+          </tr>
+          <tr>
+            <td><code>struct</code></td>
+            <td>Composite value type. Packing applies within structs.</td>
+          </tr>
+          <tr>
+            <td><code>mapping(K =&gt; V)</code></td>
+            <td>
+              Hash table. Keys are hashed with slot index to find storage
+              location. <code>mapping</code> values are NOT iterable natively.
+            </td>
+          </tr>
+          <tr>
+            <td><code>enum</code></td>
+            <td>Represented as <code>uint8</code> internally.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>ABI Encoding</strong></p>
+      <p>
+        The Application Binary Interface (ABI) is the standard encoding for
+        function calls:
+      </p>
+      <ul>
+        <li>
+          Function selector: first 4 bytes of
+          <code>keccak256("functionName(paramTypes)")</code>.
+        </li>
+        <li>
+          Arguments: ABI-encoded after the selector. Static types are inlined;
+          dynamic types (arrays, strings) use offsets.
+        </li>
+      </ul>
+      <p>
+        Understanding ABI encoding is required for: manual transaction
+        construction, low-level call composition, and debugging call failures.
+      </p>
+      <p><strong>Function Visibility and State Mutability</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Modifier</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>public</code></td>
+            <td>
+              Callable externally and internally; generates getter for state
+              variables
+            </td>
+          </tr>
+          <tr>
+            <td><code>external</code></td>
+            <td>Only callable from outside the contract</td>
+          </tr>
+          <tr>
+            <td><code>internal</code></td>
+            <td>Only callable from this contract and inheriting contracts</td>
+          </tr>
+          <tr>
+            <td><code>private</code></td>
+            <td>Only callable from this exact contract</td>
+          </tr>
+          <tr>
+            <td><code>view</code></td>
+            <td>
+              Reads state but does not modify it. Compiled to STATICCALL
+              internally for external calls.
+            </td>
+          </tr>
+          <tr>
+            <td><code>pure</code></td>
+            <td>Neither reads nor modifies state.</td>
+          </tr>
+          <tr>
+            <td><code>payable</code></td>
+            <td>
+              Can receive ETH. Functions without this modifier revert on ETH
+              receipt.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        <strong>Critical: <code>private</code> does not mean "secret."</strong>
+        All contract storage is publicly readable from the blockchain.
+        <code>private</code> only restricts <em>which code</em> can call the
+        function or read the variable.
+      </p>
+      <p><strong>Inheritance and Linearization</strong></p>
+      <p>
+        Solidity uses C3 linearization for multiple inheritance. The order of
+        inheritance matters significantly — functions are resolved in reverse
+        order of the inheritance list.
+      </p>
+      <p><strong>Libraries</strong></p>
+      <ul>
+        <li>
+          <strong>Internal libraries</strong>: Functions are inlined at compile
+          time. No deployment cost.
+        </li>
+        <li>
+          <strong>External libraries</strong>: Deployed to a separate address.
+          Called via DELEGATECALL. Must be linked at deployment time.
+        </li>
+      </ul>
+      <p><strong>Error Handling</strong></p>
+      <ul>
+        <li>
+          <code>require(condition, "error")</code>: Reverts on false. Gas
+          refunded for remaining gas.
+        </li>
+        <li>
+          <code>revert CustomError()</code>: Reverts with a typed error
+          (Solidity 0.8+). More gas-efficient than string errors.
+        </li>
+        <li>
+          <code>assert(condition)</code>: Reverts on false with all gas
+          consumed. Used for invariant violations.
+        </li>
+        <li>Try/catch: Handles reverts from external calls.</li>
+      </ul>
+      <p><strong>Yul / Inline Assembly</strong></p>
+      <p>
+        Solidity allows inline assembly via <code>assembly { ... }</code> blocks
+        using Yul, EVM's intermediate language. Used for:
+      </p>
+      <ul>
+        <li>Gas optimization (avoid bounds checking, direct slot access).</li>
+        <li>Low-level operations (extcodesize, keccak256 on dynamic data).</li>
+        <li>Proxy contracts (custom dispatch in fallback via DELEGATECALL).</li>
+      </ul>
+      <h3 id="why-it-matters-2">Why It Matters</h3>
+      <p>
+        Solidity has subtle traps that are not obvious from its syntax: integer
+        division truncates, address type conversion requires explicit casting,
+        <code>delete</code> on a mapping doesn't clear it, and
+        <code>msg.value</code> persists through internal calls. Mastering
+        Solidity means internalizing these traps and writing defensively around
+        them.
+      </p>
+      <h3 id="real-world-context-2">Real-World Context</h3>
+      <ul>
+        <li>
+          The USDC stablecoin contract (Circle) is a feature-rich ERC-20 with
+          blacklisting, pause, and upgrade capabilities. Reading it teaches
+          production-grade Solidity patterns.
+        </li>
+        <li>
+          OpenZeppelin Contracts is the canonical reference library. Virtually
+          every DeFi protocol extends OZ's <code>Ownable</code>,
+          <code>AccessControl</code>, <code>ERC20</code>, or
+          <code>ReentrancyGuard</code>.
+        </li>
+        <li>
+          Solidity's <code>override</code> and <code>virtual</code> keywords
+          enforce explicit override acknowledgment — a lesson learned from
+          security bugs caused by accidental function overrides.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-2">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>solc</code></td>
+            <td>Solidity compiler</td>
+          </tr>
+          <tr>
+            <td>Foundry (<code>forge</code>)</td>
+            <td>All-in-one testing and build tool</td>
+          </tr>
+          <tr>
+            <td>Hardhat</td>
+            <td>Node.js-based Ethereum development environment</td>
+          </tr>
+          <tr>
+            <td>OpenZeppelin Contracts</td>
+            <td>Audited contract library</td>
+          </tr>
+          <tr>
+            <td><code>slither</code></td>
+            <td>Static analysis for Solidity</td>
+          </tr>
+          <tr>
+            <td>Remix IDE</td>
+            <td>Browser-based IDE for quick iteration</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-2">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          What is the difference between <code>memory</code> and
+          <code>storage</code> reference types? What happens to memory when a
+          function returns?
+        </li>
+        <li>
+          Why does Solidity hash mapping keys with the storage slot? What are
+          the implications for detecting mapping key collisions?
+        </li>
+        <li>
+          What is the order of inheritance in <code>Contract C is A, B</code> if
+          A and B both define the same function? How is this resolved?
+        </li>
+        <li>
+          Why does <code>delete myMapping[key]</code> not clear the mapping's
+          content? What does it actually do?
+        </li>
+        <li>
+          Explain ABI encoding for <code>callFoo(uint256, bool, bytes)</code>.
+          What does the calldata look like byte-by-byte?
+        </li>
+        <li>
+          What is the "short-circuit evaluation" behavior of
+          <code>&amp;&amp;</code> and <code>||</code> in Solidity? How can you
+          exploit this for gas optimization?
+        </li>
+        <li>
+          Why is <code>msg.value</code> the same across reentrant calls in a
+          single transaction? What attack vector does this create if not
+          handled?
+        </li>
+        <li>
+          What is the <code>receive()</code> function vs the
+          <code>fallback()</code> function? Under what conditions is each
+          triggered?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-2">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>ABI encoder</strong>: Manually construct the calldata for
+          calling <code>transfer(address to, uint256 amount)</code> with
+          hardcoded values. Verify by comparing to
+          <code>abi.encodeWithSignature</code>.
+        </li>
+        <li>
+          <strong>Inheritance exercise</strong>: Create a diamond inheritance
+          scenario (A, B extend Base; C extends A and B). Implement a function
+          in Base that is overridden in B. Verify C's resolution order via C3
+          linearization.
+        </li>
+        <li>
+          <strong>Assembly exercise</strong>: Implement
+          <code>memcpy(dest, src, len)</code> in Yul inline assembly. Compare
+          gas to the Solidity equivalent.
+        </li>
+        <li>
+          <strong>Storage layout</strong>: Write a contract with multiple state
+          variables of different types. Use Foundry's
+          <code>cast storage</code> to read each slot directly. Verify the
+          packing of small types.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-2">Mini Build Task</h3>
+      <p>
+        <strong>Build a feature-complete ERC-20 token from scratch.</strong>
+        Without inheriting OpenZeppelin, implement: <code>transfer</code>,
+        <code>transferFrom</code>, <code>approve</code>, <code>mint</code>,
+        <code>burn</code>, <code>Ownable</code> (only owner can mint/burn),
+        <code>Pausable</code> (owner can pause all transfers), and
+        <code>permit</code> (EIP-2612 signature-based approval). Write natspec
+        documentation for all functions. This exercise forces mastery of
+        Solidity fundamentals without shortcuts.
+      </p>
+      <hr />
+      <h2 id="topic-4-smart-contract-architecture-patterns">
+        Topic 4: Smart Contract Architecture Patterns
+      </h2>
+      <h3 id="explanation-3">Explanation</h3>
+      <p><strong>Checks-Effects-Interactions (CEI)</strong></p>
+      <p>
+        The most important pattern for reentrancy prevention. Structure every
+        state-modifying function in three phases:
+      </p>
+      <ol>
+        <li><strong>Checks</strong>: Validate all conditions.</li>
+        <li><strong>Effects</strong>: Update all state variables.</li>
+        <li><strong>Interactions</strong>: Call external contracts.</li>
+      </ol>
+      <p>
+        Violation: performing an external call before updating state allows the
+        callee to reenter and observe stale state.
+      </p>
+      <p><strong>Pull-over-Push Payments</strong></p>
+      <p>
+        Never send ETH via push (calling the recipient from your contract).
+        Instead, track owed balances in a mapping and let recipients
+        <code>withdraw()</code> themselves. This isolates the risk of the
+        recipient's address being a malicious contract.
+      </p>
+      <p><strong>Proxy Patterns for Upgradeability</strong></p>
+      <p>
+        Upgradeability in an immutable system is an architectural challenge.
+        Proxy patterns solve this via DELEGATECALL:
+      </p>
+      <ul>
+        <li>
+          <strong>Transparent Proxy (EIP-1967)</strong>: A proxy contract holds
+          state and delegates all calls to a logic contract. The logic contract
+          defines the functions. To upgrade, point the proxy to a new logic
+          contract. Complexity: admin must be distinguished from regular users
+          to avoid selector clashes.
+        </li>
+        <li>
+          <strong>UUPS Proxy (EIP-1822)</strong>: The upgrade function lives in
+          the logic contract itself (not the proxy). More gas-efficient proxy,
+          but self-destructing a bad logic contract can brick the proxy.
+        </li>
+        <li>
+          <strong>Beacon Proxy</strong>: Multiple proxies share a single
+          "beacon" contract that points to the logic contract. One upgrade at
+          the beacon upgrades all proxy instances.
+        </li>
+      </ul>
+      <p><strong>Storage Layout in Proxies</strong></p>
+      <p>
+        DELEGATECALL executes code in the caller's storage context. If the proxy
+        and logic contract have different storage layouts, variables overwrite
+        each other — a storage collision. <strong>EIP-1967</strong> defines
+        standard storage slots for proxy admin and implementation addresses
+        using pseudo-random slots within the implementation's storage space.
+      </p>
+      <p><strong>Factory Pattern</strong></p>
+      <p>
+        A factory contract deploys instances of a child contract. Enables: batch
+        deployment, tracking deployed instances, and centralized initialization.
+        Often combined with CREATE2 for deterministic child addresses.
+      </p>
+      <p><strong>Access Control</strong></p>
+      <ul>
+        <li>
+          <code>Ownable</code>: Single owner (usually deployer) controls
+          privileged functions.
+        </li>
+        <li>
+          <code>AccessControl</code> (OpenZeppelin): Role-based access with
+          granular permissions. Multiple roles (e.g., MINTER_ROLE, PAUSER_ROLE).
+          Roles can be granted/revoked per address.
+        </li>
+        <li>
+          <code>Timelock</code>: Privileged operations must be queued and
+          executed after a delay, giving users time to exit before potentially
+          harmful changes take effect.
+        </li>
+      </ul>
+      <h3 id="why-it-matters-3">Why It Matters</h3>
+      <p>
+        Production smart contracts are not isolated functions — they are systems
+        of interacting contracts that manage thousands of participants and
+        billions of dollars. Architecture patterns provide the structure for
+        multi-contract systems, upgrade paths, and privilege management. The
+        wrong architecture creates systemic risk; the right architecture creates
+        a system that evolves safely.
+      </p>
+      <h3 id="real-world-context-3">Real-World Context</h3>
+      <ul>
+        <li>
+          Compound protocol's governor uses a Timelock: all governance proposals
+          have a 2-day delay before execution.
+        </li>
+        <li>
+          Uniswap V3 uses a factory pattern (UniswapV3Factory) to deploy pair
+          contracts with CREATE2 for deterministic pool addresses.
+        </li>
+        <li>
+          The Audius hack (2022) exploited a DELEGATECALL proxy storage
+          collision bug to steal $6M.
+        </li>
+        <li>
+          OpenZeppelin's TransparentUpgradeableProxy is deployed by thousands of
+          DeFi protocols.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-3">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>OpenZeppelin Upgrades Plugins</td>
+            <td>Safe proxy deployment and upgrade validation</td>
+          </tr>
+          <tr>
+            <td><code>hardhat-deploy</code></td>
+            <td>Deployment scripts with proxy management</td>
+          </tr>
+          <tr>
+            <td><code>foundry</code> upgradeability tests</td>
+            <td>Test proxy pattern correctness</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-3">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Trace the exact DELEGATECALL path in a Transparent Proxy. What is the
+          storage slot used for the implementation address (EIP-1967)? Why was
+          that specific slot chosen?
+        </li>
+        <li>
+          What is a "storage collision" in a proxy contract? Give a concrete
+          example of two variables in the proxy and logic contract that would
+          collide.
+        </li>
+        <li>
+          Why is the timelock pattern valuable even if you trust the protocol
+          admin? What scenario does it protect against?
+        </li>
+        <li>
+          In UUPS, why is it dangerous to call <code>upgradeTo</code> from
+          within the logic contract's <code>initialize</code> function?
+        </li>
+        <li>
+          What is the difference between <code>constructor</code> and
+          <code>initialize</code> in upgradeable contracts, and why can't you
+          use a constructor with a proxy?
+        </li>
+        <li>
+          Why does OpenZeppelin's Upgrades plugin warn you if you add a new
+          state variable at the beginning of a contract instead of at the end?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-3">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Proxy implementation</strong>: Deploy a UUPS proxy and logic
+          contract. Call a function. Upgrade the logic to a new version with an
+          additional function. Verify both old state is preserved and new
+          function works.
+        </li>
+        <li>
+          <strong>Storage layout validation</strong>: Use OpenZeppelin's
+          <code>storageLayout</code> plugin to validate that an upgrade doesn't
+          break the storage layout.
+        </li>
+        <li>
+          <strong>Factory + CREATE2</strong>: Write a factory that deploys
+          "vaults" with CREATE2. Compute the vault address off-chain before
+          deployment. Verify it matches after deployment.
+        </li>
+        <li>
+          <strong>Access control system</strong>: Implement a three-tiered
+          access control system (admin, operator, user) for a contract that
+          manages a simple token vault.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-3">Mini Build Task</h3>
+      <p>
+        <strong>Build an Upgradeable Token Vault.</strong> A UUPS-upgradeable
+        contract where users can deposit ERC-20 tokens. Version 1: basic deposit
+        and withdraw with per-user balance tracking. Version 2: add a withdrawal
+        fee (without breaking existing balances). Demonstrate: deploying V1,
+        making deposits, upgrading to V2, verifying balances are preserved,
+        verifying fee is now charged on withdrawal.
+      </p>
+      <hr />
+      <h2 id="topic-5-testing-and-debugging-smart-contracts">
+        Topic 5: Testing and Debugging Smart Contracts
+      </h2>
+      <h3 id="explanation-4">Explanation</h3>
+      <p><strong>Testing Hierarchy</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Test Type</th>
+            <th>What It Checks</th>
+            <th>Tools</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Unit tests</td>
+            <td>Individual function behavior</td>
+            <td>Foundry, Hardhat</td>
+          </tr>
+          <tr>
+            <td>Integration tests</td>
+            <td>Multi-contract interactions</td>
+            <td>Foundry with forks, Hardhat</td>
+          </tr>
+          <tr>
+            <td>Fuzz tests</td>
+            <td>Function behavior over random inputs</td>
+            <td>Foundry <code>forge fuzz</code></td>
+          </tr>
+          <tr>
+            <td>Invariant tests</td>
+            <td>System-wide properties that must always hold</td>
+            <td>Foundry <code>forge invariant</code></td>
+          </tr>
+          <tr>
+            <td>Formal verification</td>
+            <td>Mathematical proof of correctness</td>
+            <td>Certora, Halmos</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Foundry Testing</strong></p>
+      <p>
+        Foundry is the preferred tool for serious smart contract testing. Key
+        features:
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="solidity"
+        class="language-solidity solidity"
+      ><code><span class="token keyword keyword-contract">contract</span> <span class="token class-name">TokenTest</span> <span class="token keyword keyword-is">is</span> Test <span class="token punctuation">{</span>
+    Token token<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-function">function</span> <span class="token function">setUp</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-public">public</span> <span class="token punctuation">{</span>
+        token <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">Token</span><span class="token punctuation">(</span><span class="token number">1</span>_000_000e18<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-function">function</span> <span class="token function">test_transferReducesSenderBalance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-public">public</span> <span class="token punctuation">{</span>
+        token<span class="token punctuation">.</span><span class="token function">transfer</span><span class="token punctuation">(</span>alice<span class="token punctuation">,</span> <span class="token number">100e18</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">assertEq</span><span class="token punctuation">(</span>token<span class="token punctuation">.</span><span class="token function">balanceOf</span><span class="token punctuation">(</span>alice<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">100e18</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Fuzz test: runs 256 times with random inputs</span>
+    <span class="token keyword keyword-function">function</span> <span class="token function">test_fuzz_transferNeverOverflows</span><span class="token punctuation">(</span><span class="token builtin">uint256</span> amount<span class="token punctuation">)</span> <span class="token keyword keyword-public">public</span> <span class="token punctuation">{</span>
+        amount <span class="token operator">=</span> <span class="token function">bound</span><span class="token punctuation">(</span>amount<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> token<span class="token punctuation">.</span><span class="token function">balanceOf</span><span class="token punctuation">(</span><span class="token builtin">address</span><span class="token punctuation">(</span><span class="token keyword keyword-this">this</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        token<span class="token punctuation">.</span><span class="token function">transfer</span><span class="token punctuation">(</span>alice<span class="token punctuation">,</span> amount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">assertLe</span><span class="token punctuation">(</span>token<span class="token punctuation">.</span><span class="token function">balanceOf</span><span class="token punctuation">(</span>alice<span class="token punctuation">)</span><span class="token punctuation">,</span> token<span class="token punctuation">.</span><span class="token function">totalSupply</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Invariant test: Foundry calls handler functions in random order,</span>
+    <span class="token comment">// then checks invariants after each call sequence</span>
+    <span class="token keyword keyword-function">function</span> <span class="token function">invariant_totalSupplyEqualsAllBalances</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-public">public</span> <span class="token punctuation">{</span>
+        <span class="token function">assertEq</span><span class="token punctuation">(</span>token<span class="token punctuation">.</span><span class="token function">totalSupply</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">sumOfAllBalances</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+      <p><strong>Mainnet Forking</strong></p>
+      <p>
+        Foundry and Hardhat support forking mainnet state at a specific block.
+        This enables testing your contract against real deployed contracts (real
+        USDC, real Uniswap pools) without touching mainnet.
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="bash"
+        class="language-bash bash"
+      ><code>forge <span class="token builtin class-name">test</span> --fork-url <span class="token variable">$ETH_RPC_URL</span> --fork-block-number <span class="token number">18000000</span>
+</code></pre>
+      <p><strong>Trace Debugging</strong></p>
+      <p>
+        Foundry's <code>forge test -vvvv</code> outputs a full execution trace
+        with every call, every storage access, and revert reasons.
+        <code>cast run &lt;txhash&gt; --rpc-url</code> traces a mainnet
+        transaction.
+      </p>
+      <p><strong>Formal Verification with Halmos</strong></p>
+      <p>
+        Halmos performs symbolic execution — instead of running with concrete
+        input values, it explores all possible inputs using constraint solving
+        (SMT). It can prove that a property holds for <em>all</em> inputs or
+        find a counterexample.
+      </p>
+      <h3 id="why-it-matters-4">Why It Matters</h3>
+      <p>
+        Testing in smart contract development is not optional hygiene — it is
+        mandatory engineering. The cost of a bug in production is irreversible
+        fund loss. The DeFi ecosystem has lost billions to exploits that would
+        have been caught by invariant tests. Coverage metrics are insufficient;
+        what matters is whether you have tested the <em>right</em> properties.
+      </p>
+      <h3 id="real-world-context-4">Real-World Context</h3>
+      <ul>
+        <li>
+          The Euler Finance hack ($197M, 2023) would have been prevented by an
+          invariant test checking <code>totalBorrow &lt;= totalDeposits</code> —
+          a property that was violated by the exploit.
+        </li>
+        <li>
+          The Mango Markets exploit (2022) manipulated oracle prices. A fuzz
+          test varying oracle prices would have revealed the issue.
+        </li>
+        <li>
+          Paradigm's research team discovered several Uniswap V3 edge cases via
+          fuzz testing before the protocol launched.
+        </li>
+        <li>
+          OpenZeppelin's test suite for their contracts covers 100% of lines and
+          branches.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-4">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Foundry (<code>forge</code>)</td>
+            <td>Testing, fuzzing, invariant testing, deployment</td>
+          </tr>
+          <tr>
+            <td>Hardhat</td>
+            <td>JS-based testing with Mocha/Chai</td>
+          </tr>
+          <tr>
+            <td><code>forge coverage</code></td>
+            <td>Measure code coverage</td>
+          </tr>
+          <tr>
+            <td>Halmos</td>
+            <td>Symbolic execution for Solidity</td>
+          </tr>
+          <tr>
+            <td>Certora Prover</td>
+            <td>Formal verification via specification language (CVL)</td>
+          </tr>
+          <tr>
+            <td><code>slither</code></td>
+            <td>Static analysis — detects 90+ vulnerability patterns</td>
+          </tr>
+          <tr>
+            <td><code>mythril</code></td>
+            <td>Symbolic execution-based security scanner</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-4">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          What is the difference between a fuzz test and an invariant test? When
+          would you use each?
+        </li>
+        <li>
+          What invariants would you define for a lending protocol? Give 5
+          specific invariants that would, if violated, indicate an exploit.
+        </li>
+        <li>
+          Why is line coverage an insufficient metric for smart contract test
+          quality?
+        </li>
+        <li>
+          How does mainnet forking enable you to test real protocol
+          interactions? What are its limitations?
+        </li>
+        <li>
+          What are the soundness trade-offs of symbolic execution (Halmos) vs.
+          random fuzzing? Which finds more bugs, and under what conditions?
+        </li>
+        <li>
+          How would you test a reentrancy guard? What does the test need to
+          simulate?
+        </li>
+        <li>
+          In Foundry's invariant testing, what is a "handler" contract and why
+          is it needed?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-4">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Invariant testing</strong>: Write 5 invariant tests for the
+          ERC-20 token from Topic 3. Ensure total supply is always conserved,
+          balances never go negative, and approval accounting is correct.
+        </li>
+        <li>
+          <strong>Fuzz a bug</strong>: Write a function with a subtle bug (e.g.,
+          rounding error that can drain funds). Write a fuzz test that discovers
+          the bug.
+        </li>
+        <li>
+          <strong>Fork test</strong>: Fork Ethereum mainnet. Write a test that
+          uses real USDC to test your deposit contract.
+        </li>
+        <li>
+          <strong>Static analysis run</strong>: Run <code>slither</code> on your
+          ERC-20 token. Analyze each finding — is it a true positive or false
+          positive? Fix the true positives.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-4">Mini Build Task</h3>
+      <p>
+        <strong>Test Coverage Engineering.</strong> Take an existing open-source
+        DeFi contract (e.g., a Compound fork or Uniswap V2 pair). Write a
+        comprehensive Foundry test suite including: unit tests for every
+        function, fuzz tests for all arithmetic operations, and 10+ invariant
+        tests. Achieve 100% line coverage. Produce a security report identifying
+        any gaps between coverage and actual security assurance.
+      </p>
+      <hr />
+      <h2 id="topic-6-smart-contract-security-vulnerabilities">
+        Topic 6: Smart Contract Security Vulnerabilities
+      </h2>
+      <h3 id="explanation-5">Explanation</h3>
+      <p><strong>Reentrancy</strong></p>
+      <p>
+        The most infamous smart contract vulnerability class. A malicious
+        external call executes before the caller's state is updated.
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="solidity"
+        class="language-solidity solidity"
+      ><code><span class="token comment">// VULNERABLE: Effects after Interactions</span>
+<span class="token keyword keyword-function">function</span> <span class="token function">withdraw</span><span class="token punctuation">(</span><span class="token builtin">uint256</span> amount<span class="token punctuation">)</span> <span class="token keyword keyword-external">external</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-require">require</span><span class="token punctuation">(</span>balances<span class="token punctuation">[</span>msg<span class="token punctuation">.</span>sender<span class="token punctuation">]</span> <span class="token operator">&gt;=</span> amount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">(</span><span class="token builtin">bool</span> success<span class="token punctuation">,</span> <span class="token punctuation">)</span> <span class="token operator">=</span> msg<span class="token punctuation">.</span>sender<span class="token punctuation">.</span>call<span class="token punctuation">{</span>value<span class="token punctuation">:</span> amount<span class="token punctuation">}</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// External call!</span>
+    <span class="token keyword keyword-require">require</span><span class="token punctuation">(</span>success<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    balances<span class="token punctuation">[</span>msg<span class="token punctuation">.</span>sender<span class="token punctuation">]</span> <span class="token operator">-=</span> amount<span class="token punctuation">;</span> <span class="token comment">// State updated AFTER call</span>
+<span class="token punctuation">}</span>
+</code></pre>
+      <p>
+        Attack: the recipient's <code>receive()</code> function re-calls
+        <code>withdraw()</code> before <code>balances</code> is updated. Fix:
+        Update state BEFORE the external call (CEI pattern) or use a
+        ReentrancyGuard mutex.
+      </p>
+      <p>Variants:</p>
+      <ul>
+        <li>
+          <strong>Cross-function reentrancy</strong>: Reenters via a
+          <em>different</em> function than the one called.
+        </li>
+        <li>
+          <strong>Read-only reentrancy</strong>: A view function is called
+          mid-execution and returns stale state, which another protocol trusts
+          as correct.
+        </li>
+      </ul>
+      <p><strong>Integer Overflow/Underflow (Pre-0.8)</strong></p>
+      <p>
+        Before Solidity 0.8, arithmetic silently wrapped around.
+        <code>uint8(255) + 1 == 0</code>. The Proof-of-Concept exploit of the
+        BatchOverflow bug on BEC token (2018) minted $900M worth of tokens from
+        overflow.
+      </p>
+      <p>
+        Fix: Use Solidity 0.8+ (checked arithmetic by default) or OpenZeppelin's
+        <code>SafeMath</code> for 0.7 and earlier.
+      </p>
+      <p><strong>Access Control Failures</strong></p>
+      <p>
+        Missing or incorrect permission checks. Functions that should be
+        restricted are public or reachable via an unexpected call path.
+      </p>
+      <p>
+        Example: The Parity multisig wallet bug left the
+        <code>initWallet</code> function public, allowing anyone to become the
+        owner.
+      </p>
+      <p><strong>Front-Running and Sandwich Attacks</strong></p>
+      <p>
+        MEV bots monitor the mempool and inject transactions before and after a
+        victim's transaction:
+      </p>
+      <ul>
+        <li>
+          <strong>Front-run</strong>: Bot submits the same trade ahead of the
+          victim (higher gas price), taking the favorable price.
+        </li>
+        <li>
+          <strong>Sandwich</strong>: Bot buys before and sells after the
+          victim's large swap, profiting from their price impact.
+        </li>
+      </ul>
+      <p>
+        Defenses: commit-reveal schemes, private mempools (Flashbots Protect),
+        slippage limits.
+      </p>
+      <p><strong>Oracle Manipulation</strong></p>
+      <p>
+        On-chain oracles (like Uniswap V2 spot price) can be manipulated within
+        a single transaction using flash loans. Protocol that reads a spot price
+        (not a time-weighted average) is vulnerable.
+      </p>
+      <p>
+        Example: The Harvest Finance exploit (2020, $34M) manipulated USDC/USDT
+        prices in Curve's pool via flash loans to drain the vault.
+      </p>
+      <p>
+        Fix: Use time-weighted average prices (TWAP), multiple oracle sources,
+        and Chainlink decentralized oracles.
+      </p>
+      <p><strong>Flash Loan Attacks</strong></p>
+      <p>
+        Flash loans provide unsecured, immediate liquidity that must be repaid
+        in the same transaction. They amplify the attacker's effective capital
+        for oracle manipulation, governance attacks, and arbitrage exploits.
+      </p>
+      <p><strong>DELEGATECALL Storage Collision</strong></p>
+      <p>
+        When a proxy uses DELEGATECALL, the logic contract's storage layout must
+        exactly match the proxy's. If the proxy has state variables in slots 0–2
+        and the logic contract defines different variables in those slots,
+        writes to the logic variables corrupt the proxy's admin address.
+      </p>
+      <p><strong>Signature Replay</strong></p>
+      <p>
+        A valid signature for one transaction can be replayed in another context
+        if the message doesn't include a unique identifier (nonce, chain ID,
+        contract address).
+      </p>
+      <p>
+        Example: A signed "approve this withdrawal" message replayed on a fork
+        chain or against a different contract instance.
+      </p>
+      <p>
+        Fix: EIP-712 typed structured data signing includes domain separator
+        (chain ID + contract address + version).
+      </p>
+      <p><strong>tx.origin Phishing</strong></p>
+      <p>
+        <code>tx.origin</code> returns the original EOA that initiated the
+        transaction. A malicious contract tricking a user into calling it can
+        then call the victim contract and pass the
+        <code>require(tx.origin == owner)</code> check.
+      </p>
+      <p>
+        Fix: Never use <code>tx.origin</code> for authorization. Use
+        <code>msg.sender</code>.
+      </p>
+      <p><strong>Denial of Service via Gas Exhaustion</strong></p>
+      <p>
+        A contract that loops over an unbounded array can be griefed by an
+        attacker who makes the array large enough that the loop runs out of gas.
+        Example: a contract that distributes ETH to all holders in a loop —
+        anyone can add many zero-value holder addresses.
+      </p>
+      <h3 id="why-it-matters-5">Why It Matters</h3>
+      <p>
+        Every vulnerability class here has caused real, significant financial
+        losses. The combined DeFi hacks from 2020–2024 total over $10 billion.
+        Cryptocurrency transactions are irreversible. Smart contract developers
+        must internalize every vulnerability class and audit their code against
+        each one before deployment.
+      </p>
+      <h3 id="real-world-context-5">Real-World Context</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Exploit</th>
+            <th>Year</th>
+            <th>Loss</th>
+            <th>Vulnerability</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>The DAO</td>
+            <td>2016</td>
+            <td>$60M</td>
+            <td>Reentrancy</td>
+          </tr>
+          <tr>
+            <td>Parity Multisig</td>
+            <td>2017</td>
+            <td>$150M</td>
+            <td>Missing access control</td>
+          </tr>
+          <tr>
+            <td>bZx</td>
+            <td>2020</td>
+            <td>$8M</td>
+            <td>Oracle manipulation (flash loan)</td>
+          </tr>
+          <tr>
+            <td>Harvest Finance</td>
+            <td>2020</td>
+            <td>$34M</td>
+            <td>Oracle manipulation</td>
+          </tr>
+          <tr>
+            <td>Cream Finance</td>
+            <td>2021</td>
+            <td>$130M</td>
+            <td>Reentrancy (cross-function)</td>
+          </tr>
+          <tr>
+            <td>Nomad Bridge</td>
+            <td>2022</td>
+            <td>$190M</td>
+            <td>Access control / initialization</td>
+          </tr>
+          <tr>
+            <td>Euler Finance</td>
+            <td>2023</td>
+            <td>$197M</td>
+            <td>Missing health check (unexpected state path)</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="tools--technologies-5">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>slither</code></td>
+            <td>Static analysis for 90+ vulnerability patterns</td>
+          </tr>
+          <tr>
+            <td><code>mythril</code></td>
+            <td>Symbolic execution vulnerability scanner</td>
+          </tr>
+          <tr>
+            <td><code>echidna</code></td>
+            <td>Property-based fuzzer for security testing</td>
+          </tr>
+          <tr>
+            <td>Foundry</td>
+            <td>Exploit PoC scripting</td>
+          </tr>
+          <tr>
+            <td>Tenderly</td>
+            <td>Transaction simulation and trace analysis</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-5">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Explain the exact reentrant call sequence in The DAO exploit. What
+          state was read, what was not yet updated, and what was the financial
+          impact of each reentrant call?
+        </li>
+        <li>
+          How does the cross-function reentrancy attack work? Why does a
+          ReentrancyGuard mutex prevent it?
+        </li>
+        <li>
+          What is the read-only reentrancy attack, and why is a ReentrancyGuard
+          insufficient to prevent it?
+        </li>
+        <li>
+          A protocol relies on Uniswap V2 spot price for collateral valuation.
+          Walk through a flash loan attack that exploits this. How much profit
+          is possible?
+        </li>
+        <li>
+          Why does EIP-712 structured signing prevent signature replay attacks?
+          What specific fields make each signature unique?
+        </li>
+        <li>
+          You have a smart contract that distributes rewards to all users in a
+          <code>for</code> loop. Identify the DoS vector and propose a fix.
+        </li>
+        <li>
+          Explain the storage collision bug in a proxy contract where the proxy
+          stores <code>address admin</code> in slot 0 and the logic contract
+          stores <code>address owner</code> in slot 0. What happens when the
+          logic contract writes to <code>owner</code>?
+        </li>
+        <li>
+          Why is <code>tx.origin</code> considered dangerous for authorization?
+          Construct an exact attack scenario.
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-5">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Reentrancy CTF</strong>: Implement the vulnerable
+          <code>withdraw</code> function, implement an attacking contract, and
+          run the exploit in a Foundry test. Then fix the vulnerability with CEI
+          and ReentrancyGuard, and verify the attack no longer works.
+        </li>
+        <li>
+          <strong>Oracle manipulation PoC</strong>: Fork mainnet with a Uniswap
+          V2 pool. Write an attack contract that uses a flash loan to manipulate
+          the spot price, exploits a vulnerable lending protocol, and repays the
+          flash loan. Run as a Foundry test against a fork.
+        </li>
+        <li>
+          <strong>Access control audit</strong>: Take a given Solidity contract
+          (intentionally containing missing access control). Use slither to
+          detect the issue. Write a proof-of-concept exploit.
+        </li>
+        <li>
+          <strong>Signature replay</strong>: Implement a vulnerable
+          signature-based withdrawal system. Build an exploit that replays a
+          valid signature. Fix with EIP-712.
+        </li>
+        <li>
+          <strong>Storage collision</strong>: Write a proxy and a logic contract
+          with a known storage collision. Demonstrate that upgrading corrupts
+          the proxy's admin address. Fix by using EIP-1967 storage slots.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-5">Mini Build Task</h3>
+      <p>
+        <strong>Audit a Protocol.</strong> Take an open-source, publicly known
+        vulnerable contract (e.g., from Damn Vulnerable DeFi or EtherNaut). For
+        each of the 12+ vulnerability classes covered in this topic: (a)
+        describe whether the contract is vulnerable, (b) if vulnerable, write a
+        working exploit as a Foundry test, (c) propose a fix. Write a formal
+        security report with: executive summary, findings ranked by severity,
+        recommended remediations.
+      </p>
+      <hr />
+      <h2 id="mini-projects">Mini Projects</h2>
+      <h3 id="project-1-minimal-defi-lending-protocol">
+        Project 1: Minimal DeFi Lending Protocol
+      </h3>
+      <p>
+        Build a basic lending protocol: deposit ERC-20 collateral, borrow
+        against it, repay loans, and liquidate under-collateralized positions.
+        Implement proper access control, reentrancy guards, and a simulated
+        price oracle. Avoid all known vulnerability classes.
+      </p>
+      <h3 id="project-2-upgradeable-nft-marketplace">
+        Project 2: Upgradeable NFT Marketplace
+      </h3>
+      <p>
+        A UUPS-upgradeable contract where sellers can list ERC-721 NFTs at a
+        price, and buyers can purchase them (ERC-20 payment). Version 1:
+        fixed-price sales. Version 2: add auction functionality. Demonstrate
+        upgrade without losing seller listings.
+      </p>
+      <h3 id="project-3-governance-system">Project 3: Governance System</h3>
+      <p>
+        Implement on-chain governance: token holders vote on proposals,
+        proposals have a time delay before execution, and approved proposals
+        call arbitrary functions via a timelock. Model after Compound Governor
+        Bravo.
+      </p>
+      <hr />
+      <h2 id="capstone-project-decentralized-stablecoin-system">
+        Capstone Project: Decentralized Stablecoin System
+      </h2>
+      <p>
+        Build a minimal over-collateralized stablecoin (inspired by MakerDAO):
+      </p>
+      <ol>
+        <li>
+          <strong>Vault contract</strong>: Users deposit ETH (or a mock ERC-20)
+          as collateral and mint a stablecoin ("DSC") up to 150%
+          collateralization ratio.
+        </li>
+        <li>
+          <strong>Stablecoin (DSC)</strong>: ERC-20 token, mintable only by the
+          vault contract.
+        </li>
+        <li>
+          <strong>Price oracle</strong>: Use a mock oracle (updatable by admin)
+          to simulate ETH price feeds.
+        </li>
+        <li>
+          <strong>Liquidation</strong>: If a vault falls below 150%
+          collateralization ratio, liquidators can repay the stablecoin debt and
+          claim the collateral at a discount.
+        </li>
+        <li>
+          <strong>Stability mechanism</strong>: Burning DSC increases the
+          collateralization ratio.
+        </li>
+        <li>
+          <strong>Test suite</strong>: 100% line coverage. Invariant tests:
+          total DSC supply ≤ total collateral value, no undercollateralized
+          vaults can exist after each action.
+        </li>
+        <li>
+          <strong>Security audit</strong>: Run slither and mythril. Document and
+          fix all findings.
+        </li>
+      </ol>
+      <hr />
+      <h2 id="common-mistakes--misconceptions">
+        Common Mistakes &amp; Misconceptions
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Mistake</th>
+            <th>Reality</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>"<code>private</code> means secret"</td>
+            <td>
+              Private state variables are fully readable by anyone who reads the
+              blockchain. Use encryption off-chain for actual secrets.
+            </td>
+          </tr>
+          <tr>
+            <td>"Solidity 0.8 prevents all overflow"</td>
+            <td>
+              <code>unchecked</code> blocks disable overflow protection.
+              Libraries and assembly bypass it entirely.
+            </td>
+          </tr>
+          <tr>
+            <td>"ReentrancyGuard prevents all reentrancy"</td>
+            <td>
+              Read-only reentrancy bypasses the guard because
+              <code>view</code> functions don't trigger it.
+            </td>
+          </tr>
+          <tr>
+            <td>"Audit = complete security"</td>
+            <td>
+              Audits find bugs based on auditor skill and scope. Formal
+              verification provides stronger guarantees. Novel attack vectors
+              are discovered post-audit regularly.
+            </td>
+          </tr>
+          <tr>
+            <td>"Gas fees are the user's problem"</td>
+            <td>
+              Contracts that make users pay excessive gas will not be used. Gas
+              optimization is a UX requirement.
+            </td>
+          </tr>
+          <tr>
+            <td>"Hard-coded addresses are fine"</td>
+            <td>
+              Dependency on hard-coded deployed contract addresses creates
+              fragility across networks and protocol upgrades.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+      <h2 id="security-considerations">Security Considerations</h2>
+      <p>At this stage, internalize these disciplines:</p>
+      <ol>
+        <li>
+          <strong>CEI is not optional.</strong> Structure every state-modifying
+          function with Checks-Effects-Interactions. No exceptions.
+        </li>
+        <li>
+          <strong>Threat model before code.</strong> Before writing a contract,
+          ask: who can call this? What can they do with it? What is the
+          worst-case outcome of each function being called by a malicious actor?
+        </li>
+        <li>
+          <strong>Principle of least privilege.</strong> Give each function only
+          the permissions it needs. Separate admin functions with timelocks.
+        </li>
+        <li>
+          <strong>Assume hostile callees.</strong> Any external contract you
+          call can be malicious, can reenter, and can revert to cause denial of
+          service.
+        </li>
+        <li>
+          <strong>Oracle paranoia.</strong> Never trust a single on-chain price
+          source for financial decisions without manipulation resistance (TWAP,
+          multiple sources, circuit breakers).
+        </li>
+        <li>
+          <strong>Invariant-first design.</strong> Before implementing a
+          protocol, enumerate its invariants. Then write invariant tests before
+          writing implementation.
+        </li>
+      </ol>
+      <hr />
+      <h2 id="readings--resources">Readings &amp; Resources</h2>
+      <p><strong>Books</strong></p>
+      <ul>
+        <li>
+          <em>Smart Contract Security</em> (Trail of Bits, free) — Comprehensive
+          security focused guide
+        </li>
+        <li>
+          <em>Mastering Ethereum</em> — Chapters 7–13 (Solidity, EVM, smart
+          contracts in depth)
+        </li>
+      </ul>
+      <p><strong>Papers</strong></p>
+      <ul>
+        <li>
+          Luu et al. — <em>"Making Smart Contracts Smarter"</em> (2016) — Formal
+          analysis of EVM vulnerabilities
+        </li>
+        <li>
+          Hildenbrandt et al. —
+          <em>"KEVM: A Complete Semantics of the EVM"</em> (2018)
+        </li>
+        <li>EIP-1967: Standard Proxy Storage Slots</li>
+        <li>EIP-712: Typed Structured Data Signing</li>
+        <li>EIP-3529: Reduction in refunds</li>
+      </ul>
+      <p><strong>Documentation</strong></p>
+      <ul>
+        <li>
+          Solidity documentation:
+          <a href="http://docs.soliditylang.org">docs.soliditylang.org</a>
+        </li>
+        <li>
+          Foundry book:
+          <a href="http://book.getfoundry.sh">book.getfoundry.sh</a>
+        </li>
+        <li>
+          OpenZeppelin Contracts:
+          <a href="http://docs.openzeppelin.com/contracts"
+            >docs.openzeppelin.com/contracts</a
+          >
+        </li>
+      </ul>
+      <p><strong>Security Resources</strong></p>
+      <ul>
+        <li>
+          SWC Registry (Smart Contract Weakness Classification):
+          <a href="http://swcregistry.io">swcregistry.io</a>
+        </li>
+        <li>Damn Vulnerable DeFi: damnvulnerabledefi.xyz</li>
+        <li>
+          EtherNaut:
+          <a href="http://ethernaut.openzeppelin.com"
+            >ethernaut.openzeppelin.com</a
+          >
+        </li>
+        <li>
+          Trail of Bits public audits:
+          <a href="http://github.com/trailofbits/publications"
+            >github.com/trailofbits/publications</a
+          >
+        </li>
+        <li>Rekt News (post-mortems of exploits): rekt.news</li>
+        <li>Immunefi blog (bug bounty post-mortems)</li>
+      </ul>
+      <hr />
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 14px 0;
+          margin-top: 48px;
+        "
+      >
+        <a
+          href="./02_Blockchain_Core.html"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #8b949e;
+            font-size: 0.875rem;
+            padding: 6px 10px;
+            border-radius: 6px;
+          "
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M9.78 12.78a.75.75 0 0 1-1.06 0L4.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 1.06L6.06 8l3.72 3.72a.75.75 0 0 1 0 1.06z"
+            ></path>
+          </svg>
+          <span style="display: flex; flex-direction: column; line-height: 1.3">
+            <span
+              style="
+                font-size: 0.7rem;
+                opacity: 0.55;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+              "
+              >Previous</span
+            >
+            <span style="font-weight: 500">02 · Blockchain Core</span>
+          </span>
+        </a>
+        <span
+          style="
+            font-size: 0.7rem;
+            color: #8b949e;
+            opacity: 0.5;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+          "
+          >Stage 3 of 6 · Smart Contracts &amp; EVM</span
+        >
+        <a
+          href="./04_Ecosystem_Scaling_and_Crypto_Economics.html"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #8b949e;
+            font-size: 0.875rem;
+            padding: 6px 10px;
+            border-radius: 6px;
+          "
+        >
+          <span
+            style="
+              display: flex;
+              flex-direction: column;
+              line-height: 1.3;
+              text-align: right;
+            "
+          >
+            <span
+              style="
+                font-size: 0.7rem;
+                opacity: 0.55;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+              "
+              >Next</span
+            >
+            <span style="font-weight: 500">04 · Ecosystem &amp; Scaling</span>
+          </span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06z"
+            ></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

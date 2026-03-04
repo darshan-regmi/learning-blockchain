@@ -1,0 +1,2673 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Learn Blockchain | Full Stack dApp Development</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous" />
+
+    <style>
+      code[class*="language-"],
+      pre[class*="language-"] {
+        color: #333;
+        background: 0 0;
+        font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        line-height: 1.4;
+        -moz-tab-size: 8;
+        -o-tab-size: 8;
+        tab-size: 8;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+      pre[class*="language-"] {
+        padding: 0.8em;
+        overflow: auto;
+        border-radius: 3px;
+        background: #f5f5f5;
+      }
+      :not(pre) > code[class*="language-"] {
+        padding: 0.1em;
+        border-radius: 0.3em;
+        white-space: normal;
+        background: #f5f5f5;
+      }
+      .token.blockquote,
+      .token.comment {
+        color: #969896;
+      }
+      .token.cdata {
+        color: #183691;
+      }
+      .token.doctype,
+      .token.macro.property,
+      .token.punctuation,
+      .token.variable {
+        color: #333;
+      }
+      .token.builtin,
+      .token.important,
+      .token.keyword,
+      .token.operator,
+      .token.rule {
+        color: #a71d5d;
+      }
+      .token.attr-value,
+      .token.regex,
+      .token.string,
+      .token.url {
+        color: #183691;
+      }
+      .token.atrule,
+      .token.boolean,
+      .token.code,
+      .token.command,
+      .token.constant,
+      .token.entity,
+      .token.number,
+      .token.property,
+      .token.symbol {
+        color: #0086b3;
+      }
+      .token.prolog,
+      .token.selector,
+      .token.tag {
+        color: #63a35c;
+      }
+      .token.attr-name,
+      .token.class,
+      .token.class-name,
+      .token.function,
+      .token.id,
+      .token.namespace,
+      .token.pseudo-class,
+      .token.pseudo-element,
+      .token.url-reference .token.variable {
+        color: #795da3;
+      }
+      .token.entity {
+        cursor: help;
+      }
+      .token.title,
+      .token.title .token.punctuation {
+        font-weight: 700;
+        color: #1d3e81;
+      }
+      .token.list {
+        color: #ed6a43;
+      }
+      .token.inserted {
+        background-color: #eaffea;
+        color: #55a532;
+      }
+      .token.deleted {
+        background-color: #ffecec;
+        color: #bd2c00;
+      }
+      .token.bold {
+        font-weight: 700;
+      }
+      .token.italic {
+        font-style: italic;
+      }
+      .language-json .token.property {
+        color: #183691;
+      }
+      .language-markup .token.tag .token.punctuation {
+        color: #333;
+      }
+      .language-css .token.function,
+      code.language-css {
+        color: #0086b3;
+      }
+      .language-yaml .token.atrule {
+        color: #63a35c;
+      }
+      code.language-yaml {
+        color: #183691;
+      }
+      .language-ruby .token.function {
+        color: #333;
+      }
+      .language-markdown .token.url {
+        color: #795da3;
+      }
+      .language-makefile .token.symbol {
+        color: #795da3;
+      }
+      .language-makefile .token.variable {
+        color: #183691;
+      }
+      .language-makefile .token.builtin {
+        color: #0086b3;
+      }
+      .language-bash .token.keyword {
+        color: #0086b3;
+      }
+      pre[data-line] {
+        position: relative;
+        padding: 1em 0 1em 3em;
+      }
+      pre[data-line] .line-highlight-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: transparent;
+        display: block;
+        width: 100%;
+      }
+      pre[data-line] .line-highlight {
+        position: absolute;
+        left: 0;
+        right: 0;
+        padding: inherit 0;
+        margin-top: 1em;
+        background: hsla(24, 20%, 50%, 0.08);
+        background: linear-gradient(
+          to right,
+          hsla(24, 20%, 50%, 0.1) 70%,
+          hsla(24, 20%, 50%, 0)
+        );
+        pointer-events: none;
+        line-height: inherit;
+        white-space: pre;
+      }
+      pre[data-line] .line-highlight:before,
+      pre[data-line] .line-highlight[data-end]:after {
+        content: attr(data-start);
+        position: absolute;
+        top: 0.4em;
+        left: 0.6em;
+        min-width: 1em;
+        padding: 0 0.5em;
+        background-color: hsla(24, 20%, 50%, 0.4);
+        color: #f4f1ef;
+        font: bold 65%/1.5 sans-serif;
+        text-align: center;
+        vertical-align: 0.3em;
+        border-radius: 999px;
+        text-shadow: none;
+        box-shadow: 0 1px #fff;
+      }
+      pre[data-line] .line-highlight[data-end]:after {
+        content: attr(data-end);
+        top: auto;
+        bottom: 0.4em;
+      }
+      html body {
+        font-family:
+          "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+        background-color: #fff;
+        overflow: initial;
+        box-sizing: border-box;
+        word-wrap: break-word;
+      }
+      html body > :first-child {
+        margin-top: 0;
+      }
+      html body h1,
+      html body h2,
+      html body h3,
+      html body h4,
+      html body h5,
+      html body h6 {
+        line-height: 1.2;
+        margin-top: 1em;
+        margin-bottom: 16px;
+        color: #000;
+      }
+      html body h1 {
+        font-size: 2.25em;
+        font-weight: 300;
+        padding-bottom: 0.3em;
+      }
+      html body h2 {
+        font-size: 1.75em;
+        font-weight: 400;
+        padding-bottom: 0.3em;
+      }
+      html body h3 {
+        font-size: 1.5em;
+        font-weight: 500;
+      }
+      html body h4 {
+        font-size: 1.25em;
+        font-weight: 600;
+      }
+      html body h5 {
+        font-size: 1.1em;
+        font-weight: 600;
+      }
+      html body h6 {
+        font-size: 1em;
+        font-weight: 600;
+      }
+      html body h1,
+      html body h2,
+      html body h3,
+      html body h4,
+      html body h5 {
+        font-weight: 600;
+      }
+      html body h5 {
+        font-size: 1em;
+      }
+      html body h6 {
+        color: #5c5c5c;
+      }
+      html body strong {
+        color: #000;
+      }
+      html body del {
+        color: #5c5c5c;
+      }
+      html body a:not([href]) {
+        color: inherit;
+        text-decoration: none;
+      }
+      html body a {
+        color: #08c;
+        text-decoration: none;
+      }
+      html body a:hover {
+        color: #00a3f5;
+        text-decoration: none;
+      }
+      html body img {
+        max-width: 100%;
+      }
+      html body > p {
+        margin-top: 0;
+        margin-bottom: 16px;
+        word-wrap: break-word;
+      }
+      html body > ol,
+      html body > ul {
+        margin-bottom: 16px;
+      }
+      html body ol,
+      html body ul {
+        padding-left: 2em;
+      }
+      html body ol.no-list,
+      html body ul.no-list {
+        padding: 0;
+        list-style-type: none;
+      }
+      html body ol ol,
+      html body ol ul,
+      html body ul ol,
+      html body ul ul {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      html body li {
+        margin-bottom: 0;
+      }
+      html body li.task-list-item {
+        list-style: none;
+      }
+      html body li > p {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      html body .task-list-item-checkbox {
+        margin: 0 0.2em 0.25em -1.8em;
+        vertical-align: middle;
+      }
+      html body .task-list-item-checkbox:hover {
+        cursor: pointer;
+      }
+      html body blockquote {
+        margin: 16px 0;
+        font-size: inherit;
+        padding: 0 15px;
+        color: #5c5c5c;
+        background-color: #f0f0f0;
+        border-left: 4px solid #d6d6d6;
+      }
+      html body blockquote > :first-child {
+        margin-top: 0;
+      }
+      html body blockquote > :last-child {
+        margin-bottom: 0;
+      }
+      html body hr {
+        height: 4px;
+        margin: 32px 0;
+        background-color: #d6d6d6;
+        border: 0 none;
+      }
+      html body table {
+        margin: 10px 0 15px 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        width: 100%;
+        overflow: auto;
+        word-break: normal;
+        word-break: keep-all;
+      }
+      html body table th {
+        font-weight: 700;
+        color: #000;
+      }
+      html body table td,
+      html body table th {
+        border: 1px solid #d6d6d6;
+        padding: 6px 13px;
+      }
+      html body dl {
+        padding: 0;
+      }
+      html body dl dt {
+        padding: 0;
+        margin-top: 16px;
+        font-size: 1em;
+        font-style: italic;
+        font-weight: 700;
+      }
+      html body dl dd {
+        padding: 0 16px;
+        margin-bottom: 16px;
+      }
+      html body code {
+        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        font-size: 0.85em;
+        color: #000;
+        background-color: #f0f0f0;
+        border-radius: 3px;
+        padding: 0.2em 0;
+      }
+      html body code::after,
+      html body code::before {
+        letter-spacing: -0.2em;
+        content: "\00a0";
+      }
+      html body pre > code {
+        padding: 0;
+        margin: 0;
+        word-break: normal;
+        white-space: pre;
+        background: 0 0;
+        border: 0;
+      }
+      html body .highlight {
+        margin-bottom: 16px;
+      }
+      html body .highlight pre,
+      html body pre {
+        padding: 1em;
+        overflow: auto;
+        line-height: 1.45;
+        border: #d6d6d6;
+        border-radius: 3px;
+      }
+      html body .highlight pre {
+        margin-bottom: 0;
+        word-break: normal;
+      }
+      html body pre code,
+      html body pre tt {
+        display: inline;
+        max-width: initial;
+        padding: 0;
+        margin: 0;
+        overflow: initial;
+        line-height: inherit;
+        word-wrap: normal;
+        background-color: transparent;
+        border: 0;
+      }
+      html body pre code:after,
+      html body pre code:before,
+      html body pre tt:after,
+      html body pre tt:before {
+        content: normal;
+      }
+      html body blockquote,
+      html body dl,
+      html body ol,
+      html body p,
+      html body pre,
+      html body ul {
+        margin-top: 0;
+        margin-bottom: 16px;
+      }
+      html body kbd {
+        color: #000;
+        border: 1px solid #d6d6d6;
+        border-bottom: 2px solid #c7c7c7;
+        padding: 2px 4px;
+        background-color: #f0f0f0;
+        border-radius: 3px;
+      }
+      @media print {
+        html body {
+          background-color: #fff;
+        }
+        html body h1,
+        html body h2,
+        html body h3,
+        html body h4,
+        html body h5,
+        html body h6 {
+          color: #000;
+          page-break-after: avoid;
+        }
+        html body blockquote {
+          color: #5c5c5c;
+        }
+        html body pre {
+          page-break-inside: avoid;
+        }
+        html body table {
+          display: table;
+        }
+        html body img {
+          display: block;
+          max-width: 100%;
+          max-height: 100%;
+        }
+        html body code,
+        html body pre {
+          word-wrap: break-word;
+          white-space: pre;
+        }
+      }
+      .markdown-preview {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      .markdown-preview ul {
+        list-style: disc;
+      }
+      .markdown-preview ul ul {
+        list-style: circle;
+      }
+      .markdown-preview ul ul ul {
+        list-style: square;
+      }
+      .markdown-preview ol {
+        list-style: decimal;
+      }
+      .markdown-preview ol ol,
+      .markdown-preview ul ol {
+        list-style-type: lower-roman;
+      }
+      .markdown-preview ol ol ol,
+      .markdown-preview ol ul ol,
+      .markdown-preview ul ol ol,
+      .markdown-preview ul ul ol {
+        list-style-type: lower-alpha;
+      }
+      .markdown-preview .newpage,
+      .markdown-preview .pagebreak {
+        page-break-before: always;
+      }
+      .markdown-preview pre.line-numbers {
+        position: relative;
+        padding-left: 3.8em;
+        counter-reset: linenumber;
+      }
+      .markdown-preview pre.line-numbers > code {
+        position: relative;
+      }
+      .markdown-preview pre.line-numbers .line-numbers-rows {
+        position: absolute;
+        pointer-events: none;
+        top: 1em;
+        font-size: 100%;
+        left: 0;
+        width: 3em;
+        letter-spacing: -1px;
+        border-right: 1px solid #999;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .markdown-preview pre.line-numbers .line-numbers-rows > span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+      }
+      .markdown-preview pre.line-numbers .line-numbers-rows > span:before {
+        content: counter(linenumber);
+        color: #999;
+        display: block;
+        padding-right: 0.8em;
+        text-align: right;
+      }
+      .markdown-preview .mathjax-exps .MathJax_Display {
+        text-align: center !important;
+      }
+      .markdown-preview:not([data-for="preview"])
+        .code-chunk
+        .code-chunk-btn-group {
+        display: none;
+      }
+      .markdown-preview:not([data-for="preview"]) .code-chunk .status {
+        display: none;
+      }
+      .markdown-preview:not([data-for="preview"]) .code-chunk .output-div {
+        margin-bottom: 16px;
+      }
+      .markdown-preview .md-toc {
+        padding: 0;
+      }
+      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link {
+        display: inline;
+        padding: 0.25rem 0;
+      }
+      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,
+      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p {
+        display: inline;
+      }
+      .markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link {
+        font-weight: 800;
+      }
+      .scrollbar-style::-webkit-scrollbar {
+        width: 8px;
+      }
+      .scrollbar-style::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: transparent;
+      }
+      .scrollbar-style::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgba(150, 150, 150, 0.66);
+        border: 4px solid rgba(150, 150, 150, 0.66);
+        background-clip: content-box;
+      }
+      html body[for="html-export"]:not([data-presentation-mode]) {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode])
+        .markdown-preview {
+        position: relative;
+        top: 0;
+        min-height: 100vh;
+      }
+      @media screen and (min-width: 914px) {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          .markdown-preview {
+          padding: 2em calc(50% - 457px + 2em);
+        }
+      }
+      @media screen and (max-width: 914px) {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          .markdown-preview {
+          padding: 2em;
+        }
+      }
+      @media screen and (max-width: 450px) {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          .markdown-preview {
+          font-size: 14px !important;
+          padding: 1em;
+        }
+      }
+      @media print {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          #sidebar-toc-btn {
+          display: none;
+        }
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode])
+        #sidebar-toc-btn {
+        position: fixed;
+        bottom: 8px;
+        left: 8px;
+        font-size: 28px;
+        cursor: pointer;
+        color: inherit;
+        z-index: 99;
+        width: 32px;
+        text-align: center;
+        opacity: 0.4;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        #sidebar-toc-btn {
+        opacity: 1;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 300px;
+        height: 100%;
+        padding: 32px 0 48px 0;
+        font-size: 14px;
+        box-shadow: 0 0 4px rgba(150, 150, 150, 0.33);
+        box-sizing: border-box;
+        overflow: auto;
+        background-color: inherit;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc::-webkit-scrollbar {
+        width: 8px;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: transparent;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgba(150, 150, 150, 0.66);
+        border: 4px solid rgba(150, 150, 150, 0.66);
+        background-clip: content-box;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        a {
+        text-decoration: none;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc {
+        padding: 0 16px;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper
+        .md-toc-link {
+        display: inline;
+        padding: 0.25rem 0;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper
+        .md-toc-link
+        div,
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper
+        .md-toc-link
+        p {
+        display: inline;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper.highlighted
+        .md-toc-link {
+        font-weight: 800;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .markdown-preview {
+        left: 300px;
+        width: calc(100% - 300px);
+        padding: 2em calc(50% - 457px - 300px / 2);
+        margin: 0;
+        box-sizing: border-box;
+      }
+      @media screen and (max-width: 1274px) {
+        html
+          body[for="html-export"]:not(
+            [data-presentation-mode]
+          )[html-show-sidebar-toc]
+          .markdown-preview {
+          padding: 2em;
+        }
+      }
+      @media screen and (max-width: 450px) {
+        html
+          body[for="html-export"]:not(
+            [data-presentation-mode]
+          )[html-show-sidebar-toc]
+          .markdown-preview {
+          width: 100%;
+        }
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode]):not(
+          [html-show-sidebar-toc]
+        )
+        .markdown-preview {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode]):not(
+          [html-show-sidebar-toc]
+        )
+        .md-sidebar-toc {
+        display: none;
+      }
+      /* Please visit the URL below for more information: */
+      /*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+    </style>
+    <!-- The content below will be included at the end of the <head> element. -->
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function () {
+        // your code here
+      });
+    </script>
+  </head>
+  <body for="html-export">
+    <div class="crossnote markdown-preview">
+      <h1 id="stage-5--full-stack-dapp-development">
+        Stage 5 — Full-Stack dApp Development
+      </h1>
+      <p><code>Stage 5 of 6</code> · Estimated 4–6 weeks</p>
+      <h2 id="stage-overview">Stage Overview</h2>
+      <h3 id="what-this-stage-builds">What This Stage Builds</h3>
+      <p>
+        This stage assembles all previous knowledge into the ability to build,
+        deploy, and operate production-grade decentralized applications. You
+        will learn wallet integration, Web3 libraries, on-chain/off-chain
+        interaction patterns, indexing and querying blockchain data, production
+        deployment infrastructure, and the architectural decisions that separate
+        amateur dApps from production systems. You will understand the full
+        vertical stack — from a user clicking a button in a browser, to a
+        transaction landing on-chain, to indexed data being served back to the
+        UI.
+      </p>
+      <h3 id="why-this-stage-is-critical">Why This Stage Is Critical</h3>
+      <p>
+        Knowledge of smart contracts alone does not produce a usable product.
+        The largest fraction of dApp security and UX failures happen at the
+        application layer: improper wallet handling, missing transaction error
+        recovery, inadequate state synchronization, centralized dependencies
+        that become single points of failure. This stage bridges the gap between
+        protocol knowledge and deployed products.
+      </p>
+      <h3 id="competence-at-the-end-of-this-stage">
+        Competence at the End of This Stage
+      </h3>
+      <p>
+        You can build a complete dApp from scratch including: wallet connection,
+        contract interaction, real-time state updates, transaction lifecycle
+        management, indexed data queries, and production deployment on real
+        infrastructure. You can reason about the centralization risks in your
+        stack and mitigate them. You can design a system that handles network
+        failures, transaction failures, and chain reorganizations gracefully.
+      </p>
+      <hr />
+      <h2 id="conceptual-map">Conceptual Map</h2>
+      <pre
+        data-role="codeBlock"
+        data-info="text"
+        class="language-text text"
+      ><code>Wallet Architecture
+├── Accounts, private keys, and seedphrases
+├── EIP-1193 Provider API
+├── WalletConnect and multi-wallet support
+└── ERC-4337 Account Abstraction
+        │
+        ▼
+Web3 Libraries and RPC
+├── ethers.js / viem
+├── wagmi + React integration
+├── JSON-RPC API surface
+└── Provider management (failover, load balancing)
+        │
+        ▼
+Contract Interaction Patterns
+├── Encoding calls and decoding results
+├── Event listening and log parsing
+├── Multicall batching
+├── Transaction lifecycle (submission → confirmation → finality)
+├── Error handling and reverts
+└── Simulation (eth_call before eth_sendTransaction)
+        │
+        ▼
+Frontend Architecture for dApps
+├── State management for blockchain state
+├── Optimistic UI updates
+├── Handling chain reorganizations
+├── Multi-chain support
+└── Gas estimation and user experience
+        │
+        ▼
+Backend + Blockchain Architecture
+├── When to use a backend
+├── Off-chain computation, on-chain settlement
+├── Signature-based authorization
+└── Relayer patterns (meta-transactions, ERC-2771)
+        │
+        ▼
+Indexing and Querying Blockchain Data
+├── Why raw RPC is insufficient
+├── The Graph Protocol (subgraphs)
+├── Custom indexers (Ponder, Envio)
+├── Event-driven architecture
+└── Historical data queries
+        │
+        ▼
+Production Infrastructure
+├── RPC provider strategy (Infura, Alchemy, self-hosted)
+├── IPFS and decentralized storage (Pinata, web3.storage, Filecoin)
+├── Smart contract deployment strategies
+├── Monitoring and alerting (on-chain and off-chain)
+└── Security hardening of the application stack
+</code></pre>
+      <hr />
+      <h2 id="topic-1-wallet-architecture-and-integration">
+        Topic 1: Wallet Architecture and Integration
+      </h2>
+      <h3 id="explanation">Explanation</h3>
+      <p><strong>What a Wallet Is</strong></p>
+      <p>
+        A crypto wallet does not store currency — it stores private keys (or the
+        seed phrase that derives them). The actual assets exist as state on the
+        blockchain; the wallet is the tool that generates, stores, and uses
+        private keys to produce valid signatures.
+      </p>
+      <ul>
+        <li>
+          <strong>EOA (Externally Owned Account)</strong>: Controlled by a
+          private key. Any transaction signed by the private key is valid.
+        </li>
+        <li>
+          <strong>Smart Contract Wallet</strong>: An ERC-4337 or Gnosis Safe
+          wallet where the account is a contract. Validation logic (multi-sig,
+          social recovery, spending limits) is programmable.
+        </li>
+      </ul>
+      <p><strong>HD Wallets and BIP-32/39/44</strong></p>
+      <p>Modern wallets use hierarchical deterministic (HD) key derivation:</p>
+      <ul>
+        <li>
+          <strong>BIP-39</strong>: A 12 or 24-word mnemonic encodes 128–256 bits
+          of entropy. Security: 2^128 to 2^256 possible seeds.
+        </li>
+        <li>
+          <strong>BIP-32</strong>: Defines a tree of key derivation from the
+          root seed using HMAC-SHA512. Any child key can be derived
+          deterministically from the parent + derivation path.
+        </li>
+        <li>
+          <strong>BIP-44</strong>: Standard derivation paths:
+          <code>m/44'/60'/0'/0/index</code> for Ethereum addresses. The path
+          encodes: purpose (44), coin type (60 = ETH), account, change, and
+          address index.
+        </li>
+      </ul>
+      <p><strong>EIP-1193: The Browser Provider Standard</strong></p>
+      <p>
+        Browser wallets (MetaMask) inject a provider object at
+        <code>window.ethereum</code> implementing EIP-1193:
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="javascript"
+        class="language-javascript javascript"
+      ><code><span class="token comment">// Request accounts</span>
+<span class="token keyword keyword-const">const</span> accounts <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> <span class="token dom variable">window</span><span class="token punctuation">.</span><span class="token property-access">ethereum</span><span class="token punctuation">.</span><span class="token method function property-access">request</span><span class="token punctuation">(</span><span class="token punctuation">{</span> <span class="token literal-property property">method</span><span class="token operator">:</span> <span class="token string">'eth_requestAccounts'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Listen for account changes</span>
+<span class="token dom variable">window</span><span class="token punctuation">.</span><span class="token property-access">ethereum</span><span class="token punctuation">.</span><span class="token method function property-access">on</span><span class="token punctuation">(</span><span class="token string">'accountsChanged'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">accounts</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token spread operator">...</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Listen for chain changes</span>
+<span class="token dom variable">window</span><span class="token punctuation">.</span><span class="token property-access">ethereum</span><span class="token punctuation">.</span><span class="token method function property-access">on</span><span class="token punctuation">(</span><span class="token string">'chainChanged'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">chainId</span><span class="token punctuation">)</span> <span class="token arrow operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token spread operator">...</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Send a transaction</span>
+<span class="token keyword keyword-const">const</span> txHash <span class="token operator">=</span> <span class="token keyword control-flow keyword-await">await</span> <span class="token dom variable">window</span><span class="token punctuation">.</span><span class="token property-access">ethereum</span><span class="token punctuation">.</span><span class="token method function property-access">request</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token literal-property property">method</span><span class="token operator">:</span> <span class="token string">'eth_sendTransaction'</span><span class="token punctuation">,</span>
+  <span class="token literal-property property">params</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span> <span class="token keyword module keyword-from">from</span><span class="token punctuation">,</span> to<span class="token punctuation">,</span> value<span class="token punctuation">,</span> data<span class="token punctuation">,</span> gas <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+      <p><strong>WalletConnect</strong></p>
+      <p>
+        WalletConnect (v2) is a protocol for connecting mobile wallets to dApps.
+        It uses a relay server for QR code pairing and encrypted message
+        passing. The relay can be self-hosted. WalletConnect enables: mobile
+        wallet connections, hardware wallet connections via bridge apps, and
+        cross-device session persistence.
+      </p>
+      <p><strong>ERC-4337: Account Abstraction</strong></p>
+      <p>
+        ERC-4337 introduces a new transaction type — UserOperations — that
+        allows smart contract wallets to be first-class accounts without
+        protocol changes:
+      </p>
+      <ol>
+        <li>
+          <code>EntryPoint</code> contract: A global singleton that validates
+          and executes UserOperations.
+        </li>
+        <li>
+          <code>UserOperation</code>: A signed intent (not a direct
+          transaction). Contains: <code>sender</code>, <code>callData</code>,
+          <code>signature</code>, <code>paymasterAndData</code>.
+        </li>
+        <li>
+          <code>Bundlers</code>: Nodes that aggregate UserOperations into a
+          single L1 transaction (like block proposers for UserOps).
+        </li>
+        <li>
+          <code>Paymasters</code>: Contracts that can sponsor gas fees for
+          users, or accept ERC-20 tokens for gas instead of ETH.
+        </li>
+      </ol>
+      <p>
+        Account abstraction enables: gasless transactions (paymaster sponsors
+        gas), session keys (temporary limited signing keys), social recovery
+        (approve transactions via multiple signers), and batch transactions.
+      </p>
+      <h3 id="why-it-matters">Why It Matters</h3>
+      <p>
+        Wallet UX is the largest bottleneck to blockchain adoption. ERC-4337
+        eliminates the requirement for users to hold ETH before they can do
+        anything, enables one-click transactions (session keys), and makes
+        recovery possible without a seed phrase. As an engineer, understanding
+        wallet architecture lets you design better onboarding (gasless, social
+        login) and avoid wallet integration bugs that lock users out.
+      </p>
+      <h3 id="real-world-context">Real-World Context</h3>
+      <ul>
+        <li>
+          MetaMask has 30M+ monthly active users. Its EIP-1193 implementation
+          has subtle bugs that require working around in production code (e.g.,
+          chain ID returned as hex string in some versions, number in others).
+        </li>
+        <li>
+          Safe (Gnosis Safe) is the dominant multi-sig wallet, holding &gt;$100B
+          in assets. It is a smart contract wallet — predecessor to ERC-4337.
+        </li>
+        <li>
+          Privy, Dynamic, and Turnkey provide embedded wallet services for apps
+          that want to abstract away wallet complexity from non-crypto-native
+          users.
+        </li>
+        <li>
+          ZeroDev, Biconomy, and Stackup are infrastructure providers for
+          ERC-4337 bundlers and paymasters.
+        </li>
+      </ul>
+      <h3 id="tools--technologies">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>MetaMask SDK</td>
+            <td>Browser extension and mobile wallet</td>
+          </tr>
+          <tr>
+            <td>WalletConnect v2</td>
+            <td>Multi-wallet connection protocol</td>
+          </tr>
+          <tr>
+            <td><code>wagmi</code></td>
+            <td>React hooks library for wallet connection</td>
+          </tr>
+          <tr>
+            <td><code>viem</code></td>
+            <td>TypeScript-native Ethereum library</td>
+          </tr>
+          <tr>
+            <td><code>permissionless.js</code></td>
+            <td>ERC-4337 (smart contract wallet) SDK</td>
+          </tr>
+          <tr>
+            <td>Safe SDK</td>
+            <td>Multi-sig wallet integration</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Derive the Ethereum address from a BIP-44 derivation path
+          <code>m/44'/60'/0'/0/0</code> starting from a known seed phrase. What
+          is each level of the path for?
+        </li>
+        <li>
+          What is the difference between <code>eth_sign</code> and
+          <code>personal_sign</code> (EIP-191)? Why is
+          <code>eth_sign</code> dangerous?
+        </li>
+        <li>
+          How does WalletConnect v2 work without requiring the dApp to know the
+          user's IP address? What does the relay server see?
+        </li>
+        <li>
+          In ERC-4337, who pays the gas fee if there is no paymaster? What
+          happens if neither the wallet nor the paymaster has ETH?
+        </li>
+        <li>
+          What is a "session key" in the context of account abstraction, and
+          what security constraints must it have to be safe?
+        </li>
+        <li>
+          How does social recovery work in a smart contract wallet? What is the
+          minimum number of guardians for this to be secure?
+        </li>
+        <li>
+          Why is losing a BIP-39 seed phrase an irreversible loss of funds? What
+          does social recovery in ERC-4337 wallets change about this?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>HD wallet generation</strong>: Using <code>ethers.js</code>,
+          generate an HD wallet from a mnemonic. Derive the first 5 addresses at
+          the standard BIP-44 path. Verify the addresses match MetaMask for the
+          same seed.
+        </li>
+        <li>
+          <strong>EIP-1193 integration</strong>: Build a minimal HTML/JS dApp
+          that: (a) detects whether MetaMask is installed, (b) requests account
+          access, (c) displays account address and ETH balance, (d) handles
+          chain switching to Sepolia testnet.
+        </li>
+        <li>
+          <strong>ERC-4337 UserOp</strong>: Using ZeroDev SDK, deploy an
+          ERC-4337 smart account on testnet. Send a gasless UserOperation (use
+          their testnet paymaster). Verify the transaction on the block
+          explorer.
+        </li>
+        <li>
+          <strong>Multi-sig setup</strong>: Deploy a Gnosis Safe on testnet with
+          2-of-3 multi-sig. Submit a transaction from one owner, confirm from a
+          second, and execute.
+        </li>
+      </ol>
+      <h3 id="mini-build-task">Mini Build Task</h3>
+      <p>
+        <strong>Build a Wallet Connection Component.</strong> A React component
+        that: supports MetaMask, WalletConnect v2, and Coinbase Wallet
+        simultaneously; handles chain switching (display an error if the user is
+        on wrong chain, offer to switch); shows connected address, ENS name
+        resolved, and ETH balance; handles disconnection and re-connection
+        gracefully; and detects and handles the case where the user changes
+        accounts or chains in MetaMask mid-session. This seemingly simple
+        component requires handling a dozen edge cases.
+      </p>
+      <hr />
+      <h2 id="topic-2-web3-libraries-and-the-json-rpc-api">
+        Topic 2: Web3 Libraries and the JSON-RPC API
+      </h2>
+      <h3 id="explanation-1">Explanation</h3>
+      <p><strong>The JSON-RPC API</strong></p>
+      <p>
+        Every Ethereum node exposes a JSON-RPC API — a stateless
+        request-response protocol over HTTP or WebSocket. Key methods:
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>eth_blockNumber</code></td>
+            <td>Latest block number</td>
+          </tr>
+          <tr>
+            <td><code>eth_getBalance(addr, block)</code></td>
+            <td>ETH balance at block</td>
+          </tr>
+          <tr>
+            <td><code>eth_call(tx, block)</code></td>
+            <td>Execute a call without creating a transaction</td>
+          </tr>
+          <tr>
+            <td><code>eth_estimateGas(tx)</code></td>
+            <td>Estimate gas for a transaction</td>
+          </tr>
+          <tr>
+            <td><code>eth_sendRawTransaction(rawTx)</code></td>
+            <td>Submit a signed transaction</td>
+          </tr>
+          <tr>
+            <td><code>eth_getTransactionReceipt(hash)</code></td>
+            <td>Get receipt (includes logs, status)</td>
+          </tr>
+          <tr>
+            <td><code>eth_getLogs(filter)</code></td>
+            <td>Get event logs matching a filter</td>
+          </tr>
+          <tr>
+            <td><code>eth_subscribe(event)</code></td>
+            <td>WebSocket subscription for new blocks/logs</td>
+          </tr>
+          <tr>
+            <td><code>debug_traceTransaction(hash)</code></td>
+            <td>Full execution trace (node-specific)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>ethers.js v6</strong></p>
+      <p>The most widely used JavaScript library for Ethereum:</p>
+      <pre
+        data-role="codeBlock"
+        data-info="typescript"
+        class="language-typescript typescript"
+      ><code><span class="token keyword keyword-import">import</span> <span class="token punctuation">{</span> ethers <span class="token punctuation">}</span> <span class="token keyword keyword-from">from</span> <span class="token string">"ethers"</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Connect to provider</span>
+<span class="token keyword keyword-const">const</span> provider <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ethers</span><span class="token punctuation">.</span><span class="token function">JsonRpcProvider</span><span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">ETH_RPC_URL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Connect wallet</span>
+<span class="token keyword keyword-const">const</span> wallet <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ethers</span><span class="token punctuation">.</span><span class="token function">Wallet</span><span class="token punctuation">(</span>privateKey<span class="token punctuation">,</span> provider<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Interact with contract</span>
+<span class="token keyword keyword-const">const</span> contract <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">ethers</span><span class="token punctuation">.</span><span class="token function">Contract</span><span class="token punctuation">(</span>address<span class="token punctuation">,</span> abi<span class="token punctuation">,</span> wallet<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-const">const</span> result <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> contract<span class="token punctuation">.</span><span class="token function">balanceOf</span><span class="token punctuation">(</span>userAddress<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Send transaction</span>
+<span class="token keyword keyword-const">const</span> tx <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> contract<span class="token punctuation">.</span><span class="token function">transfer</span><span class="token punctuation">(</span>recipient<span class="token punctuation">,</span> amount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-const">const</span> receipt <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> tx<span class="token punctuation">.</span><span class="token function">wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Wait for 1 confirmation</span>
+</code></pre>
+      <p><strong>viem</strong></p>
+      <p>
+        A newer, TypeScript-native library with a focus on type safety and
+        tree-shakability:
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="typescript"
+        class="language-typescript typescript"
+      ><code><span class="token keyword keyword-import">import</span> <span class="token punctuation">{</span> createPublicClient<span class="token punctuation">,</span> createWalletClient<span class="token punctuation">,</span> http<span class="token punctuation">,</span> parseEther <span class="token punctuation">}</span> <span class="token keyword keyword-from">from</span> <span class="token string">"viem"</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-import">import</span> <span class="token punctuation">{</span> mainnet <span class="token punctuation">}</span> <span class="token keyword keyword-from">from</span> <span class="token string">"viem/chains"</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-const">const</span> publicClient <span class="token operator">=</span> <span class="token function">createPublicClient</span><span class="token punctuation">(</span><span class="token punctuation">{</span> chain<span class="token operator">:</span> mainnet<span class="token punctuation">,</span> transport<span class="token operator">:</span> <span class="token function">http</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-const">const</span> balance <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> publicClient<span class="token punctuation">.</span><span class="token function">getBalance</span><span class="token punctuation">(</span><span class="token punctuation">{</span> address<span class="token operator">:</span> <span class="token string">"0x..."</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword keyword-const">const</span> walletClient <span class="token operator">=</span> <span class="token function">createWalletClient</span><span class="token punctuation">(</span><span class="token punctuation">{</span> chain<span class="token operator">:</span> mainnet<span class="token punctuation">,</span> transport<span class="token operator">:</span> <span class="token function">http</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-const">const</span> hash <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> walletClient<span class="token punctuation">.</span><span class="token function">sendTransaction</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  to<span class="token operator">:</span> <span class="token string">"0x..."</span><span class="token punctuation">,</span>
+  value<span class="token operator">:</span> <span class="token function">parseEther</span><span class="token punctuation">(</span><span class="token string">"1"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+      <p><strong>wagmi (React hooks)</strong></p>
+      <p>
+        wagmi wraps viem with React hooks for state management, caching, and
+        wallet connection:
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="typescript"
+        class="language-typescript typescript"
+      ><code><span class="token keyword keyword-import">import</span> <span class="token punctuation">{</span> useReadContract<span class="token punctuation">,</span> useWriteContract<span class="token punctuation">,</span> useAccount <span class="token punctuation">}</span> <span class="token keyword keyword-from">from</span> <span class="token string">'wagmi'</span>
+
+<span class="token keyword keyword-function">function</span> <span class="token function">TokenBalance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-const">const</span> <span class="token punctuation">{</span> address <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">useAccount</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword keyword-const">const</span> <span class="token punctuation">{</span> data<span class="token operator">:</span> balance <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">useReadContract</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    address<span class="token operator">:</span> <span class="token constant">TOKEN_ADDRESS</span><span class="token punctuation">,</span>
+    abi<span class="token operator">:</span> erc20Abi<span class="token punctuation">,</span>
+    functionName<span class="token operator">:</span> <span class="token string">'balanceOf'</span><span class="token punctuation">,</span>
+    args<span class="token operator">:</span> <span class="token punctuation">[</span>address<span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token keyword keyword-return">return</span> <span class="token operator">&lt;</span>div<span class="token operator">&gt;</span><span class="token punctuation">{</span>balance<span class="token operator">?.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">&gt;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+      <p><strong>Multicall</strong></p>
+      <p>
+        Batch multiple <code>eth_call</code>s into a single RPC call using the
+        Multicall3 contract (deployed at
+        <code>0xcA11bde05977b3631167028862bE2a173976CA11</code> on most EVM
+        chains):
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="typescript"
+        class="language-typescript typescript"
+      ><code><span class="token keyword keyword-const">const</span> multicall <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> publicClient<span class="token punctuation">.</span><span class="token function">multicall</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  contracts<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      address<span class="token operator">:</span> <span class="token constant">TOKEN_A</span><span class="token punctuation">,</span>
+      abi<span class="token operator">:</span> erc20Abi<span class="token punctuation">,</span>
+      functionName<span class="token operator">:</span> <span class="token string">"balanceOf"</span><span class="token punctuation">,</span>
+      args<span class="token operator">:</span> <span class="token punctuation">[</span>user<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      address<span class="token operator">:</span> <span class="token constant">TOKEN_B</span><span class="token punctuation">,</span>
+      abi<span class="token operator">:</span> erc20Abi<span class="token punctuation">,</span>
+      functionName<span class="token operator">:</span> <span class="token string">"balanceOf"</span><span class="token punctuation">,</span>
+      args<span class="token operator">:</span> <span class="token punctuation">[</span>user<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      address<span class="token operator">:</span> <span class="token constant">TOKEN_C</span><span class="token punctuation">,</span>
+      abi<span class="token operator">:</span> erc20Abi<span class="token punctuation">,</span>
+      functionName<span class="token operator">:</span> <span class="token string">"balanceOf"</span><span class="token punctuation">,</span>
+      args<span class="token operator">:</span> <span class="token punctuation">[</span>user<span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// Returns: [balanceA, balanceB, balanceC] in one RPC request</span>
+</code></pre>
+      <h3 id="why-it-matters-1">Why It Matters</h3>
+      <p>
+        Understanding the raw JSON-RPC layer lets you debug library issues,
+        build custom tooling, and reason about performance. Choosing the right
+        library (ethers vs viem) and integration pattern (wagmi vs custom hooks)
+        has significant impact on bundle size, type safety, and developer
+        experience. Multicall is essential for performant dApps — a dApp that
+        makes 50 individual RPC calls for a portfolio view will be slow and
+        rate-limited.
+      </p>
+      <h3 id="real-world-context-1">Real-World Context</h3>
+      <ul>
+        <li>
+          Infura and Alchemy impose rate limits (e.g., 300 requests/second on
+          paid plans). A dApp making individual RPC calls per user will hit
+          limits quickly — multicall reduces RPC usage by 10–50x.
+        </li>
+        <li>
+          viem is now the primary library for new Ethereum projects (replacing
+          ethers.js) due to its full TypeScript support and smaller bundle.
+        </li>
+        <li>
+          wagmi v2 powers wallet interactions for Uniswap, Coinbase, and many
+          other major dApps.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-1">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ethers.js</code> v6</td>
+            <td>Comprehensive Ethereum JS library</td>
+          </tr>
+          <tr>
+            <td><code>viem</code></td>
+            <td>Modern TypeScript-native Ethereum library</td>
+          </tr>
+          <tr>
+            <td><code>wagmi</code> v2</td>
+            <td>React hooks for Ethereum</td>
+          </tr>
+          <tr>
+            <td><code>@tanstack/react-query</code></td>
+            <td>Data fetching/caching (used by wagmi)</td>
+          </tr>
+          <tr>
+            <td>Multicall3</td>
+            <td>Batch RPC calls</td>
+          </tr>
+          <tr>
+            <td><code>eth-sdk</code></td>
+            <td>Type-safe contract bindings generation</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-1">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          What is the difference between <code>eth_call</code> and
+          <code>eth_sendTransaction</code>? Can <code>eth_call</code> mutate
+          state?
+        </li>
+        <li>
+          Why is <code>eth_estimateGas</code> not a reliable upper bound for gas
+          usage? What conditions could cause a transaction to consume more gas
+          than estimated?
+        </li>
+        <li>
+          What is the difference between polling
+          <code>eth_getTransactionReceipt</code> and using
+          <code>eth_subscribe</code> to listen for new blocks? What are the
+          trade-offs?
+        </li>
+        <li>
+          How does the Multicall3 contract work? What failure mode should you
+          handle when one of the batched calls reverts?
+        </li>
+        <li>
+          How would you implement a rate-limited, failover-capable RPC provider
+          that falls back from Alchemy to Infura to a self-hosted node?
+        </li>
+        <li>
+          Why does <code>tx.wait(1)</code> (wait for one confirmation) not give
+          you finality guarantee on Ethereum PoS? What does
+          <code>tx.wait(64)</code> not guarantee?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-1">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Raw RPC</strong>: Make all major JSON-RPC calls using raw
+          <code>curl</code>. Fetch a block, get a balance, estimate gas, and
+          submit a transaction. Parse the responses manually.
+        </li>
+        <li>
+          <strong>Multicall portfolio</strong>: Given 10 token addresses and 5
+          user addresses, fetch all 50 balances in one multicall. Measure
+          round-trip time vs. 50 individual calls.
+        </li>
+        <li>
+          <strong>Event subscription</strong>: Build a script that subscribes to
+          all ERC-20 Transfer events on a specific token contract via WebSocket.
+          Print sender, receiver, and amount in real time.
+        </li>
+        <li>
+          <strong>Provider failover</strong>: Implement a provider that tries 3
+          different RPC endpoints in order, falling back on error. Test by
+          intentionally making the first two fail.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-1">Mini Build Task</h3>
+      <p>
+        <strong>Build a DeFi Portfolio Tracker.</strong> Given a wallet address,
+        fetch (via multicall): ETH balance, ERC-20 token balances for the top 20
+        tokens, and Uniswap V3 LP positions. Display balances with USD values
+        (from CoinGecko API or an on-chain oracle). Handle: rate limits, missing
+        tokens, failed calls in multicall gracefully. Target: all data fetched
+        in &lt;2 RPC calls.
+      </p>
+      <hr />
+      <h2 id="topic-3-contract-interaction-and-transaction-lifecycle">
+        Topic 3: Contract Interaction and Transaction Lifecycle
+      </h2>
+      <h3 id="explanation-2">Explanation</h3>
+      <p><strong>Transaction Lifecycle (Full Detail)</strong></p>
+      <ol>
+        <li>
+          <strong>Construction</strong>: Assemble transaction parameters. For
+          contract calls: ABI-encode <code>(selector + args)</code> as
+          <code>data</code>.
+        </li>
+        <li>
+          <strong>Simulation</strong>: Call <code>eth_call</code> with the same
+          parameters. If it reverts, surface the error before spending gas.
+        </li>
+        <li>
+          <strong>Gas estimation</strong>: Call <code>eth_estimateGas</code>.
+          Apply a buffer (1.2–1.5x) for non-deterministic functions.
+        </li>
+        <li>
+          <strong>Fee determination</strong>: Fetch current
+          <code>baseFee</code> (from block header). Query user for
+          <code>maxPriorityFeePerGas</code> preference.
+        </li>
+        <li>
+          <strong>Signing</strong>: Sign the typed transaction (EIP-1559 Type 2)
+          with the user's private key.
+        </li>
+        <li>
+          <strong>Submission</strong>: Send to mempool via
+          <code>eth_sendRawTransaction</code>. Receive
+          <code>txHash</code> immediately.
+        </li>
+        <li>
+          <strong>Pending</strong>: Transaction is in the mempool. May be
+          accelerated (replace with higher tip, same nonce), cancelled (send
+          0-value to self with same nonce, higher tip), or stuck (insufficient
+          tip during congestion).
+        </li>
+        <li>
+          <strong>Inclusion</strong>: Transaction included in a block.
+          <code>eth_getTransactionReceipt</code> returns
+          <code>blockNumber</code>, <code>status</code> (1=success, 0=revert),
+          <code>logs</code>.
+        </li>
+        <li>
+          <strong>Finality</strong>: PoS: after 2 epochs (~13 minutes), the
+          block is finalized. Application policy determines acceptable
+          confirmation depth.
+        </li>
+        <li>
+          <strong>Reorg handling</strong>: Monitor for block reorganizations. If
+          the block containing the transaction is orphaned, the transaction may
+          need resubmission.
+        </li>
+      </ol>
+      <p><strong>Decoding Revert Reasons</strong></p>
+      <p>
+        When a transaction reverts, the receipt status is 0. The revert reason
+        is encoded in the return data:
+      </p>
+      <ul>
+        <li>
+          <code>Error(string)</code>: Standard revert — ABI-decode as
+          <code>(string)</code> after the <code>0x08c379a0</code> selector.
+        </li>
+        <li>
+          Custom errors: <code>MyCustomError(args)</code> — decode using the
+          contract ABI.
+        </li>
+        <li>OOG (out-of-gas): No return data; receipt gas used ≈ gas limit.</li>
+      </ul>
+      <p><strong>Event Decoding</strong></p>
+      <p>
+        Events are stored in transaction receipts as <code>logs</code>. Each log
+        contains:
+      </p>
+      <ul>
+        <li><code>address</code>: The contract that emitted the event.</li>
+        <li>
+          <code>topics[0]</code>: Keccak-256 of the event signature (e.g.,
+          <code>Transfer(address,address,uint256)</code>).
+        </li>
+        <li><code>topics[1..n]</code>: ABI-encoded indexed parameters.</li>
+        <li><code>data</code>: ABI-encoded non-indexed parameters.</li>
+      </ul>
+      <p><strong>Transaction Replacement and Cancellation</strong></p>
+      <p>
+        A transaction in the mempool can be replaced by sending a new
+        transaction with the same nonce but higher
+        <code>maxPriorityFeePerGas</code> (typically +10%+). Most mempools
+        enforce a minimum fee bump to replace. Cancel by sending to yourself
+        with 0 value at the same nonce.
+      </p>
+      <p><strong>The Sign-Then-Submit Pattern</strong></p>
+      <p>
+        For operations where the user should not be exposed to blockchain
+        latency in the UI interaction:
+      </p>
+      <ol>
+        <li>Prompt the user to sign a typed message (no gas cost).</li>
+        <li>
+          Backend verifies the signature and performs the on-chain action.
+        </li>
+        <li>
+          Used for: access control gates, off-chain orders (0x, OpenSea),
+          meta-transactions.
+        </li>
+      </ol>
+      <h3 id="why-it-matters-2">Why It Matters</h3>
+      <p>
+        Transaction management is where most dApp UX fails. A dApp that doesn't
+        handle stuck transactions, doesn't decode revert reasons clearly, or
+        loses track of pending transactions creates a confusing and frustrating
+        user experience. For financial applications, transaction lifecycle
+        correctness is a safety property — a missed reorg or a double-submission
+        could result in financial loss.
+      </p>
+      <h3 id="real-world-context-2">Real-World Context</h3>
+      <ul>
+        <li>
+          The 2021 NFT minting "gas wars" (e.g., Bored Ape Yacht Club) required
+          minting bots to manage transaction replacement in real-time to win the
+          block inclusion race.
+        </li>
+        <li>
+          Uniswap's frontend always simulates transactions before submitting
+          them, showing the user an error message if the swap would revert,
+          rather than wasting gas.
+        </li>
+        <li>
+          The Flashbots RPC endpoint (<code>flashbots_sendBundle</code>) allows
+          submitting bundles of transactions to specific blocks without the
+          mempool, preventing front-running.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-2">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tenderly</td>
+            <td>Transaction simulation, debugging, monitoring</td>
+          </tr>
+          <tr>
+            <td>Flashbots Protect RPC</td>
+            <td>MEV-protected transaction submission</td>
+          </tr>
+          <tr>
+            <td><code>cast send</code> (Foundry)</td>
+            <td>CLI transaction submission</td>
+          </tr>
+          <tr>
+            <td><code>ethers.js</code> transaction handling</td>
+            <td>
+              <code>tx.wait()</code>, <code>tx.replaceTransaction()</code>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-2">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          What is the exact sequence of events when a transaction "fails"
+          (reverts)? Does gas get spent? What appears on the blockchain?
+        </li>
+        <li>
+          How would you implement automatic transaction "speed-up" in your dApp?
+          What are the edge cases (transaction already mined before replacement
+          is submitted)?
+        </li>
+        <li>
+          Why can't you rely solely on
+          <code>eth_getTransactionReceipt</code> returning a result to conclude
+          that a transaction is confirmed? What else must you check?
+        </li>
+        <li>
+          What happens to a pending transaction if it becomes stuck (below base
+          fee) during a period of high congestion? Will it be included
+          eventually?
+        </li>
+        <li>
+          Explain the mechanics of a "sandwich attack" from the attacker's
+          perspective. What transactions are submitted, in what order, and why?
+        </li>
+        <li>
+          What is the "nonce gap" problem? If a user accidentally sends
+          transaction with nonce 5 to two different nodes, what happens?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-2">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Transaction replacement</strong>: Write a script that sends a
+          transaction with a low tip, detects that it's stuck (not mined within
+          30 seconds), and replaces it with a higher tip. Repeat until mined.
+        </li>
+        <li>
+          <strong>Revert decoding</strong>: Write a function that takes a
+          transaction hash of a failed transaction and decodes the full revert
+          reason (handling both <code>Error(string)</code> and custom errors).
+          Test it against known reverting transactions.
+        </li>
+        <li>
+          <strong>Event-driven indexing</strong>: Write a script that fetches
+          all <code>Transfer</code> events from USDC since block 18,000,000.
+          Decode each event and aggregate total volume.
+        </li>
+        <li>
+          <strong>Simulation before submission</strong>: Before submitting any
+          transaction to a sample contract, run <code>eth_call</code> with the
+          same parameters. If it fails, display the reason. Only proceed if
+          simulation succeeds.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-2">Mini Build Task</h3>
+      <p>
+        <strong>Build a Transaction Manager Library.</strong> A TypeScript class
+        that: submits transactions, monitors their status (polling, with
+        exponential backoff), detects stuck transactions and offers replacement,
+        handles reorgs (monitors for block reorganizations and resubmits
+        affected transactions), and decodes revert reasons. Test it under
+        adverse conditions: simulate network failures, OOG reverts, and nonce
+        conflicts.
+      </p>
+      <hr />
+      <h2 id="topic-4-blockchain-data-indexing-with-the-graph">
+        Topic 4: Blockchain Data Indexing with The Graph
+      </h2>
+      <h3 id="explanation-3">Explanation</h3>
+      <p><strong>Why Raw RPC is Insufficient</strong></p>
+      <p><code>eth_getLogs</code> with a filter works for recent data, but:</p>
+      <ul>
+        <li>
+          Ethereum limits log query ranges (~10,000 blocks or 2,000 results per
+          request).
+        </li>
+        <li>
+          No aggregation, joins, or computed fields — you get raw log bytes.
+        </li>
+        <li>No relationship tracking across events.</li>
+        <li>
+          Historical queries require iterating through potentially millions of
+          blocks.
+        </li>
+      </ul>
+      <p>
+        For a dApp displaying "all swap events for a user's address in the last
+        year," raw RPC is completely impractical.
+      </p>
+      <p><strong>The Graph Protocol</strong></p>
+      <p>
+        The Graph is a decentralized indexing protocol. Developers write
+        <strong>subgraphs</strong> — definitions of which events to capture and
+        how to store them — and Graph nodes index the data.
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="yaml"
+        class="language-yaml yaml"
+      ><code><span class="token comment"># subgraph.yaml</span>
+<span class="token key atrule">dataSources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ethereum/contract
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> UniswapV3Pool
+    <span class="token key atrule">network</span><span class="token punctuation">:</span> mainnet
+    <span class="token key atrule">source</span><span class="token punctuation">:</span>
+      <span class="token key atrule">address</span><span class="token punctuation">:</span> <span class="token string">"0x..."</span>
+      <span class="token key atrule">abi</span><span class="token punctuation">:</span> UniswapV3Pool
+      <span class="token key atrule">startBlock</span><span class="token punctuation">:</span> <span class="token number">12369621</span>
+    <span class="token key atrule">mapping</span><span class="token punctuation">:</span>
+      <span class="token key atrule">kind</span><span class="token punctuation">:</span> ethereum/events
+      <span class="token key atrule">eventHandlers</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">event</span><span class="token punctuation">:</span> Swap(indexed address<span class="token punctuation">,</span>indexed address<span class="token punctuation">,</span>int256<span class="token punctuation">,</span>int256<span class="token punctuation">,</span>uint160<span class="token punctuation">,</span>uint128<span class="token punctuation">,</span>int24)
+          <span class="token key atrule">handler</span><span class="token punctuation">:</span> handleSwap
+</code></pre>
+      <pre
+        data-role="codeBlock"
+        data-info="typescript"
+        class="language-typescript typescript"
+      ><code><span class="token comment">// mapping.ts (AssemblyScript, compiled to WASM)</span>
+<span class="token keyword keyword-export">export</span> <span class="token keyword keyword-function">function</span> <span class="token function">handleSwap</span><span class="token punctuation">(</span>event<span class="token operator">:</span> SwapEvent<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword keyword-void">void</span> <span class="token punctuation">{</span>
+  <span class="token keyword keyword-let">let</span> swap <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">Swap</span><span class="token punctuation">(</span>event<span class="token punctuation">.</span>transaction<span class="token punctuation">.</span>hash<span class="token punctuation">.</span><span class="token function">toHex</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  swap<span class="token punctuation">.</span>sender <span class="token operator">=</span> event<span class="token punctuation">.</span>params<span class="token punctuation">.</span>sender<span class="token punctuation">;</span>
+  swap<span class="token punctuation">.</span>amount0 <span class="token operator">=</span> event<span class="token punctuation">.</span>params<span class="token punctuation">.</span>amount0<span class="token punctuation">;</span>
+  swap<span class="token punctuation">.</span>timestamp <span class="token operator">=</span> event<span class="token punctuation">.</span>block<span class="token punctuation">.</span>timestamp<span class="token punctuation">;</span>
+  swap<span class="token punctuation">.</span><span class="token function">save</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+      <p>
+        Subgraphs expose a <strong>GraphQL API</strong> for querying indexed
+        data:
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="graphql"
+        class="language-graphql graphql"
+      ><code><span class="token keyword keyword-query">query</span> <span class="token punctuation">{</span>
+  <span class="token property-query">swaps</span><span class="token punctuation">(</span><span class="token attr-name">where</span><span class="token punctuation">:</span> <span class="token punctuation">{</span> <span class="token attr-name">sender</span><span class="token punctuation">:</span> <span class="token string">"0x..."</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token attr-name">orderBy</span><span class="token punctuation">:</span> <span class="token property">timestamp</span><span class="token punctuation">,</span> <span class="token attr-name">orderDirection</span><span class="token punctuation">:</span> <span class="token property">desc</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token property">id</span>
+    <span class="token property">amount0</span>
+    <span class="token property">amount1</span>
+    <span class="token property">timestamp</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+      <p><strong>Custom Indexers: Ponder and Envio</strong></p>
+      <p>
+        <strong>Ponder</strong> (Node.js) and <strong>Envio</strong> (Rust) are
+        alternatives to The Graph for self-hosted indexing:
+      </p>
+      <ul>
+        <li>
+          Written in TypeScript/JavaScript (Ponder) — familiar developer
+          experience.
+        </li>
+        <li>Faster sync times, local development with hot-reloading.</li>
+        <li>Full SQL queries on indexed data.</li>
+        <li>
+          Self-hosted — no decentralization, but no indexer centralization risk.
+        </li>
+      </ul>
+      <p><strong>When to Use What</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Approach</th>
+            <th>When</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>eth_getLogs</code></td>
+            <td>Simple, one-time queries over small block ranges</td>
+          </tr>
+          <tr>
+            <td>The Graph (Hosted)</td>
+            <td>Cross-team, external data sharing, GraphQL API</td>
+          </tr>
+          <tr>
+            <td>Ponder (self-hosted)</td>
+            <td>Custom indexing with TypeScript, internal use</td>
+          </tr>
+          <tr>
+            <td>Dune Analytics</td>
+            <td>Ad-hoc analytics with SQL, cross-protocol queries</td>
+          </tr>
+          <tr>
+            <td>Alchemy/Quicknode APIs</td>
+            <td>
+              Enhanced APIs for specific data types (NFT metadata, token
+              transfers)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="why-it-matters-3">Why It Matters</h3>
+      <p>
+        Virtually every production dApp with non-trivial data requirements uses
+        an indexer. Without indexing, leaderboards, history, analytics, and
+        aggregate views are impossible. The Graph's hosted service has
+        experienced outages that took major DeFi protocols offline —
+        understanding its architecture and failure modes helps you design
+        resilient systems with fallback indexers.
+      </p>
+      <h3 id="tools--technologies-3">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>graph-cli</code></td>
+            <td>The Graph subgraph CLI</td>
+          </tr>
+          <tr>
+            <td>Graph Studio</td>
+            <td>Hosted subgraph deployment</td>
+          </tr>
+          <tr>
+            <td><code>ponder</code></td>
+            <td>TypeScript-native Ethereum indexer</td>
+          </tr>
+          <tr>
+            <td><code>envio</code></td>
+            <td>Rust-based hypersync indexer</td>
+          </tr>
+          <tr>
+            <td>Dune Analytics</td>
+            <td>SQL-based blockchain analytics</td>
+          </tr>
+          <tr>
+            <td>Goldsky</td>
+            <td>Managed subgraph hosting with mirror sync</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-3">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Why can't you use <code>eth_getLogs</code> directly to serve a
+          production dApp's "transaction history" page? What specific limits
+          does this approach hit?
+        </li>
+        <li>
+          In The Graph's architecture, what happens if a subgraph handler throws
+          an unhandled error? What data is lost?
+        </li>
+        <li>
+          What is the "determinism requirement" for subgraph handlers? Why can't
+          a handler make HTTP calls to external APIs?
+        </li>
+        <li>
+          How does The Graph handle chain reorganizations in its indexed data?
+          What happens to entities created from orphaned blocks?
+        </li>
+        <li>
+          Compare the trust model of using The Graph's decentralized network vs.
+          hosting your own indexer. What are the security implications of each?
+        </li>
+        <li>
+          What is "time travel" querying in The Graph, and why is it important
+          for analytics dashboards?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-3">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Write a subgraph</strong>: Create a subgraph for a simple
+          ERC-20 token contract. Index Transfer events. Expose: per-address
+          total received, per-address total sent, and a global transfer history.
+        </li>
+        <li>
+          <strong>GraphQL querying</strong>: Query Uniswap V3's official
+          subgraph for: the 10 highest-volume pools in the last 24 hours, all
+          swaps by a specific address, and the price history for ETH/USDC.
+        </li>
+        <li>
+          <strong>Ponder indexer</strong>: Build a local Ponder indexer for the
+          same ERC-20 token. Compare development experience, sync speed, and
+          query flexibility vs. The Graph.
+        </li>
+        <li>
+          <strong>Reorg handling test</strong>: In your local Graph node,
+          artificially introduce a block reorg. Observe how the indexed data is
+          rolled back and re-indexed.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-3">Mini Build Task</h3>
+      <p>
+        <strong>Build a DEX Analytics Dashboard.</strong> Create a subgraph for
+        a Uniswap V2 fork (or use the official Uniswap subgraph). Display in
+        real-time: top pools by volume (24h), price charts for selected pairs,
+        and per-wallet trade history. The application must: handle loading
+        states, error states, and stale data gracefully; refetch data every 30
+        seconds; and display data within 2 seconds of page load (using caching).
+      </p>
+      <hr />
+      <h2 id="topic-5-backend-and-off-chain-architecture">
+        Topic 5: Backend and Off-Chain Architecture
+      </h2>
+      <h3 id="explanation-4">Explanation</h3>
+      <p><strong>When You Need a Backend</strong></p>
+      <p>
+        Blockchains are expensive for computation and storage. Some logic
+        belongs off-chain:
+      </p>
+      <ul>
+        <li>
+          <strong>Computation-heavy operations</strong>: Compute off-chain,
+          verify on-chain (using commitments or ZK proofs).
+        </li>
+        <li>
+          <strong>User authentication and session management</strong>: Rely on
+          EVM signature verification (Sign-In With Ethereum, EIP-4361).
+        </li>
+        <li>
+          <strong>Notification systems</strong>: Webhooks for on-chain events →
+          email/push notifications.
+        </li>
+        <li>
+          <strong>Order books</strong>: Off-chain order matching with on-chain
+          settlement (0x Protocol, Seaport).
+        </li>
+        <li>
+          <strong>Analytics and reporting</strong>: Heavy data aggregation.
+        </li>
+        <li>
+          <strong>Content delivery</strong>: Media files, metadata hosted on
+          IPFS but served via a CDN gateway.
+        </li>
+      </ul>
+      <p><strong>Sign-In With Ethereum (SIWE, EIP-4361)</strong></p>
+      <p>Authentication without a password or centralized provider:</p>
+      <ol>
+        <li>Backend sends a nonce and terms to the client.</li>
+        <li>
+          Client signs the message with their Ethereum account (EIP-191 personal
+          sign).
+        </li>
+        <li>
+          Backend verifies the signature and associates the session with the
+          Ethereum address.
+        </li>
+        <li>Session is a JWT or server-side session tied to the address.</li>
+      </ol>
+      <pre
+        data-role="codeBlock"
+        data-info="typescript"
+        class="language-typescript typescript"
+      ><code><span class="token comment">// SIWE message construction</span>
+<span class="token keyword keyword-import">import</span> <span class="token punctuation">{</span> SiweMessage <span class="token punctuation">}</span> <span class="token keyword keyword-from">from</span> <span class="token string">"siwe"</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-const">const</span> message <span class="token operator">=</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">SiweMessage</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  domain<span class="token operator">:</span> <span class="token string">"app.example.com"</span><span class="token punctuation">,</span>
+  address<span class="token operator">:</span> userAddress<span class="token punctuation">,</span>
+  statement<span class="token operator">:</span> <span class="token string">"Sign in to Example App"</span><span class="token punctuation">,</span>
+  uri<span class="token operator">:</span> <span class="token string">"https://app.example.com"</span><span class="token punctuation">,</span>
+  version<span class="token operator">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+  chainId<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+  nonce<span class="token operator">:</span> <span class="token function">generateNonce</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  issuedAt<span class="token operator">:</span> <span class="token keyword keyword-new">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toISOString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-const">const</span> prepared <span class="token operator">=</span> message<span class="token punctuation">.</span><span class="token function">prepareMessage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-const">const</span> signature <span class="token operator">=</span> <span class="token keyword keyword-await">await</span> wallet<span class="token punctuation">.</span><span class="token function">signMessage</span><span class="token punctuation">(</span>prepared<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// Backend verifies: message.verify({ signature })</span>
+</code></pre>
+      <p><strong>Meta-Transactions (ERC-2771)</strong></p>
+      <p>
+        Users sign a message off-chain; a trusted "relayer" submits the
+        transaction on-chain and pays gas. The target contract uses
+        <code>_msgSender()</code> which returns the original signer (extracted
+        from the forwarded call data) rather than the relayer's address.
+      </p>
+      <p>
+        This enables gasless UX — users never hold ETH, but still interact with
+        contracts as if they are the sender.
+      </p>
+      <p><strong>Off-Chain Order Books with On-Chain Settlement</strong></p>
+      <p>The 0x Protocol pattern:</p>
+      <ol>
+        <li>
+          Market maker signs an off-chain order (EIP-712 typed data):
+          <code>{makerToken, takerToken, makerAmount, takerAmount, expiry}</code
+          >.
+        </li>
+        <li>Order is stored in an off-chain order book (0x API).</li>
+        <li>
+          Taker submits the signed order to the exchange contract on-chain,
+          which validates the signature and executes the swap atomically.
+        </li>
+      </ol>
+      <p>
+        Benefits: No gas cost for order placement/cancellation. On-chain cost
+        only for executed trades.
+      </p>
+      <p><strong>Webhook Architecture for dApps</strong></p>
+      <p>
+        Alchemy Notify, Moralis, and The Graph can trigger webhooks when
+        specific on-chain events occur (e.g., NFT transferred to an address, a
+        large trade executed). This powers: notification systems, backend state
+        updates, fraud detection.
+      </p>
+      <h3 id="real-world-context-3">Real-World Context</h3>
+      <ul>
+        <li>
+          OpenSea uses Seaport Protocol for on-chain order execution, with an
+          off-chain order book managed by their API. Orders are signed off-chain
+          (no gas); settlement is on-chain.
+        </li>
+        <li>
+          Stripe's fiat-to-crypto onramp integrates with SIWE for proving wallet
+          ownership.
+        </li>
+        <li>
+          Gas Station Network (GSN) is an open-source relayer network
+          implementing meta-transactions.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-4">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>siwe</code> library</td>
+            <td>Sign-In With Ethereum implementation</td>
+          </tr>
+          <tr>
+            <td>ERC-2771 / OpenGSN</td>
+            <td>Meta-transaction / relayer framework</td>
+          </tr>
+          <tr>
+            <td>Alchemy Notify</td>
+            <td>On-chain event webhooks</td>
+          </tr>
+          <tr>
+            <td>0x Protocol</td>
+            <td>Off-chain orderbook, on-chain settlement</td>
+          </tr>
+          <tr>
+            <td>Seaport (OpenSea)</td>
+            <td>NFT marketplace protocol</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-4">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          In a SIWE flow, what prevents a phishing attack where a malicious
+          website presents the same nonce to the user and captures their
+          signature?
+        </li>
+        <li>
+          In ERC-2771 (meta-transactions), what prevents a malicious relayer
+          from forging the original sender's address in the forwarded call?
+        </li>
+        <li>
+          Why does off-chain order book + on-chain settlement create a better UX
+          and economic model than a fully on-chain order book?
+        </li>
+        <li>
+          What is the trust model for an app that uses webhooks from Alchemy for
+          critical operations (e.g., crediting a user's in-app balance when they
+          deposit on-chain)? What attack is possible?
+        </li>
+        <li>
+          How would you design a system that provides notifications within 1
+          second of an on-chain event while remaining trustless?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-4">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>SIWE authentication</strong>: Build a Next.js app with SIWE
+          authentication. Users log in with MetaMask. The backend issues a JWT
+          tied to their Ethereum address. Restrict certain API routes to
+          authenticated addresses.
+        </li>
+        <li>
+          <strong>Meta-transaction</strong>: Deploy an ERC-2771-compatible
+          ERC-20 token. Deploy a forwarder contract. Build a relayer service
+          that accepts signed meta-transactions and submits them. Allow a user
+          with no ETH to transfer tokens.
+        </li>
+        <li>
+          <strong>Webhook integration</strong>: Set up an Alchemy webhook that
+          triggers when any address sends ETH to a specified vault address. Log
+          each deposit to a database within 2 seconds.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-4">Mini Build Task</h3>
+      <p>
+        <strong>Build a Gasless NFT Minting dApp.</strong> Users sign a minting
+        request off-chain. Your relayer service (a simple Express.js server)
+        validates the request, checks eligibility (from a Merkle allowlist), and
+        submits the mint transaction, paying gas. The NFT contract uses ERC-2771
+        to record the user as the minter, not the relayer. Deploy on Sepolia
+        testnet.
+      </p>
+      <hr />
+      <h2 id="topic-6-production-deployment-and-infrastructure">
+        Topic 6: Production Deployment and Infrastructure
+      </h2>
+      <h3 id="explanation-5">Explanation</h3>
+      <p><strong>RPC Provider Strategy</strong></p>
+      <p>Never rely on a single RPC endpoint:</p>
+      <ul>
+        <li>
+          <strong>Single provider failure</strong>: Alchemy, Infura, and
+          QuickNode have had outages. A resilient dApp must fall back
+          gracefully.
+        </li>
+        <li>
+          <strong>Rate limiting</strong>: High-traffic dApps regularly hit rate
+          limits.
+        </li>
+        <li>
+          <strong>Geographic latency</strong>: Serve users from the nearest
+          provider endpoint.
+        </li>
+      </ul>
+      <p>
+        Pattern: <strong>Primary provider</strong> (Alchemy/QuickNode) →
+        <strong>Fallback provider</strong> (Infura) →
+        <strong>Self-hosted node</strong> (Geth/Erigon, for critical
+        operations).
+      </p>
+      <p><strong>IPFS and Decentralized Storage</strong></p>
+      <ul>
+        <li>
+          <strong>Pinata</strong>: Managed IPFS pinning service. Upload files,
+          get IPFS CIDs, serve via their gateway.
+        </li>
+        <li>
+          <strong>web3.storage</strong> (now Storacha): Filecoin-backed storage
+          with IPFS CIDs.
+        </li>
+        <li>
+          <strong>Self-hosted IPFS</strong>: Full control, but requires
+          operational overhead.
+        </li>
+        <li>
+          <strong>Filecoin</strong>: Blockchain-based storage with cryptographic
+          proofs of storage (PoSt, PoRep). Decentralized but complex for direct
+          use.
+        </li>
+      </ul>
+      <p>
+        For NFT metadata: Pin to multiple services. Never use a centralized URL
+        as the <code>tokenURI</code>.
+      </p>
+      <p><strong>Smart Contract Deployment Strategy</strong></p>
+      <ol>
+        <li>
+          <strong>Local development</strong>: Foundry Anvil or Hardhat Network —
+          instant, no cost.
+        </li>
+        <li>
+          <strong>Testnet</strong>: Sepolia (Ethereum), Amoy (Polygon), Arbitrum
+          Sepolia. Test full deployment flow.
+        </li>
+        <li>
+          <strong>Mainnet</strong>: Use a deployment script (Foundry
+          <code>forge script</code> or <code>hardhat-deploy</code>). Verify
+          contracts on Etherscan immediately after deployment.
+        </li>
+        <li>
+          <strong>Contract verification</strong>: Post ABI and source to
+          Etherscan/Blockscout for public auditability.
+        </li>
+        <li>
+          <strong>Multi-sig ownership</strong>: Transfer contract ownership to a
+          Gnosis Safe immediately after deployment. Remove single private key
+          control.
+        </li>
+      </ol>
+      <p><strong>Monitoring and Alerting</strong></p>
+      <p>Essential monitoring for production dApps:</p>
+      <ul>
+        <li>
+          <strong>Transaction monitoring</strong>: Detect failed transactions,
+          gas spikes, unusual activity.
+        </li>
+        <li>
+          <strong>Oracle deviation alerts</strong>: Alert if a price feed
+          deviates by &gt;5% in one block.
+        </li>
+        <li>
+          <strong>TVL/balance monitoring</strong>: Alert if a vault's balance
+          changes dramatically.
+        </li>
+        <li>
+          <strong>Event monitoring</strong>: Custom alerts for specific emitted
+          events (governance proposals, large transfers).
+        </li>
+      </ul>
+      <p>
+        Tools: Forta Network (decentralized bot monitoring), OpenZeppelin
+        Defender, Tenderly Alerts, custom CloudWatch/Grafana dashboards.
+      </p>
+      <p><strong>Security Hardening of the App Stack</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>Threat</th>
+            <th>Mitigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Frontend</td>
+            <td>Malicious code injection (supply chain)</td>
+            <td>Content Security Policy, Subresource Integrity</td>
+          </tr>
+          <tr>
+            <td>DNS</td>
+            <td>DNS hijacking</td>
+            <td>DNSSEC, IPFS hosting (ENS)</td>
+          </tr>
+          <tr>
+            <td>RPC</td>
+            <td>Man-in-the-middle</td>
+            <td>
+              HTTPS only, never trust unsigned RPC responses for critical
+              operations
+            </td>
+          </tr>
+          <tr>
+            <td>Backend</td>
+            <td>
+              SSRF (reading blockchain or calling contracts through backend)
+            </td>
+            <td>Validate all inputs, use allowlists</td>
+          </tr>
+          <tr>
+            <td>Smart contract</td>
+            <td>Already deployed bugs</td>
+            <td>
+              Immutable contracts + bug bounty; upgradeable contracts +
+              monitoring + pause
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>IPFS Frontend Hosting</strong></p>
+      <p>
+        For maximum censorship resistance, host the frontend on IPFS and serve
+        via ENS:
+      </p>
+      <ol>
+        <li>Build frontend to static files.</li>
+        <li>Upload to IPFS (get CID).</li>
+        <li>Update ENS <code>contenthash</code> to the CID.</li>
+        <li>
+          Users with ENS-aware browsers can access
+          <code>app.uniswap.eth</code> pointing to your IPFS-hosted frontend.
+        </li>
+      </ol>
+      <h3 id="why-it-matters-4">Why It Matters</h3>
+      <p>
+        Production failures in dApps typically aren't smart contract bugs —
+        they're infrastructure failures: RPC downtime, IPFS gateway failures,
+        event handling bugs, insufficient monitoring. The 2017 CryptoKitties
+        launch exposed Ethereum's scalability limits. The 2022 Wintermute hack
+        started with a vulnerable vanity address generator — a tooling security
+        issue. Complex systems fail at the boundaries. This stage teaches you to
+        design and monitor those boundaries.
+      </p>
+      <h3 id="real-world-context-4">Real-World Context</h3>
+      <ul>
+        <li>
+          OpenZeppelin Defender monitors large DeFi protocols including Compound
+          and Aave. It detected and automatically paused a compromised protocol
+          in 2023.
+        </li>
+        <li>
+          Uniswap's frontend is deployed to both Vercel (centralized) and
+          IPFS/ENS (decentralized). Users can access both.
+        </li>
+        <li>
+          Forta Network has deployed 700+ detection bots that monitor for
+          unusual on-chain activity in real-time.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-5">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>OpenZeppelin Defender</td>
+            <td>Smart contract monitoring, automation</td>
+          </tr>
+          <tr>
+            <td>Tenderly</td>
+            <td>Transaction simulation, alerting, observability</td>
+          </tr>
+          <tr>
+            <td>Forta Network</td>
+            <td>Decentralized threat detection</td>
+          </tr>
+          <tr>
+            <td>Pinata</td>
+            <td>IPFS pinning service</td>
+          </tr>
+          <tr>
+            <td>Foundry <code>forge script</code></td>
+            <td>Deployment scripting</td>
+          </tr>
+          <tr>
+            <td>Blockscout</td>
+            <td>Open-source block explorer (self-hostable)</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-5">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          What is the difference between deploying a smart contract with a
+          private key (EOA) vs. through a Gnosis Safe? Why should all production
+          contracts be owned by a multi-sig?
+        </li>
+        <li>
+          If your dApp's frontend is hijacked (DNS attack swapping the
+          legitimate site with a malicious one), what on-chain harm can
+          attackers cause? What can they NOT cause?
+        </li>
+        <li>
+          How does the <code>contenthash</code> ENS record work for IPFS-hosted
+          frontends? What are the trust assumptions?
+        </li>
+        <li>
+          Design a monitoring system that detects: (a) an unusual spike in
+          liquidations at a lending protocol, (b) a price oracle deviation of
+          &gt;10%, and (c) a large unauthorized withdrawal from a treasury. What
+          data sources and tooling would you use?
+        </li>
+        <li>
+          What is Subresource Integrity (SRI) and how does it protect against
+          supply chain attacks on dApp frontends?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-5">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Multi-provider setup</strong>: Configure a viem transport with
+          3 RPC endpoints using fallback logic. Simulate the primary going
+          offline and verify fallback activates.
+        </li>
+        <li>
+          <strong>Deployment script</strong>: Write a Foundry
+          <code>forge script</code> that: deploys a contract, verifies it on
+          Etherscan, and transfers ownership to a specified Gnosis Safe.
+        </li>
+        <li>
+          <strong>IPFS upload</strong>: Build, upload a React dApp to IPFS via
+          Pinata, and verify the CID is accessible via multiple public gateways.
+        </li>
+        <li>
+          <strong>Monitoring bot</strong>: Write a Forta bot that alerts when a
+          specific ERC-20 token has a single transfer &gt; $1M equivalent.
+          Deploy to Forta testnet.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-5">Mini Build Task</h3>
+      <p>
+        <strong>Deploy a Production-Ready dApp.</strong> Take your AMM from
+        Stage 4 or your lending protocol from Stage 3. Build a full production
+        deployment: (a) deploy contracts to Sepolia with Foundry scripts; (b)
+        verify on Etherscan; (c) transfer ownership to a testnet Gnosis Safe;
+        (d) build a React frontend with wagmi; (e) deploy frontend to IPFS; (f)
+        set up Tenderly monitoring for 3 critical events; (g) write a
+        post-deployment runbook (how to pause, upgrade, and monitor the system).
+      </p>
+      <hr />
+      <h2 id="mini-projects">Mini Projects</h2>
+      <h3 id="project-1-full-stack-nft-mint-site">
+        Project 1: Full-Stack NFT Mint Site
+      </h3>
+      <p>
+        End-to-end: ERC-721 contract with Merkle-proof allowlist minting,
+        metadata on IPFS, a React frontend with wagmi wallet connection, reveal
+        mechanism (pre-reveal placeholder → post-reveal real metadata via
+        Chainlink VRF), and Etherscan-verified deployment on testnet.
+      </p>
+      <h3 id="project-2-on-chain-governance-dashboard">
+        Project 2: On-Chain Governance Dashboard
+      </h3>
+      <p>
+        Frontend for a DAO governor contract: display all active proposals (via
+        subgraph), show vote counts, allow token holders to cast votes, and show
+        the timelock queue. Handle: wallet connection, token delegation, and
+        proposal execution transactions.
+      </p>
+      <h3 id="project-3-cross-chain-bridge-monitor">
+        Project 3: Cross-Chain Bridge Monitor
+      </h3>
+      <p>
+        Build a monitoring tool that tracks the state of assets bridged between
+        Ethereum mainnet and an OP Stack L2. Show: pending deposits (not yet
+        relayed), completed withdrawals, and the 7-day challenge window status
+        for optimistic rollup withdrawals.
+      </p>
+      <hr />
+      <h2 id="capstone-project-full-stack-defi-application--dex-with-analytics">
+        Capstone Project: Full-Stack DeFi Application — DEX with Analytics
+      </h2>
+      <p>
+        Build a complete, production-grade DEX (decentralized exchange) frontend
+        and backend for your AMM from Stage 4:
+      </p>
+      <ol>
+        <li>
+          <strong>Frontend</strong>: React/Next.js with wagmi. Swap interface
+          with: token selection, price impact display (calculated from contract
+          state), slippage tolerance setting, real-time price updates (via event
+          subscription), and transaction status tracking.
+        </li>
+        <li>
+          <strong>Subgraph</strong>: Index all swap and liquidity events. Expose
+          GraphQL API for: pool statistics, price history, per-user trade
+          history.
+        </li>
+        <li>
+          <strong>Analytics</strong>: Display candlestick chart for the token
+          pair (from indexed swap events), TVL over time, volume bars (24h
+          buckets).
+        </li>
+        <li>
+          <strong>Backend</strong>: Node.js server: SIWE authentication, user
+          trade history, email notifications for large trades
+          (webhook-triggered).
+        </li>
+        <li>
+          <strong>Infrastructure</strong>: Deploy contracts on Sepolia (Foundry
+          script, Etherscan-verified). Host frontend on Vercel + IPFS. Self-host
+          a Graph node with your subgraph.
+        </li>
+        <li>
+          <strong>Monitoring</strong>: Tenderly alerts for OOG transaction
+          spikes and anomalous trade sizes.
+        </li>
+      </ol>
+      <hr />
+      <h2 id="common-mistakes--misconceptions">
+        Common Mistakes &amp; Misconceptions
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Mistake</th>
+            <th>Reality</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>"The RPC will always respond"</td>
+            <td>
+              Build retry and failover logic. Treat RPC endpoints as unreliable
+              service dependencies.
+            </td>
+          </tr>
+          <tr>
+            <td>"Gas estimation is exact"</td>
+            <td>
+              It's a simulation result. Add a buffer. Gas usage can differ at
+              execution time due to state changes between estimate and
+              inclusion.
+            </td>
+          </tr>
+          <tr>
+            <td>"Transaction confirmed = transaction final"</td>
+            <td>
+              Confirmed ≠ finalized. On PoS Ethereum, PoS finality takes ~13
+              minutes. For high-value transactions, wait for finality or PoS
+              justification.
+            </td>
+          </tr>
+          <tr>
+            <td>"The Graph never lies"</td>
+            <td>
+              Subgraphs can lag, miss events, or have handler bugs. Always
+              validate critical on-chain data via direct RPC as a secondary
+              check.
+            </td>
+          </tr>
+          <tr>
+            <td>"IPFS is permanent"</td>
+            <td>
+              IPFS data persists only as long as someone pins it. Without
+              multiple pinners, content can disappear.
+            </td>
+          </tr>
+          <tr>
+            <td>"ENS resolves for all users"</td>
+            <td>
+              ENS resolution requires a compatible browser or dApp. Most users
+              access dApps via <code>app.example.com</code> DNS, not ENS.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+      <h2 id="security-considerations">Security Considerations</h2>
+      <ul>
+        <li>
+          <strong
+            >Never store private keys in environment variables in
+            production.</strong
+          >
+          Use hardware security modules (HSMs), AWS KMS, or Vault for key
+          management.
+        </li>
+        <li>
+          <strong>Validate all on-chain data before trusting it.</strong> RPC
+          providers can serve stale or incorrect data. For financial decisions,
+          verify against multiple sources.
+        </li>
+        <li>
+          <strong>Frontend supply chain attacks are real.</strong> Compromised
+          npm packages have injected address-replacing code in DeFi frontends.
+          Use Subresource Integrity, pin dependency versions, and audit
+          packages.
+        </li>
+        <li>
+          <strong>Unsigned API responses are malleable.</strong> An attacker
+          between your dApp and your backend can modify API responses. Sign
+          critical data with a known key or derive it directly from on-chain
+          state.
+        </li>
+      </ul>
+      <hr />
+      <h2 id="readings--resources">Readings &amp; Resources</h2>
+      <p><strong>Documentation</strong></p>
+      <ul>
+        <li>wagmi v2 documentation: <a href="http://wagmi.sh">wagmi.sh</a></li>
+        <li>viem documentation: <a href="http://viem.sh">viem.sh</a></li>
+        <li>
+          The Graph documentation:
+          <a href="http://thegraph.com/docs">thegraph.com/docs</a>
+        </li>
+        <li>
+          EIP-4361 (SIWE):
+          <a href="http://eips.ethereum.org/EIPS/eip-4361"
+            >eips.ethereum.org/EIPS/eip-4361</a
+          >
+        </li>
+        <li>
+          ERC-4337 specification:
+          <a href="http://eips.ethereum.org/EIPS/eip-4337"
+            >eips.ethereum.org/EIPS/eip-4337</a
+          >
+        </li>
+        <li>
+          Foundry book (forge script):
+          <a href="http://book.getfoundry.sh/forge/deploying"
+            >book.getfoundry.sh/forge/deploying</a
+          >
+        </li>
+      </ul>
+      <p><strong>Technical Blogs</strong></p>
+      <ul>
+        <li>Rainbow wallet engineering blog (wallet UX patterns)</li>
+        <li>OpenZeppelin blog (production deployment practices)</li>
+        <li>Alchemy blog (RPC and node performance)</li>
+        <li>Paradigm engineering blog (dApp architecture)</li>
+      </ul>
+      <p><strong>Tools Reference</strong></p>
+      <ul>
+        <li><code>evm.codes</code> — Opcode gas costs</li>
+        <li><code>ethernodes.org</code> — Node client diversity</li>
+        <li><code>l2beat.com</code> — L2 security analysis</li>
+        <li><code>defillama.com</code> — TVL and protocol analytics</li>
+      </ul>
+      <hr />
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 14px 0;
+          margin-top: 48px;
+        "
+      >
+        <a
+          href="./04_Ecosystem_Scaling_and_Crypto_Economics.html"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #8b949e;
+            font-size: 0.875rem;
+            padding: 6px 10px;
+            border-radius: 6px;
+          "
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M9.78 12.78a.75.75 0 0 1-1.06 0L4.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 1.06L6.06 8l3.72 3.72a.75.75 0 0 1 0 1.06z"
+            ></path>
+          </svg>
+          <span style="display: flex; flex-direction: column; line-height: 1.3">
+            <span
+              style="
+                font-size: 0.7rem;
+                opacity: 0.55;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+              "
+              >Previous</span
+            >
+            <span style="font-weight: 500">04 · Ecosystem &amp; Scaling</span>
+          </span>
+        </a>
+        <span
+          style="
+            font-size: 0.7rem;
+            color: #8b949e;
+            opacity: 0.5;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+          "
+          >Stage 5 of 6 · Full-Stack dApp</span
+        >
+        <a
+          href="./06_Advanced_Protocol_Engineering.html"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #8b949e;
+            font-size: 0.875rem;
+            padding: 6px 10px;
+            border-radius: 6px;
+          "
+        >
+          <span
+            style="
+              display: flex;
+              flex-direction: column;
+              line-height: 1.3;
+              text-align: right;
+            "
+          >
+            <span
+              style="
+                font-size: 0.7rem;
+                opacity: 0.55;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+              "
+              >Next</span
+            >
+            <span style="font-weight: 500">06 · Advanced Protocol</span>
+          </span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06z"
+            ></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

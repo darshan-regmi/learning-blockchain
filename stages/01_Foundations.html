@@ -1,0 +1,2411 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Learn Blockchain | Foundations</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous" />
+
+    <style>
+      code[class*="language-"],
+      pre[class*="language-"] {
+        color: #333;
+        background: 0 0;
+        font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        line-height: 1.4;
+        -moz-tab-size: 8;
+        -o-tab-size: 8;
+        tab-size: 8;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+      pre[class*="language-"] {
+        padding: 0.8em;
+        overflow: auto;
+        border-radius: 3px;
+        background: #f5f5f5;
+      }
+      :not(pre) > code[class*="language-"] {
+        padding: 0.1em;
+        border-radius: 0.3em;
+        white-space: normal;
+        background: #f5f5f5;
+      }
+      .token.blockquote,
+      .token.comment {
+        color: #969896;
+      }
+      .token.cdata {
+        color: #183691;
+      }
+      .token.doctype,
+      .token.macro.property,
+      .token.punctuation,
+      .token.variable {
+        color: #333;
+      }
+      .token.builtin,
+      .token.important,
+      .token.keyword,
+      .token.operator,
+      .token.rule {
+        color: #a71d5d;
+      }
+      .token.attr-value,
+      .token.regex,
+      .token.string,
+      .token.url {
+        color: #183691;
+      }
+      .token.atrule,
+      .token.boolean,
+      .token.code,
+      .token.command,
+      .token.constant,
+      .token.entity,
+      .token.number,
+      .token.property,
+      .token.symbol {
+        color: #0086b3;
+      }
+      .token.prolog,
+      .token.selector,
+      .token.tag {
+        color: #63a35c;
+      }
+      .token.attr-name,
+      .token.class,
+      .token.class-name,
+      .token.function,
+      .token.id,
+      .token.namespace,
+      .token.pseudo-class,
+      .token.pseudo-element,
+      .token.url-reference .token.variable {
+        color: #795da3;
+      }
+      .token.entity {
+        cursor: help;
+      }
+      .token.title,
+      .token.title .token.punctuation {
+        font-weight: 700;
+        color: #1d3e81;
+      }
+      .token.list {
+        color: #ed6a43;
+      }
+      .token.inserted {
+        background-color: #eaffea;
+        color: #55a532;
+      }
+      .token.deleted {
+        background-color: #ffecec;
+        color: #bd2c00;
+      }
+      .token.bold {
+        font-weight: 700;
+      }
+      .token.italic {
+        font-style: italic;
+      }
+      .language-json .token.property {
+        color: #183691;
+      }
+      .language-markup .token.tag .token.punctuation {
+        color: #333;
+      }
+      .language-css .token.function,
+      code.language-css {
+        color: #0086b3;
+      }
+      .language-yaml .token.atrule {
+        color: #63a35c;
+      }
+      code.language-yaml {
+        color: #183691;
+      }
+      .language-ruby .token.function {
+        color: #333;
+      }
+      .language-markdown .token.url {
+        color: #795da3;
+      }
+      .language-makefile .token.symbol {
+        color: #795da3;
+      }
+      .language-makefile .token.variable {
+        color: #183691;
+      }
+      .language-makefile .token.builtin {
+        color: #0086b3;
+      }
+      .language-bash .token.keyword {
+        color: #0086b3;
+      }
+      pre[data-line] {
+        position: relative;
+        padding: 1em 0 1em 3em;
+      }
+      pre[data-line] .line-highlight-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: transparent;
+        display: block;
+        width: 100%;
+      }
+      pre[data-line] .line-highlight {
+        position: absolute;
+        left: 0;
+        right: 0;
+        padding: inherit 0;
+        margin-top: 1em;
+        background: hsla(24, 20%, 50%, 0.08);
+        background: linear-gradient(
+          to right,
+          hsla(24, 20%, 50%, 0.1) 70%,
+          hsla(24, 20%, 50%, 0)
+        );
+        pointer-events: none;
+        line-height: inherit;
+        white-space: pre;
+      }
+      pre[data-line] .line-highlight:before,
+      pre[data-line] .line-highlight[data-end]:after {
+        content: attr(data-start);
+        position: absolute;
+        top: 0.4em;
+        left: 0.6em;
+        min-width: 1em;
+        padding: 0 0.5em;
+        background-color: hsla(24, 20%, 50%, 0.4);
+        color: #f4f1ef;
+        font: bold 65%/1.5 sans-serif;
+        text-align: center;
+        vertical-align: 0.3em;
+        border-radius: 999px;
+        text-shadow: none;
+        box-shadow: 0 1px #fff;
+      }
+      pre[data-line] .line-highlight[data-end]:after {
+        content: attr(data-end);
+        top: auto;
+        bottom: 0.4em;
+      }
+      html body {
+        font-family:
+          "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+        background-color: #fff;
+        overflow: initial;
+        box-sizing: border-box;
+        word-wrap: break-word;
+      }
+      html body > :first-child {
+        margin-top: 0;
+      }
+      html body h1,
+      html body h2,
+      html body h3,
+      html body h4,
+      html body h5,
+      html body h6 {
+        line-height: 1.2;
+        margin-top: 1em;
+        margin-bottom: 16px;
+        color: #000;
+      }
+      html body h1 {
+        font-size: 2.25em;
+        font-weight: 300;
+        padding-bottom: 0.3em;
+      }
+      html body h2 {
+        font-size: 1.75em;
+        font-weight: 400;
+        padding-bottom: 0.3em;
+      }
+      html body h3 {
+        font-size: 1.5em;
+        font-weight: 500;
+      }
+      html body h4 {
+        font-size: 1.25em;
+        font-weight: 600;
+      }
+      html body h5 {
+        font-size: 1.1em;
+        font-weight: 600;
+      }
+      html body h6 {
+        font-size: 1em;
+        font-weight: 600;
+      }
+      html body h1,
+      html body h2,
+      html body h3,
+      html body h4,
+      html body h5 {
+        font-weight: 600;
+      }
+      html body h5 {
+        font-size: 1em;
+      }
+      html body h6 {
+        color: #5c5c5c;
+      }
+      html body strong {
+        color: #000;
+      }
+      html body del {
+        color: #5c5c5c;
+      }
+      html body a:not([href]) {
+        color: inherit;
+        text-decoration: none;
+      }
+      html body a {
+        color: #08c;
+        text-decoration: none;
+      }
+      html body a:hover {
+        color: #00a3f5;
+        text-decoration: none;
+      }
+      html body img {
+        max-width: 100%;
+      }
+      html body > p {
+        margin-top: 0;
+        margin-bottom: 16px;
+        word-wrap: break-word;
+      }
+      html body > ol,
+      html body > ul {
+        margin-bottom: 16px;
+      }
+      html body ol,
+      html body ul {
+        padding-left: 2em;
+      }
+      html body ol.no-list,
+      html body ul.no-list {
+        padding: 0;
+        list-style-type: none;
+      }
+      html body ol ol,
+      html body ol ul,
+      html body ul ol,
+      html body ul ul {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      html body li {
+        margin-bottom: 0;
+      }
+      html body li.task-list-item {
+        list-style: none;
+      }
+      html body li > p {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      html body .task-list-item-checkbox {
+        margin: 0 0.2em 0.25em -1.8em;
+        vertical-align: middle;
+      }
+      html body .task-list-item-checkbox:hover {
+        cursor: pointer;
+      }
+      html body blockquote {
+        margin: 16px 0;
+        font-size: inherit;
+        padding: 0 15px;
+        color: #5c5c5c;
+        background-color: #f0f0f0;
+        border-left: 4px solid #d6d6d6;
+      }
+      html body blockquote > :first-child {
+        margin-top: 0;
+      }
+      html body blockquote > :last-child {
+        margin-bottom: 0;
+      }
+      html body hr {
+        height: 4px;
+        margin: 32px 0;
+        background-color: #d6d6d6;
+        border: 0 none;
+      }
+      html body table {
+        margin: 10px 0 15px 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        width: 100%;
+        overflow: auto;
+        word-break: normal;
+        word-break: keep-all;
+      }
+      html body table th {
+        font-weight: 700;
+        color: #000;
+      }
+      html body table td,
+      html body table th {
+        border: 1px solid #d6d6d6;
+        padding: 6px 13px;
+      }
+      html body dl {
+        padding: 0;
+      }
+      html body dl dt {
+        padding: 0;
+        margin-top: 16px;
+        font-size: 1em;
+        font-style: italic;
+        font-weight: 700;
+      }
+      html body dl dd {
+        padding: 0 16px;
+        margin-bottom: 16px;
+      }
+      html body code {
+        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        font-size: 0.85em;
+        color: #000;
+        background-color: #f0f0f0;
+        border-radius: 3px;
+        padding: 0.2em 0;
+      }
+      html body code::after,
+      html body code::before {
+        letter-spacing: -0.2em;
+        content: "\00a0";
+      }
+      html body pre > code {
+        padding: 0;
+        margin: 0;
+        word-break: normal;
+        white-space: pre;
+        background: 0 0;
+        border: 0;
+      }
+      html body .highlight {
+        margin-bottom: 16px;
+      }
+      html body .highlight pre,
+      html body pre {
+        padding: 1em;
+        overflow: auto;
+        line-height: 1.45;
+        border: #d6d6d6;
+        border-radius: 3px;
+      }
+      html body .highlight pre {
+        margin-bottom: 0;
+        word-break: normal;
+      }
+      html body pre code,
+      html body pre tt {
+        display: inline;
+        max-width: initial;
+        padding: 0;
+        margin: 0;
+        overflow: initial;
+        line-height: inherit;
+        word-wrap: normal;
+        background-color: transparent;
+        border: 0;
+      }
+      html body pre code:after,
+      html body pre code:before,
+      html body pre tt:after,
+      html body pre tt:before {
+        content: normal;
+      }
+      html body blockquote,
+      html body dl,
+      html body ol,
+      html body p,
+      html body pre,
+      html body ul {
+        margin-top: 0;
+        margin-bottom: 16px;
+      }
+      html body kbd {
+        color: #000;
+        border: 1px solid #d6d6d6;
+        border-bottom: 2px solid #c7c7c7;
+        padding: 2px 4px;
+        background-color: #f0f0f0;
+        border-radius: 3px;
+      }
+      @media print {
+        html body {
+          background-color: #fff;
+        }
+        html body h1,
+        html body h2,
+        html body h3,
+        html body h4,
+        html body h5,
+        html body h6 {
+          color: #000;
+          page-break-after: avoid;
+        }
+        html body blockquote {
+          color: #5c5c5c;
+        }
+        html body pre {
+          page-break-inside: avoid;
+        }
+        html body table {
+          display: table;
+        }
+        html body img {
+          display: block;
+          max-width: 100%;
+          max-height: 100%;
+        }
+        html body code,
+        html body pre {
+          word-wrap: break-word;
+          white-space: pre;
+        }
+      }
+      .markdown-preview {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      .markdown-preview ul {
+        list-style: disc;
+      }
+      .markdown-preview ul ul {
+        list-style: circle;
+      }
+      .markdown-preview ul ul ul {
+        list-style: square;
+      }
+      .markdown-preview ol {
+        list-style: decimal;
+      }
+      .markdown-preview ol ol,
+      .markdown-preview ul ol {
+        list-style-type: lower-roman;
+      }
+      .markdown-preview ol ol ol,
+      .markdown-preview ol ul ol,
+      .markdown-preview ul ol ol,
+      .markdown-preview ul ul ol {
+        list-style-type: lower-alpha;
+      }
+      .markdown-preview .newpage,
+      .markdown-preview .pagebreak {
+        page-break-before: always;
+      }
+      .markdown-preview pre.line-numbers {
+        position: relative;
+        padding-left: 3.8em;
+        counter-reset: linenumber;
+      }
+      .markdown-preview pre.line-numbers > code {
+        position: relative;
+      }
+      .markdown-preview pre.line-numbers .line-numbers-rows {
+        position: absolute;
+        pointer-events: none;
+        top: 1em;
+        font-size: 100%;
+        left: 0;
+        width: 3em;
+        letter-spacing: -1px;
+        border-right: 1px solid #999;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .markdown-preview pre.line-numbers .line-numbers-rows > span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+      }
+      .markdown-preview pre.line-numbers .line-numbers-rows > span:before {
+        content: counter(linenumber);
+        color: #999;
+        display: block;
+        padding-right: 0.8em;
+        text-align: right;
+      }
+      .markdown-preview .mathjax-exps .MathJax_Display {
+        text-align: center !important;
+      }
+      .markdown-preview:not([data-for="preview"])
+        .code-chunk
+        .code-chunk-btn-group {
+        display: none;
+      }
+      .markdown-preview:not([data-for="preview"]) .code-chunk .status {
+        display: none;
+      }
+      .markdown-preview:not([data-for="preview"]) .code-chunk .output-div {
+        margin-bottom: 16px;
+      }
+      .markdown-preview .md-toc {
+        padding: 0;
+      }
+      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link {
+        display: inline;
+        padding: 0.25rem 0;
+      }
+      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,
+      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p {
+        display: inline;
+      }
+      .markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link {
+        font-weight: 800;
+      }
+      .scrollbar-style::-webkit-scrollbar {
+        width: 8px;
+      }
+      .scrollbar-style::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: transparent;
+      }
+      .scrollbar-style::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgba(150, 150, 150, 0.66);
+        border: 4px solid rgba(150, 150, 150, 0.66);
+        background-clip: content-box;
+      }
+      html body[for="html-export"]:not([data-presentation-mode]) {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode])
+        .markdown-preview {
+        position: relative;
+        top: 0;
+        min-height: 100vh;
+      }
+      @media screen and (min-width: 914px) {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          .markdown-preview {
+          padding: 2em calc(50% - 457px + 2em);
+        }
+      }
+      @media screen and (max-width: 914px) {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          .markdown-preview {
+          padding: 2em;
+        }
+      }
+      @media screen and (max-width: 450px) {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          .markdown-preview {
+          font-size: 14px !important;
+          padding: 1em;
+        }
+      }
+      @media print {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          #sidebar-toc-btn {
+          display: none;
+        }
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode])
+        #sidebar-toc-btn {
+        position: fixed;
+        bottom: 8px;
+        left: 8px;
+        font-size: 28px;
+        cursor: pointer;
+        color: inherit;
+        z-index: 99;
+        width: 32px;
+        text-align: center;
+        opacity: 0.4;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        #sidebar-toc-btn {
+        opacity: 1;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 300px;
+        height: 100%;
+        padding: 32px 0 48px 0;
+        font-size: 14px;
+        box-shadow: 0 0 4px rgba(150, 150, 150, 0.33);
+        box-sizing: border-box;
+        overflow: auto;
+        background-color: inherit;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc::-webkit-scrollbar {
+        width: 8px;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: transparent;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgba(150, 150, 150, 0.66);
+        border: 4px solid rgba(150, 150, 150, 0.66);
+        background-clip: content-box;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        a {
+        text-decoration: none;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc {
+        padding: 0 16px;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper
+        .md-toc-link {
+        display: inline;
+        padding: 0.25rem 0;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper
+        .md-toc-link
+        div,
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper
+        .md-toc-link
+        p {
+        display: inline;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper.highlighted
+        .md-toc-link {
+        font-weight: 800;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .markdown-preview {
+        left: 300px;
+        width: calc(100% - 300px);
+        padding: 2em calc(50% - 457px - 300px / 2);
+        margin: 0;
+        box-sizing: border-box;
+      }
+      @media screen and (max-width: 1274px) {
+        html
+          body[for="html-export"]:not(
+            [data-presentation-mode]
+          )[html-show-sidebar-toc]
+          .markdown-preview {
+          padding: 2em;
+        }
+      }
+      @media screen and (max-width: 450px) {
+        html
+          body[for="html-export"]:not(
+            [data-presentation-mode]
+          )[html-show-sidebar-toc]
+          .markdown-preview {
+          width: 100%;
+        }
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode]):not(
+          [html-show-sidebar-toc]
+        )
+        .markdown-preview {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode]):not(
+          [html-show-sidebar-toc]
+        )
+        .md-sidebar-toc {
+        display: none;
+      }
+      /* Please visit the URL below for more information: */
+      /*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+    </style>
+    <!-- The content below will be included at the end of the <head> element. -->
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function () {
+        // your code here
+      });
+    </script>
+  </head>
+  <body for="html-export">
+    <div class="crossnote markdown-preview">
+      <h1 id="stage-1--foundations-the-bedrock-of-decentralized-systems">
+        Stage 1 — Foundations: The Bedrock of Decentralized Systems
+      </h1>
+      <p><code>Stage 1 of 6</code> · Estimated 4–6 weeks</p>
+      <h2 id="stage-overview">Stage Overview</h2>
+      <h3 id="what-this-stage-builds">What This Stage Builds</h3>
+      <p>
+        This stage constructs the cognitive and technical foundation upon which
+        every subsequent blockchain concept rests. You will develop fluency in
+        networking, cryptography, data structures, distributed systems theory,
+        and game theory — not as abstract academic exercises, but as the exact
+        engineering primitives that make blockchains possible.
+      </p>
+      <h3 id="why-this-stage-is-critical">Why This Stage Is Critical</h3>
+      <p>
+        Every blockchain failure — every exploit, every broken consensus, every
+        flawed protocol — traces back to a misunderstanding of fundamentals.
+        Engineers who skip this stage build fragile systems. They copy patterns
+        without understanding invariants. They write smart contracts without
+        understanding the execution environment beneath them. This stage ensures
+        you are not that engineer.
+      </p>
+      <h3 id="competence-at-the-end-of-this-stage">
+        Competence at the End of This Stage
+      </h3>
+      <p>
+        You can explain how data moves across the internet at a packet level.
+        You can implement basic cryptographic primitives from scratch. You can
+        construct and verify Merkle trees. You can reason about distributed
+        consensus failures using formal models. You can articulate why
+        game-theoretic incentives are not optional in open networks — they are
+        the architecture.
+      </p>
+      <hr />
+      <h2 id="conceptual-map">Conceptual Map</h2>
+      <pre
+        data-role="codeBlock"
+        data-info="text"
+        class="language-text text"
+      ><code>Internet &amp; Networking
+├── How data moves (TCP/IP, HTTP, DNS)
+├── Client-server vs peer-to-peer models
+└── NAT traversal, gossip protocols
+        │
+        ▼
+Cryptography
+├── Hash functions (SHA-256, Keccak)
+├── Asymmetric cryptography (ECDSA, EdDSA)
+├── Digital signatures
+└── Commitment schemes
+        │
+        ▼
+Data Structures
+├── Hash-linked lists (blockchain as a structure)
+├── Merkle trees
+├── Patricia/Radix tries
+└── Bloom filters
+        │
+        ▼
+Distributed Systems
+├── CAP theorem
+├── Failure models (crash, Byzantine)
+├── State machine replication
+├── Byzantine Fault Tolerance
+└── Practical BFT algorithms
+        │
+        ▼
+Game Theory
+├── Nash equilibrium
+├── Mechanism design
+├── Incentive compatibility
+└── Schelling points
+</code></pre>
+      <hr />
+      <h2 id="topic-1-how-the-internet-works">
+        Topic 1: How the Internet Works
+      </h2>
+      <h3 id="explanation">Explanation</h3>
+      <p>
+        The internet is a layered packet-switching network. Data is broken into
+        packets, each independently routed across interconnected autonomous
+        systems (ASes). The architecture follows the OSI/TCP-IP model:
+      </p>
+      <ul>
+        <li>
+          <strong>Physical/Link Layer</strong>: Ethernet frames, MAC addresses,
+          switches.
+        </li>
+        <li>
+          <strong>Network Layer (IP)</strong>: Logical addressing, routing via
+          BGP across ASes. IPv4 uses 32-bit addresses; IPv6 uses 128-bit.
+        </li>
+        <li>
+          <strong>Transport Layer (TCP/UDP)</strong>: TCP provides reliable,
+          ordered delivery via three-way handshake, sequence numbers, and
+          acknowledgments. UDP provides unreliable datagrams — used where
+          latency matters more than guaranteed delivery.
+        </li>
+        <li>
+          <strong>Application Layer (HTTP/HTTPS)</strong>: Request-response
+          protocol. HTTP/1.1 uses persistent connections; HTTP/2 multiplexes
+          streams; HTTP/3 runs over QUIC (UDP-based). TLS encrypts the
+          transport.
+        </li>
+      </ul>
+      <p>
+        DNS resolves human-readable names to IP addresses via a hierarchical,
+        cached lookup system (recursive resolvers → root servers → TLD servers →
+        authoritative servers).
+      </p>
+      <h3 id="why-it-matters">Why It Matters</h3>
+      <p>
+        Blockchain nodes communicate over the internet. Understanding packet
+        routing, NAT traversal, firewall behavior, and TCP reliability directly
+        impacts your ability to reason about node connectivity, network
+        partitions, eclipse attacks, and propagation delays — all of which
+        affect consensus safety and liveness.
+      </p>
+      <h3 id="real-world-context">Real-World Context</h3>
+      <ul>
+        <li>
+          Bitcoin nodes use TCP port 8333 for peer communication. The gossip
+          protocol floods transactions and blocks across the network.
+        </li>
+        <li>
+          Ethereum's devp2p protocol uses a Kademlia-based DHT (discv5) for peer
+          discovery, running over UDP.
+        </li>
+        <li>
+          Network partitions in cloud infrastructure (e.g., the 2017 S3 outage)
+          demonstrate how connectivity failures cascade — the same dynamics
+          apply to blockchain networks.
+        </li>
+      </ul>
+      <h3 id="tools--technologies">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Wireshark</code></td>
+            <td>Packet capture and protocol analysis</td>
+          </tr>
+          <tr>
+            <td><code>tcpdump</code></td>
+            <td>Command-line packet analyzer</td>
+          </tr>
+          <tr>
+            <td><code>curl</code> / <code>httpie</code></td>
+            <td>HTTP request inspection</td>
+          </tr>
+          <tr>
+            <td><code>dig</code> / <code>nslookup</code></td>
+            <td>DNS resolution debugging</td>
+          </tr>
+          <tr>
+            <td><code>traceroute</code> / <code>mtr</code></td>
+            <td>Network path analysis</td>
+          </tr>
+          <tr>
+            <td><code>netcat</code></td>
+            <td>Raw TCP/UDP socket communication</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          If a TCP packet is lost between two blockchain nodes, what mechanism
+          ensures the transaction data is eventually delivered? What are the
+          performance implications?
+        </li>
+        <li>
+          Why does Bitcoin use TCP rather than UDP for block propagation? What
+          trade-offs does this create?
+        </li>
+        <li>
+          How does NAT traversal work, and why is it relevant for peer-to-peer
+          blockchain networks where nodes sit behind home routers?
+        </li>
+        <li>
+          Explain how an attacker could perform an eclipse attack by
+          manipulating a node's DNS resolution or peer table. What defenses
+          exist?
+        </li>
+        <li>
+          What is the difference between a network partition and high latency?
+          How does each affect blockchain consensus differently?
+        </li>
+        <li>
+          Why does Ethereum's peer discovery use UDP (for discv5) while actual
+          data exchange uses TCP (for devp2p/RLPx)?
+        </li>
+        <li>
+          If you had to design a protocol for propagating a 1MB block to 10,000
+          nodes as fast as possible, what approach would you take and why?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Packet tracing</strong>: Use Wireshark to capture a full HTTP
+          request-response cycle. Identify the TCP handshake, HTTP headers, and
+          payload.
+        </li>
+        <li>
+          <strong>DNS walkthrough</strong>: Use
+          <code>dig +trace example.com</code> to trace the full DNS resolution
+          path from root servers to the authoritative answer.
+        </li>
+        <li>
+          <strong>Raw socket server</strong>: Write a simple TCP echo server and
+          client in Python. Send a message, observe the bytes on the wire with
+          <code>tcpdump</code>.
+        </li>
+        <li>
+          <strong>Latency mapping</strong>: Use <code>mtr</code> to trace the
+          route to several Ethereum RPC endpoints (<code>infura.io</code>,
+          <code>alchemy.com</code>). Note hop counts and latency.
+        </li>
+      </ol>
+      <h3 id="mini-build-task">Mini Build Task</h3>
+      <p>
+        <strong>Build a simple peer-to-peer chat application</strong> using raw
+        TCP sockets in Python. Two peers should be able to discover each other
+        on a local network (via a hardcoded list or a simple discovery
+        mechanism), establish a TCP connection, and exchange text messages
+        bidirectionally. This exercise forces you to handle connection setup,
+        message framing, and concurrent I/O — the same problems that blockchain
+        networking layers solve.
+      </p>
+      <hr />
+      <h2 id="topic-2-peer-to-peer-networking-fundamentals">
+        Topic 2: Peer-to-Peer Networking Fundamentals
+      </h2>
+      <h3 id="explanation-1">Explanation</h3>
+      <p>
+        In client-server architecture, a central server mediates all
+        communication. In peer-to-peer (P2P) networks, every participant is both
+        client and server. This eliminates single points of failure but
+        introduces coordination complexity.
+      </p>
+      <p>Key P2P concepts:</p>
+      <ul>
+        <li>
+          <strong>Overlay networks</strong>: A logical network topology layered
+          on top of the physical internet. Nodes maintain routing tables that
+          map logical identifiers to physical addresses.
+        </li>
+        <li>
+          <strong>Structured vs unstructured overlays</strong>: Structured
+          overlays (Chord, Kademlia) use distributed hash tables (DHTs) for
+          deterministic routing. Unstructured overlays (Gnutella) use flooding
+          or random walks.
+        </li>
+        <li>
+          <strong>Gossip protocols</strong>: Epidemic-style information
+          dissemination. A node receiving new information forwards it to a
+          random subset of peers. With probability, information reaches all
+          nodes in O(log n) rounds.
+        </li>
+        <li>
+          <strong>Peer discovery</strong>: How nodes find each other.
+          Approaches: bootstrap nodes (hardcoded), DNS seeds, DHT-based
+          discovery.
+        </li>
+        <li>
+          <strong>NAT traversal</strong>: Techniques like STUN, TURN, and hole
+          punching allow nodes behind NATs to accept incoming connections.
+        </li>
+      </ul>
+      <h3 id="why-it-matters-1">Why It Matters</h3>
+      <p>
+        Every blockchain is a P2P network. The security guarantees of a
+        blockchain are only as strong as the networking layer's ability to
+        ensure that all honest nodes receive all valid transactions and blocks
+        in a timely manner. Understanding gossip efficiency, eclipse attack
+        vectors, and network topology is essential for protocol design.
+      </p>
+      <h3 id="real-world-context-1">Real-World Context</h3>
+      <ul>
+        <li>
+          Bitcoin uses an unstructured overlay with gossip-based flooding. Nodes
+          maintain up to 125 connections (8 outbound, up to 117 inbound).
+        </li>
+        <li>
+          Ethereum uses Kademlia DHT (<code>discv5</code>) for peer discovery
+          and a structured gossip protocol (<code>GossipSub</code> in the
+          consensus layer via libp2p).
+        </li>
+        <li>
+          IPFS uses libp2p with Kademlia DHT for content routing and Bitswap for
+          data exchange.
+        </li>
+        <li>
+          The 2019 "Erebus" attack on Bitcoin demonstrated how ISP-level
+          adversaries could isolate nodes by manipulating BGP routing.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-1">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>libp2p</code></td>
+            <td>
+              Modular P2P networking stack (used by Ethereum 2.0, IPFS,
+              Polkadot)
+            </td>
+          </tr>
+          <tr>
+            <td><code>devp2p</code></td>
+            <td>Ethereum's P2P networking protocol suite</td>
+          </tr>
+          <tr>
+            <td>Kademlia</td>
+            <td>DHT algorithm for structured P2P routing</td>
+          </tr>
+          <tr>
+            <td><code>GossipSub</code></td>
+            <td>Pub/sub gossip protocol in libp2p</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-1">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Why is gossip protocol convergence O(log n) in the number of rounds?
+          What assumptions does this require?
+        </li>
+        <li>
+          What is an eclipse attack, and how does it differ from a Sybil attack?
+          How can a blockchain node defend against each?
+        </li>
+        <li>
+          In the Kademlia DHT, what is the XOR distance metric, and why was it
+          chosen over other distance functions?
+        </li>
+        <li>
+          Why does Bitcoin limit outbound connections to 8? What would happen if
+          this number were 1? What if it were 1,000?
+        </li>
+        <li>
+          How does GossipSub's mesh-based approach improve upon pure flooding
+          for block propagation?
+        </li>
+        <li>
+          What is the "nothing at stake" problem in P2P gossip — specifically,
+          why might a rational node choose not to relay blocks?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-1">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Implement Kademlia routing</strong>: Write a simplified
+          Kademlia node in Python that maintains a routing table with k-buckets.
+          Implement <code>FIND_NODE</code> and <code>STORE</code> RPCs.
+        </li>
+        <li>
+          <strong>Gossip simulation</strong>: Simulate a gossip protocol across
+          100 nodes. Measure how many rounds it takes for all nodes to receive a
+          message as you vary the fanout parameter (number of peers each node
+          forwards to).
+        </li>
+        <li>
+          <strong>libp2p experimentation</strong>: Set up two libp2p nodes (in
+          Go or Rust) and have them discover each other via mDNS and exchange
+          messages.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-1">Mini Build Task</h3>
+      <p>
+        <strong>Build a gossip-based message dissemination simulator.</strong>
+        Create a network of 50+ simulated nodes. When one node introduces a
+        message, it propagates via gossip. Track and visualize: time to full
+        propagation, redundant messages received, and the effect of node
+        failures (randomly drop 10% of nodes mid-propagation). Output a report
+        showing convergence time and message overhead.
+      </p>
+      <hr />
+      <h2
+        id="topic-3-cryptography--hashing-digital-signatures-and-asymmetric-keys"
+      >
+        Topic 3: Cryptography — Hashing, Digital Signatures, and Asymmetric Keys
+      </h2>
+      <h3 id="explanation-2">Explanation</h3>
+      <p>
+        Cryptography provides the mathematical guarantees that make trustless
+        systems possible.
+      </p>
+      <p><strong>Hash Functions</strong></p>
+      <p>
+        A cryptographic hash function <code>H</code> maps arbitrary-length input
+        to a fixed-length output with three properties:
+      </p>
+      <ol>
+        <li>
+          <strong>Preimage resistance</strong>: Given <code>h</code>, it is
+          computationally infeasible to find <code>m</code> such that
+          <code>H(m) = h</code>.
+        </li>
+        <li>
+          <strong>Second preimage resistance</strong>: Given <code>m₁</code>, it
+          is infeasible to find <code>m₂ ≠ m₁</code> such that
+          <code>H(m₁) = H(m₂)</code>.
+        </li>
+        <li>
+          <strong>Collision resistance</strong>: It is infeasible to find any
+          <code>m₁ ≠ m₂</code> such that <code>H(m₁) = H(m₂)</code>.
+        </li>
+      </ol>
+      <p>
+        Bitcoin uses SHA-256 (double hashing: <code>SHA256(SHA256(x))</code>).
+        Ethereum uses Keccak-256 (the original SHA-3 submission, not the
+        NIST-standardized version).
+      </p>
+      <p><strong>Asymmetric Cryptography</strong></p>
+      <p>
+        A key pair <code>(sk, pk)</code> where <code>sk</code> is secret and
+        <code>pk</code> is public. The core primitive: given <code>pk</code>,
+        deriving <code>sk</code> is computationally infeasible.
+      </p>
+      <p>
+        Blockchain systems primarily use
+        <strong>elliptic curve cryptography (ECC)</strong>:
+      </p>
+      <ul>
+        <li>Bitcoin and Ethereum use the <strong>secp256k1</strong> curve.</li>
+        <li>
+          Newer systems use <strong>Ed25519</strong> (Curve25519) for its
+          performance and resistance to implementation errors.
+        </li>
+      </ul>
+      <p><strong>Digital Signatures</strong></p>
+      <p>A signature scheme consists of three algorithms:</p>
+      <ol>
+        <li><code>KeyGen() → (sk, pk)</code>: Generate a key pair.</li>
+        <li><code>Sign(sk, m) → σ</code>: Produce a signature.</li>
+        <li><code>Verify(pk, m, σ) → {0, 1}</code>: Verify the signature.</li>
+      </ol>
+      <p>
+        <strong>ECDSA</strong> (Elliptic Curve Digital Signature Algorithm) is
+        used in Bitcoin and Ethereum. The signature <code>(r, s)</code> is
+        computed as:
+      </p>
+      <ul>
+        <li>
+          Choose random nonce <code>k</code>, compute
+          <code>R = k·G</code> (elliptic curve point multiplication), set
+          <code>r = R.x mod n</code>.
+        </li>
+        <li>Compute <code>s = k⁻¹(hash(m) + sk·r) mod n</code>.</li>
+      </ul>
+      <p>
+        <strong>Critical</strong>: Nonce reuse in ECDSA is catastrophic — it
+        leaks the private key. This is not theoretical: the PlayStation 3's
+        ECDSA implementation was broken because Sony used a fixed nonce.
+      </p>
+      <p><strong>Commitment Schemes</strong></p>
+      <p>A two-phase protocol:</p>
+      <ol>
+        <li>
+          <strong>Commit</strong>: Publish <code>C = H(value || nonce)</code>.
+        </li>
+        <li>
+          <strong>Reveal</strong>: Publish <code>(value, nonce)</code>. Anyone
+          can verify <code>H(value || nonce) = C</code>.
+        </li>
+      </ol>
+      <p>
+        Used in commit-reveal voting, randomness generation, and submarine
+        sends.
+      </p>
+      <h3 id="why-it-matters-2">Why It Matters</h3>
+      <p>
+        Every transaction on every blockchain is authenticated via digital
+        signatures. Address derivation, transaction validation, block hashing,
+        Merkle root computation — cryptography is not a module of the
+        blockchain; it is the substrate.
+      </p>
+      <h3 id="real-world-context-2">Real-World Context</h3>
+      <ul>
+        <li>
+          Ethereum addresses are the last 20 bytes of
+          <code>Keccak-256(public_key)</code>.
+        </li>
+        <li>
+          The Bitcoin Genesis block hash
+          <code
+            >000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f</code
+          >
+          demonstrates SHA-256 output.
+        </li>
+        <li>
+          The DAO hack exploited a smart contract vulnerability, but the
+          response (the hard fork) was authenticated via the cryptographic
+          signatures of miners and node operators.
+        </li>
+        <li>
+          The Profanity vanity address generator was found to have weak
+          randomness in key generation, leading to ~$160M in stolen funds
+          (2022).
+        </li>
+      </ul>
+      <h3 id="tools--technologies-2">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>openssl</code></td>
+            <td>CLI for hashing, key generation, and signature operations</td>
+          </tr>
+          <tr>
+            <td><code>hashlib</code> (Python)</td>
+            <td>Compute SHA-256, Keccak-256</td>
+          </tr>
+          <tr>
+            <td><code>eth-keys</code> (Python)</td>
+            <td>Ethereum key and signature operations</td>
+          </tr>
+          <tr>
+            <td><code>noble-secp256k1</code> (JS)</td>
+            <td>Pure JS secp256k1 implementation</td>
+          </tr>
+          <tr>
+            <td><code>libsodium</code></td>
+            <td>Modern cryptographic library (Ed25519, X25519)</td>
+          </tr>
+          <tr>
+            <td>CyberChef</td>
+            <td>Web-based tool for encoding/hashing experiments</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-2">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Why does Bitcoin use double SHA-256 (<code>SHA256(SHA256(x))</code>)?
+          What specific attack does this mitigate?
+        </li>
+        <li>
+          Explain why ECDSA nonce reuse leaks the private key. Derive this
+          mathematically.
+        </li>
+        <li>
+          What is the difference between SHA-3 (NIST standard) and Keccak-256
+          (used by Ethereum)? Why does Ethereum use the non-standard version?
+        </li>
+        <li>
+          If a hash function produces 256-bit outputs, how many hashes must you
+          compute (on average) to find a collision? What theorem gives you this
+          bound?
+        </li>
+        <li>
+          Why is secp256k1 considered "less standard" than NIST P-256, and why
+          did Bitcoin choose it anyway?
+        </li>
+        <li>
+          How does an Ethereum address derivation work, step by step, from a
+          randomly generated private key?
+        </li>
+        <li>
+          What is a length-extension attack, and which hash functions are
+          vulnerable to it? How does HMAC prevent it?
+        </li>
+        <li>
+          Why can't you recover a public key from an Ethereum address? Why does
+          Ethereum transaction verification still work?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-2">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Hash exploration</strong>: Compute SHA-256 and Keccak-256 of
+          the string <code>"blockchain"</code>. Change one character and compute
+          again. Observe the avalanche effect.
+        </li>
+        <li>
+          <strong>Key generation</strong>: Generate an secp256k1 key pair using
+          Python's <code>eth-keys</code> library. Derive the Ethereum address
+          from the public key.
+        </li>
+        <li>
+          <strong>Sign and verify</strong>: Sign a message with your private
+          key. Verify the signature with the public key. Then tamper with the
+          message and show verification fails.
+        </li>
+        <li>
+          <strong>Nonce reuse attack</strong>: Given two ECDSA signatures that
+          share the same nonce <code>k</code> (use synthetic data), recover the
+          private key algebraically.
+        </li>
+        <li>
+          <strong>Commitment scheme</strong>: Implement a commit-reveal scheme
+          in Python. Commit to a value, reveal it, and verify.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-2">Mini Build Task</h3>
+      <p>
+        <strong>Build a simple digital identity system.</strong> A user
+        generates a key pair, signs a "profile" (name, timestamp), and publishes
+        the signature and public key. A verifier takes the published data and
+        confirms: (a) the profile was signed by the holder of the corresponding
+        private key, and (b) the profile has not been tampered with. Implement
+        in Python using <code>eth_keys</code> and <code>eth_abi</code> for
+        encoding.
+      </p>
+      <hr />
+      <h2 id="topic-4-data-structures--merkle-trees-and-hash-linked-structures">
+        Topic 4: Data Structures — Merkle Trees and Hash-Linked Structures
+      </h2>
+      <h3 id="explanation-3">Explanation</h3>
+      <p><strong>Hash-Linked Lists (Blockchain as a Data Structure)</strong></p>
+      <p>
+        The blockchain is, at its most fundamental, a singly-linked list where
+        each node contains the hash of the previous node:
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="text"
+        class="language-text text"
+      ><code>Block N: { data*N, hash(Block N-1) }
+Block N-1: { data*{N-1}, hash(Block N-2) }
+</code></pre>
+      <p>
+        This creates <strong>tamper evidence</strong>: modifying any historical
+        block changes its hash, which invalidates every subsequent block's
+        back-pointer. Integrity verification requires only the latest block's
+        hash.
+      </p>
+      <p><strong>Merkle Trees</strong></p>
+      <p>A Merkle tree (hash tree) is a binary tree where:</p>
+      <ul>
+        <li>Leaf nodes contain the hash of a data block.</li>
+        <li>
+          Internal nodes contain the hash of the concatenation of their
+          children's hashes.
+        </li>
+        <li>
+          The root hash (Merkle root) is a single fixed-size commitment to the
+          entire dataset.
+        </li>
+      </ul>
+      <p>
+        Key property: <strong>Merkle proofs</strong> allow O(log n) verification
+        that a specific data element is included in the dataset, given only the
+        root hash and a logarithmic number of sibling hashes (the "proof path").
+      </p>
+      <p><strong>Patricia/Merkle Patricia Tries (MPT)</strong></p>
+      <p>
+        Ethereum's state is stored in a Modified Merkle Patricia Trie — a
+        combination of:
+      </p>
+      <ul>
+        <li>
+          <strong>Radix trie</strong>: Keys (account addresses) determine the
+          path through the tree.
+        </li>
+        <li>
+          <strong>Merkle hashing</strong>: Every node's hash depends on its
+          children, producing a state root.
+        </li>
+        <li>
+          <strong>Path compression</strong>: Extension nodes and branch nodes
+          reduce depth.
+        </li>
+      </ul>
+      <p>
+        This allows: (1) O(log n) key-value lookups, (2) a single hash (state
+        root) that commits to the entire global state, (3) efficient state
+        proofs.
+      </p>
+      <p><strong>Bloom Filters</strong></p>
+      <p>
+        A probabilistic data structure that answers set membership queries with:
+      </p>
+      <ul>
+        <li>
+          No false negatives: If the filter says "not present," it is definitely
+          not present.
+        </li>
+        <li>
+          Possible false positives: If the filter says "present," it might not
+          be.
+        </li>
+      </ul>
+      <p>
+        Ethereum uses Bloom filters in transaction receipts to enable efficient
+        log filtering without scanning all logs.
+      </p>
+      <h3 id="why-it-matters-3">Why It Matters</h3>
+      <p>
+        Merkle trees enable light clients — nodes that verify blockchain data
+        without downloading the full chain. Patricia tries enable Ethereum's
+        stateful model. Without these structures, blockchains would require
+        every participant to store and process the complete history, making the
+        system impractical.
+      </p>
+      <h3 id="real-world-context-3">Real-World Context</h3>
+      <ul>
+        <li>
+          Bitcoin's block header contains a Merkle root of all transactions in
+          the block. SPV (Simplified Payment Verification) wallets use Merkle
+          proofs to verify transaction inclusion.
+        </li>
+        <li>
+          Ethereum's block header contains three Merkle roots: state root,
+          transactions root, and receipts root.
+        </li>
+        <li>
+          Certificate Transparency (used by web CAs) uses Merkle trees to enable
+          auditable append-only logs.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-3">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>merkletreejs</code> (JS)</td>
+            <td>Merkle tree construction and proof generation</td>
+          </tr>
+          <tr>
+            <td><code>py-merkle-tree</code></td>
+            <td>Python Merkle tree library</td>
+          </tr>
+          <tr>
+            <td><code>ethereum/go-ethereum</code> (Geth)</td>
+            <td>Reference implementation of Ethereum's MPT</td>
+          </tr>
+          <tr>
+            <td><code>rlp</code> (Python)</td>
+            <td>RLP encoding used in Ethereum's trie</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-3">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Given a Merkle tree with 1 million leaves, how many hashes are needed
+          for a Merkle proof? What is the exact proof size in bytes if using
+          SHA-256?
+        </li>
+        <li>
+          Why must Merkle tree implementations handle the case where the number
+          of leaves is not a power of two? What security issue arises if you
+          simply duplicate the last leaf?
+        </li>
+        <li>
+          Explain how Ethereum's state root changes when a single account's
+          balance is updated. How many nodes in the MPT are modified?
+        </li>
+        <li>
+          What is a "hash tree attack" on a Merkle tree, and how does prepending
+          a <code>0x00</code>/<code>0x01</code> byte to leaf/internal nodes
+          prevent it?
+        </li>
+        <li>
+          Why does Bitcoin use Merkle trees for transactions but not for UTXO
+          state? What structure does Bitcoin use for UTXO tracking?
+        </li>
+        <li>
+          How do Bloom filters in Ethereum receipts work, and what are their
+          false positive rates with typical parameters?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-3">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Build a Merkle tree from scratch</strong>: Implement a binary
+          Merkle tree in Python. Given 8 data items, construct the tree, compute
+          the root, and generate a proof for one item. Verify the proof.
+        </li>
+        <li>
+          <strong>Tamper detection</strong>: Modify one leaf in your tree. Show
+          that the Merkle root changes and the old proof no longer verifies.
+        </li>
+        <li>
+          <strong>Variable-size tree</strong>: Handle non-power-of-two leaf
+          counts correctly. Test with 5, 7, and 10 leaves.
+        </li>
+        <li>
+          <strong>Bloom filter implementation</strong>: Build a simple Bloom
+          filter. Insert 100 items, test for membership (true and false cases),
+          measure the empirical false positive rate vs. the theoretical
+          prediction.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-3">Mini Build Task</h3>
+      <p>
+        <strong>Build a verifiable file integrity system.</strong> Given a
+        directory of files, compute a Merkle tree over the file hashes. Store
+        the root hash. Later, given a single file and a Merkle proof, verify
+        that the file was part of the original directory without needing the
+        other files. This is exactly how SPV works in Bitcoin.
+      </p>
+      <hr />
+      <h2 id="topic-5-distributed-systems-basics-and-byzantine-fault-tolerance">
+        Topic 5: Distributed Systems Basics and Byzantine Fault Tolerance
+      </h2>
+      <h3 id="explanation-4">Explanation</h3>
+      <p><strong>Distributed Systems Fundamentals</strong></p>
+      <p>
+        A distributed system is a collection of independent computers that
+        appear as a single system to users. The fundamental challenges:
+      </p>
+      <ul>
+        <li>
+          <strong>No global clock</strong>: Events across nodes cannot be
+          perfectly ordered. Lamport timestamps and vector clocks provide
+          partial ordering.
+        </li>
+        <li>
+          <strong>Unreliable communication</strong>: Messages can be delayed,
+          reordered, duplicated, or lost.
+        </li>
+        <li>
+          <strong>Partial failures</strong>: Individual nodes can crash while
+          others continue operating.
+        </li>
+      </ul>
+      <p><strong>The CAP Theorem (Brewer's Theorem)</strong></p>
+      <p>For any distributed data store, you can guarantee at most two of:</p>
+      <ul>
+        <li>
+          <strong>Consistency</strong>: All nodes see the same data at the same
+          time.
+        </li>
+        <li>
+          <strong>Availability</strong>: Every request receives a response
+          (success or failure).
+        </li>
+        <li>
+          <strong>Partition tolerance</strong>: The system continues operating
+          despite network partitions.
+        </li>
+      </ul>
+      <p>
+        Since network partitions are inevitable in real systems, the practical
+        choice is between CP (consistent under partition, but some requests may
+        be rejected) and AP (available under partition, but data may be
+        inconsistent).
+      </p>
+      <p>
+        Blockchains make a nuanced choice: they provide
+        <strong>eventual consistency</strong> (AP-leaning) with strong
+        guarantees after sufficient confirmations.
+      </p>
+      <p><strong>Failure Models</strong></p>
+      <ol>
+        <li>
+          <strong>Crash failure</strong>: A node stops and never recovers.
+          Requires <code>2f + 1</code> total nodes to tolerate
+          <code>f</code> crash failures.
+        </li>
+        <li>
+          <strong>Byzantine failure</strong>: A node behaves arbitrarily — it
+          can lie, send conflicting messages, or collude. Requires
+          <code>3f + 1</code> total nodes to tolerate <code>f</code> Byzantine
+          failures.
+        </li>
+      </ol>
+      <p><strong>State Machine Replication (SMR)</strong></p>
+      <p>
+        The core abstraction: model each node as a deterministic state machine.
+        If all nodes start in the same state and process the same sequence of
+        inputs, they arrive at the same state. The consensus problem reduces to:
+        <strong>agree on a total ordering of inputs</strong>.
+      </p>
+      <p><strong>Byzantine Fault Tolerance (BFT)</strong></p>
+      <ul>
+        <li>
+          <strong>Lamport, Shostak, Pease (1982)</strong>: Proved that Byzantine
+          consensus requires <code>n ≥ 3f + 1</code> nodes and
+          <code>f + 1</code> communication rounds.
+        </li>
+        <li>
+          <strong>PBFT (Castro &amp; Liskov, 1999)</strong>: Practical BFT for
+          <code>n = 3f + 1</code> with O(n²) message complexity. Uses a
+          three-phase protocol: pre-prepare → prepare → commit. Includes
+          view-change protocol for leader failure.
+        </li>
+        <li>
+          <strong>Tendermint (2014)</strong>: BFT consensus designed for
+          blockchain. Combines PBFT-style voting with stake-weighted validators.
+          Used by Cosmos ecosystem.
+        </li>
+        <li>
+          <strong>HotStuff (2019)</strong>: Linear message complexity BFT. Used
+          as the basis for Meta's (formerly Facebook's) Diem/Libra blockchain.
+        </li>
+      </ul>
+      <p><strong>FLP Impossibility</strong></p>
+      <p>
+        Fischer, Lynch, and Paterson (1985) proved that no deterministic
+        consensus protocol can guarantee both safety and liveness in an
+        asynchronous system with even one crash failure. Practical systems work
+        around this via:
+      </p>
+      <ul>
+        <li>
+          Partial synchrony assumptions (messages are eventually delivered
+          within a bounded time).
+        </li>
+        <li>Randomized protocols (Ben-Or, 1983).</li>
+      </ul>
+      <h3 id="why-it-matters-4">Why It Matters</h3>
+      <p>
+        Blockchain consensus is a specific instance of Byzantine fault-tolerant
+        state machine replication. Without understanding SMR, BFT bounds, and
+        the CAP theorem, you cannot reason about why blockchains make the design
+        trade-offs they do — why Bitcoin has 10-minute blocks, why Ethereum
+        needs finality gadgets, or why "fast finality" chains sacrifice some
+        liveness guarantees.
+      </p>
+      <h3 id="real-world-context-4">Real-World Context</h3>
+      <ul>
+        <li>
+          Bitcoin's Nakamoto consensus is a probabilistic BFT protocol: it
+          tolerates up to ~50% Byzantine nodes (under certain network synchrony
+          assumptions), but provides only probabilistic finality.
+        </li>
+        <li>
+          Ethereum's Gasper (combining Casper FFG and LMD-GHOST) provides
+          "accountable safety" — if finality is violated, at least 1/3 of staked
+          ETH is provably slashable.
+        </li>
+        <li>
+          Cosmos chains use Tendermint BFT with instant finality — a block is
+          final once 2/3+ of validators sign it. The trade-off: if &gt;1/3 of
+          validators go offline, the chain halts.
+        </li>
+        <li>
+          The August 2023 Cosmos Hub halt demonstrated Tendermint's liveness
+          trade-off in practice.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-4">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tendermint Core</td>
+            <td>BFT consensus engine</td>
+          </tr>
+          <tr>
+            <td>CometBFT</td>
+            <td>Fork of Tendermint, used in Cosmos SDK</td>
+          </tr>
+          <tr>
+            <td>Raft (etcd)</td>
+            <td>
+              Crash fault-tolerant consensus (non-Byzantine, for comparison)
+            </td>
+          </tr>
+          <tr>
+            <td>Jepsen</td>
+            <td>Distributed systems testing framework</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-4">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Why does Byzantine fault tolerance require <code>3f + 1</code> nodes,
+          while crash fault tolerance requires only <code>2f + 1</code>? Derive
+          this from first principles.
+        </li>
+        <li>
+          Explain the FLP impossibility result in plain language. How do
+          practical Byzantine consensus protocols (PBFT, Tendermint) circumvent
+          it?
+        </li>
+        <li>
+          In PBFT, why is the "view change" protocol necessary? What happens if
+          the primary (leader) is Byzantine?
+        </li>
+        <li>
+          How does Bitcoin's Nakamoto consensus relate to traditional BFT? Is it
+          more or less tolerant of Byzantine nodes than PBFT?
+        </li>
+        <li>
+          The CAP theorem says you can't have all three. Where does Bitcoin
+          fall? Where does a PBFT-based chain fall?
+        </li>
+        <li>
+          What is "accountable safety" in Ethereum's Casper FFG, and why is it a
+          stronger guarantee than standard BFT safety?
+        </li>
+        <li>
+          What is the difference between "safety" and "liveness" in consensus?
+          Which does Bitcoin prioritize? Which does Tendermint prioritize?
+        </li>
+        <li>
+          If a network partition splits validators 60/40 in a Tendermint chain,
+          what happens? What if the same split happens in Bitcoin?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-4">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Implement Raft</strong>: Build a simplified Raft consensus
+          protocol (leader election + log replication only) across 3 processes.
+          Demonstrate that the system continues operating when 1 process
+          crashes.
+        </li>
+        <li>
+          <strong>Byzantine generals simulation</strong>: Simulate the Byzantine
+          generals problem with 4 generals, 1 traitor. Show that consensus is
+          achieved. Then try with 3 generals, 1 traitor, and show that consensus
+          fails.
+        </li>
+        <li>
+          <strong>PBFT walkthrough</strong>: Trace through PBFT's three phases
+          (pre-prepare, prepare, commit) on paper for a 4-node system with 1
+          Byzantine node. Show how the honest nodes still reach agreement.
+        </li>
+        <li>
+          <strong>Partition simulation</strong>: Build a 5-node system where you
+          can introduce network partitions. Observe how consensus behavior
+          changes under partition.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-4">Mini Build Task</h3>
+      <p>
+        <strong
+          >Build a simplified Byzantine fault-tolerant replicated log.</strong
+        >
+        Implement a 4-node system where:
+      </p>
+      <ul>
+        <li>One node is the leader and proposes entries.</li>
+        <li>All nodes vote on entries (2-phase: propose → vote → commit).</li>
+        <li>
+          One node is Byzantine: it sends conflicting votes to different nodes.
+        </li>
+        <li>
+          The 3 honest nodes still agree on the same log despite the traitor.
+        </li>
+        <li>
+          Demonstrate: inject a Byzantine node and show the protocol still
+          produces a consistent log.
+        </li>
+      </ul>
+      <hr />
+      <h2 id="topic-6-game-theory-basics-for-protocol-design">
+        Topic 6: Game Theory Basics for Protocol Design
+      </h2>
+      <h3 id="explanation-5">Explanation</h3>
+      <p><strong>Why Game Theory in Blockchain</strong></p>
+      <p>
+        In traditional systems, you trust the server (or the operator). In open
+        blockchain networks, participants are anonymous and potentially
+        adversarial. You cannot rely on trust — you must design systems where
+        <strong>rational self-interest produces correct system behavior</strong
+        >.
+      </p>
+      <p><strong>Core Concepts</strong></p>
+      <ul>
+        <li>
+          <p>
+            <strong>Nash Equilibrium</strong>: A strategy profile where no
+            player can improve their payoff by unilaterally changing their
+            strategy. In blockchain: the protocol rules should form a Nash
+            equilibrium where following the protocol is the best response to
+            others following the protocol.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Dominant Strategy</strong>: A strategy that is optimal
+            regardless of what others do. Example: in Bitcoin, mining on the
+            longest chain is (approximately) a dominant strategy — it maximizes
+            expected reward regardless of what other miners do.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Mechanism Design (Reverse Game Theory)</strong>: You design
+            the rules of the game so that self-interested agents produce a
+            desired outcome. Blockchain protocol design is mechanism design: you
+            choose the reward structure, penalty structure, and information
+            environment to align incentives.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Incentive Compatibility</strong>: A mechanism is
+            incentive-compatible if every participant's best strategy is to act
+            truthfully (reveal true preferences, follow the protocol). Example:
+            Ethereum staking is designed to be incentive-compatible — attesting
+            honestly yields higher expected returns than any deviation.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Schelling Points (Focal Points)</strong>: In a coordination
+            game with multiple equilibria, a Schelling point is the equilibrium
+            that players converge on without communication. Example: in a hard
+            fork, the "legitimate" chain is a Schelling point — participants
+            coordinate on it because they expect others to.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Tragedy of the Commons</strong>: When individuals acting in
+            self-interest deplete a shared resource. Relevant to: transaction
+            fee markets (block space as a shared resource), validator set
+            management.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Griefing Factor</strong>: The ratio of cost inflicted on a
+            victim to the cost borne by the attacker. In good mechanism design,
+            the griefing factor should be low (attacking is expensive relative
+            to the harm caused).
+          </p>
+        </li>
+      </ul>
+      <h3 id="why-it-matters-5">Why It Matters</h3>
+      <p>
+        Every design decision in a blockchain protocol is a game-theoretic
+        statement. Transaction fee mechanisms, validator rewards, slashing
+        conditions, governance voting — all are games played by rational (and
+        sometimes irrational) agents. If the incentives are wrong, the protocol
+        breaks — not because of a bug in code, but because of a bug in the game.
+      </p>
+      <h3 id="real-world-context-5">Real-World Context</h3>
+      <ul>
+        <li>
+          Bitcoin's block reward halving creates a long-term game: as rewards
+          decrease, transaction fees must sustain miner revenue. If fees are
+          insufficient, security degrades (miners leave, hash rate drops, 51%
+          attacks become cheaper).
+        </li>
+        <li>
+          Ethereum's EIP-1559 redesigned the fee market using mechanism design
+          principles: a base fee is burned (removing miner extractable value),
+          and users bid a priority fee (tip). This reduces fee volatility and
+          improves UX.
+        </li>
+        <li>
+          The 2016 DAO vote was a coordination game: ETH holders voted to hard
+          fork by choosing which chain to follow. The "forked" chain became
+          Ethereum; the "unforked" chain became Ethereum Classic.
+        </li>
+        <li>
+          MEV (Maximal Extractable Value) is a game-theoretic phenomenon:
+          validators reorder transactions to extract profit, creating an arms
+          race between searchers and validators.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-5">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gambit</td>
+            <td>Game theory analysis software</td>
+          </tr>
+          <tr>
+            <td>Nashpy (Python)</td>
+            <td>Compute Nash equilibria</td>
+          </tr>
+          <tr>
+            <td>Agent-based modeling (Mesa, Python)</td>
+            <td>Simulate multi-agent strategic behavior</td>
+          </tr>
+          <tr>
+            <td>Cadence (cadCAD)</td>
+            <td>Python framework for crypto-economic modeling</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-5">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Why is "mine on the longest chain" approximately (but not exactly) a
+          dominant strategy in Bitcoin? What is the exception, and why does it
+          matter? (Hint: selfish mining.)
+        </li>
+        <li>
+          Explain EIP-1559's fee mechanism as a mechanism design problem. What
+          behavior does it incentivize? What behavior does it discourage?
+        </li>
+        <li>
+          In Ethereum's proof-of-stake, why is the slashing penalty for
+          correlated failures higher than for individual failures? What
+          game-theoretic principle does this enforce?
+        </li>
+        <li>
+          What is the "nothing at stake" problem in naive proof-of-stake, and
+          how does it relate to Nash equilibrium?
+        </li>
+        <li>
+          How does MEV (Maximal Extractable Value) arise from game-theoretic
+          incentives? Why can't it be "solved" by protocol rules alone?
+        </li>
+        <li>
+          In a DAO vote with token-weighted governance, what is the free-rider
+          problem? How does it affect governance quality?
+        </li>
+        <li>
+          What is the difference between a credible threat and a non-credible
+          threat in the context of blockchain slashing?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-5">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Prisoner's dilemma simulation</strong>: Implement iterated
+          prisoner's dilemma with multiple strategies (always cooperate, always
+          defect, tit-for-tat, random). Tournament-style: run all strategies
+          against each other over 1000 rounds. Analyze which strategy dominates.
+        </li>
+        <li>
+          <strong>Nash equilibrium computation</strong>: Using Nashpy, compute
+          the Nash equilibrium for a 2-player game representing a mining
+          strategy choice (mine honestly vs. selfish mine) with specified
+          payoffs.
+        </li>
+        <li>
+          <strong>Fee market simulation</strong>: Simulate a blockchain fee
+          market with 100 users and limited block space. Users have private
+          valuations for inclusion. Implement a first-price auction and an
+          EIP-1559-style mechanism. Compare outcomes: revenue, user experience,
+          and waste.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-5">Mini Build Task</h3>
+      <p>
+        <strong
+          >Build a crypto-economic simulation of the "nothing at stake"
+          problem.</strong
+        >
+        Simulate a proof-of-stake chain where validators can vote on multiple
+        forks at zero cost. Show that rational validators always vote on every
+        fork (since it costs nothing and increases expected reward). Then
+        introduce slashing conditions: validators who vote on conflicting forks
+        lose their stake. Show that slashing changes the Nash equilibrium so
+        that honest single-chain voting becomes the dominant strategy.
+      </p>
+      <hr />
+      <h2 id="mini-projects">Mini Projects</h2>
+      <h3 id="project-1-verifiable-data-registry">
+        Project 1: Verifiable Data Registry
+      </h3>
+      <p>
+        Build a system where users can register data entries (e.g., document
+        hashes) into a Merkle tree. The system publishes the Merkle root. Users
+        can later prove that their data was registered by presenting a Merkle
+        proof. Add signature-based access control: only the original registrant
+        (verified by ECDSA signature) can update their entry.
+      </p>
+      <h3 id="project-2-p2p-file-sharing-system">
+        Project 2: P2P File Sharing System
+      </h3>
+      <p>
+        Build a simple P2P file sharing system where nodes can advertise files
+        they have and request files from peers. Use gossip-based discovery and
+        direct TCP transfers. Handle: peer joining, peer leaving, file chunk
+        verification (using hashes from a Merkle tree of file chunks).
+      </p>
+      <h3 id="project-3-byzantine-agreement-simulator">
+        Project 3: Byzantine Agreement Simulator
+      </h3>
+      <p>
+        Build an interactive simulator that visualizes the Byzantine generals
+        problem. Allow the user to set: number of generals, number of traitors,
+        and message strategy for traitors. Show step-by-step message passing and
+        final agreement. Demonstrate the <code>3f + 1</code> threshold
+        empirically.
+      </p>
+      <hr />
+      <h2 id="capstone-project-simplified-blockchain-prototype-data-layer-only">
+        Capstone Project: Simplified Blockchain Prototype (Data Layer Only)
+      </h2>
+      <p>
+        Build a simplified blockchain that implements the
+        <strong>data structure</strong> and
+        <strong>cryptographic</strong> foundations — without consensus or
+        networking:
+      </p>
+      <ol>
+        <li>
+          <strong>Block structure</strong>: Each block contains a list of
+          transactions, a timestamp, the hash of the previous block, and a
+          Merkle root of the transactions.
+        </li>
+        <li>
+          <strong>Transaction structure</strong>: Each transaction contains a
+          sender (public key), recipient, amount, and a digital signature
+          (ECDSA/secp256k1).
+        </li>
+        <li>
+          <strong>Validation</strong>: Implement transaction validation
+          (signature verification, basic double-spend detection via UTXO or
+          account model).
+        </li>
+        <li>
+          <strong>Merkle proofs</strong>: Given a block, generate a Merkle proof
+          for any transaction.
+        </li>
+        <li>
+          <strong>Tamper detection</strong>: Demonstrate that modifying any
+          historical transaction invalidates the chain.
+        </li>
+        <li>
+          <strong>Serialization</strong>: Serialize/deserialize blocks and
+          transactions to/from bytes (use RLP or a custom format).
+        </li>
+      </ol>
+      <p>
+        This is not yet a working blockchain (no consensus, no networking) — it
+        is the <strong>data layer</strong> that all subsequent stages will build
+        upon.
+      </p>
+      <hr />
+      <h2 id="common-mistakes--misconceptions">
+        Common Mistakes &amp; Misconceptions
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Mistake</th>
+            <th>Reality</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>"SHA-256 encrypts data"</td>
+            <td>
+              Hash functions are one-way; they do not encrypt. There is no key
+              and no decryption.
+            </td>
+          </tr>
+          <tr>
+            <td>"Blockchain is immutable"</td>
+            <td>
+              Blockchain is tamper-evident, not tamper-proof. If an attacker
+              gains sufficient consensus power, they can rewrite history.
+            </td>
+          </tr>
+          <tr>
+            <td>"More nodes = more secure"</td>
+            <td>
+              Security depends on the distribution of stake/hashrate, not the
+              raw number of nodes. 10,000 nodes run by one entity provide less
+              security than 100 independent nodes.
+            </td>
+          </tr>
+          <tr>
+            <td>"Consensus means everyone agrees"</td>
+            <td>
+              Consensus means a sufficient supermajority agrees. Minority nodes
+              may disagree (leading to forks).
+            </td>
+          </tr>
+          <tr>
+            <td>"P2P means no structure"</td>
+            <td>
+              Most P2P networks have significant structure: routing tables, peer
+              scoring, topology management.
+            </td>
+          </tr>
+          <tr>
+            <td>"CAP theorem means you pick two and lose one"</td>
+            <td>
+              The trade-off is nuanced and depends on the type of partition and
+              the required consistency model.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+      <h2 id="security-considerations">Security Considerations</h2>
+      <p>At this stage, develop the following security mindset:</p>
+      <ul>
+        <li>
+          <strong>Cryptographic hygiene</strong>: Never roll your own crypto.
+          Use well-audited libraries. Understand the threat model of every
+          primitive you use.
+        </li>
+        <li>
+          <strong>Randomness is sacred</strong>: Poor randomness in key
+          generation or nonce selection is catastrophic. Use
+          <code>os.urandom()</code> or <code>/dev/urandom</code>, never
+          <code>random.random()</code>.
+        </li>
+        <li>
+          <strong>Assume the adversary is sophisticated</strong>: They can
+          observe all network traffic, run any number of nodes, and act
+          strategically over long time horizons.
+        </li>
+        <li>
+          <strong>Defense in depth</strong>: No single mechanism provides
+          security. Hash functions, signatures, consensus, and economic
+          incentives are all layers of defense.
+        </li>
+      </ul>
+      <hr />
+      <h2 id="readings--resources">Readings &amp; Resources</h2>
+      <p><strong>Books</strong></p>
+      <ul>
+        <li>
+          <em>Mastering Bitcoin</em> by Andreas Antonopoulos — Chapters 1–4
+          (networking, cryptography, data structures)
+        </li>
+        <li>
+          <em>Introduction to Modern Cryptography</em> by Katz &amp; Lindell —
+          Chapters 1–5 (formal cryptography foundations)
+        </li>
+        <li>
+          <em>Distributed Systems: Principles and Paradigms</em> by Tanenbaum
+          &amp; Van Steen — Chapters 1–8
+        </li>
+        <li>
+          <em>Game Theory: An Introduction</em> by Steven Tadelis — Chapters 1–6
+        </li>
+      </ul>
+      <p><strong>Papers</strong></p>
+      <ul>
+        <li>
+          Lamport, Shostak, Pease —
+          <em>"The Byzantine Generals Problem"</em> (1982)
+        </li>
+        <li>
+          Fischer, Lynch, Paterson —
+          <em
+            >"Impossibility of Distributed Consensus with One Faulty
+            Process"</em
+          >
+          (1985)
+        </li>
+        <li>
+          Castro &amp; Liskov —
+          <em>"Practical Byzantine Fault Tolerance"</em> (1999)
+        </li>
+        <li>
+          Yin et al. —
+          <em>"HotStuff: BFT Consensus with Linearity and Responsiveness"</em>
+          (2019)
+        </li>
+        <li>
+          Nakamoto —
+          <em>"Bitcoin: A Peer-to-Peer Electronic Cash System"</em> (2008) —
+          Read after this stage to connect the foundations to the actual
+          protocol.
+        </li>
+      </ul>
+      <p><strong>Documentation &amp; Online Resources</strong></p>
+      <ul>
+        <li>
+          libp2p specification:
+          <a href="https://docs.libp2p.io/">https://docs.libp2p.io/</a>
+        </li>
+        <li>
+          Ethereum networking (devp2p):
+          <a href="https://github.com/ethereum/devp2p"
+            >https://github.com/ethereum/devp2p</a
+          >
+        </li>
+        <li>Kademlia paper: Maymounkov &amp; Mazières (2002)</li>
+        <li>
+          Stanford CS251: Cryptocurrencies and Blockchain Technologies (course
+          materials)
+        </li>
+        <li>MIT 6.824: Distributed Systems lecture notes</li>
+      </ul>
+      <p><strong>Technical Blogs</strong></p>
+      <ul>
+        <li>Trail of Bits blog (cryptographic engineering)</li>
+        <li>Vitalik Buterin's blog (mechanism design, consensus theory)</li>
+        <li>Decentralized Thoughts blog (distributed systems research)</li>
+      </ul>
+      <hr />
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 14px 0;
+          margin-top: 48px;
+        "
+      >
+        <a
+          href="../index.html"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #8b949e;
+            font-size: 0.875rem;
+            padding: 6px 10px;
+            border-radius: 6px;
+          "
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M9.78 12.78a.75.75 0 0 1-1.06 0L4.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 1.06L6.06 8l3.72 3.72a.75.75 0 0 1 0 1.06z"
+            ></path>
+          </svg>
+          <span style="display: flex; flex-direction: column; line-height: 1.3">
+            <span
+              style="
+                font-size: 0.7rem;
+                opacity: 0.55;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+              "
+              >Previous</span
+            >
+            <span style="font-weight: 500">Home Page</span>
+          </span>
+        </a>
+        <span
+          style="
+            font-size: 0.7rem;
+            color: #8b949e;
+            opacity: 0.5;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+          "
+          >Stage 1 of 6 · Foundations</span
+        >
+        <a
+          href="./02_Blockchain_Core.html"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #8b949e;
+            font-size: 0.875rem;
+            padding: 6px 10px;
+            border-radius: 6px;
+          "
+        >
+          <span
+            style="
+              display: flex;
+              flex-direction: column;
+              line-height: 1.3;
+              text-align: right;
+            "
+          >
+            <span
+              style="
+                font-size: 0.7rem;
+                opacity: 0.55;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+              "
+              >Next</span
+            >
+            <span style="font-weight: 500">02 · Blockchain Core</span>
+          </span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06z"
+            ></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

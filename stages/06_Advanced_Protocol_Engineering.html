@@ -1,0 +1,2983 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Learn Blockchain | Advanced Protocol Engineering</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous" />
+
+    <style>
+      code[class*="language-"],
+      pre[class*="language-"] {
+        color: #333;
+        background: 0 0;
+        font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        line-height: 1.4;
+        -moz-tab-size: 8;
+        -o-tab-size: 8;
+        tab-size: 8;
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+      pre[class*="language-"] {
+        padding: 0.8em;
+        overflow: auto;
+        border-radius: 3px;
+        background: #f5f5f5;
+      }
+      :not(pre) > code[class*="language-"] {
+        padding: 0.1em;
+        border-radius: 0.3em;
+        white-space: normal;
+        background: #f5f5f5;
+      }
+      .token.blockquote,
+      .token.comment {
+        color: #969896;
+      }
+      .token.cdata {
+        color: #183691;
+      }
+      .token.doctype,
+      .token.macro.property,
+      .token.punctuation,
+      .token.variable {
+        color: #333;
+      }
+      .token.builtin,
+      .token.important,
+      .token.keyword,
+      .token.operator,
+      .token.rule {
+        color: #a71d5d;
+      }
+      .token.attr-value,
+      .token.regex,
+      .token.string,
+      .token.url {
+        color: #183691;
+      }
+      .token.atrule,
+      .token.boolean,
+      .token.code,
+      .token.command,
+      .token.constant,
+      .token.entity,
+      .token.number,
+      .token.property,
+      .token.symbol {
+        color: #0086b3;
+      }
+      .token.prolog,
+      .token.selector,
+      .token.tag {
+        color: #63a35c;
+      }
+      .token.attr-name,
+      .token.class,
+      .token.class-name,
+      .token.function,
+      .token.id,
+      .token.namespace,
+      .token.pseudo-class,
+      .token.pseudo-element,
+      .token.url-reference .token.variable {
+        color: #795da3;
+      }
+      .token.entity {
+        cursor: help;
+      }
+      .token.title,
+      .token.title .token.punctuation {
+        font-weight: 700;
+        color: #1d3e81;
+      }
+      .token.list {
+        color: #ed6a43;
+      }
+      .token.inserted {
+        background-color: #eaffea;
+        color: #55a532;
+      }
+      .token.deleted {
+        background-color: #ffecec;
+        color: #bd2c00;
+      }
+      .token.bold {
+        font-weight: 700;
+      }
+      .token.italic {
+        font-style: italic;
+      }
+      .language-json .token.property {
+        color: #183691;
+      }
+      .language-markup .token.tag .token.punctuation {
+        color: #333;
+      }
+      .language-css .token.function,
+      code.language-css {
+        color: #0086b3;
+      }
+      .language-yaml .token.atrule {
+        color: #63a35c;
+      }
+      code.language-yaml {
+        color: #183691;
+      }
+      .language-ruby .token.function {
+        color: #333;
+      }
+      .language-markdown .token.url {
+        color: #795da3;
+      }
+      .language-makefile .token.symbol {
+        color: #795da3;
+      }
+      .language-makefile .token.variable {
+        color: #183691;
+      }
+      .language-makefile .token.builtin {
+        color: #0086b3;
+      }
+      .language-bash .token.keyword {
+        color: #0086b3;
+      }
+      pre[data-line] {
+        position: relative;
+        padding: 1em 0 1em 3em;
+      }
+      pre[data-line] .line-highlight-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: transparent;
+        display: block;
+        width: 100%;
+      }
+      pre[data-line] .line-highlight {
+        position: absolute;
+        left: 0;
+        right: 0;
+        padding: inherit 0;
+        margin-top: 1em;
+        background: hsla(24, 20%, 50%, 0.08);
+        background: linear-gradient(
+          to right,
+          hsla(24, 20%, 50%, 0.1) 70%,
+          hsla(24, 20%, 50%, 0)
+        );
+        pointer-events: none;
+        line-height: inherit;
+        white-space: pre;
+      }
+      pre[data-line] .line-highlight:before,
+      pre[data-line] .line-highlight[data-end]:after {
+        content: attr(data-start);
+        position: absolute;
+        top: 0.4em;
+        left: 0.6em;
+        min-width: 1em;
+        padding: 0 0.5em;
+        background-color: hsla(24, 20%, 50%, 0.4);
+        color: #f4f1ef;
+        font: bold 65%/1.5 sans-serif;
+        text-align: center;
+        vertical-align: 0.3em;
+        border-radius: 999px;
+        text-shadow: none;
+        box-shadow: 0 1px #fff;
+      }
+      pre[data-line] .line-highlight[data-end]:after {
+        content: attr(data-end);
+        top: auto;
+        bottom: 0.4em;
+      }
+      html body {
+        font-family:
+          "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+        background-color: #fff;
+        overflow: initial;
+        box-sizing: border-box;
+        word-wrap: break-word;
+      }
+      html body > :first-child {
+        margin-top: 0;
+      }
+      html body h1,
+      html body h2,
+      html body h3,
+      html body h4,
+      html body h5,
+      html body h6 {
+        line-height: 1.2;
+        margin-top: 1em;
+        margin-bottom: 16px;
+        color: #000;
+      }
+      html body h1 {
+        font-size: 2.25em;
+        font-weight: 300;
+        padding-bottom: 0.3em;
+      }
+      html body h2 {
+        font-size: 1.75em;
+        font-weight: 400;
+        padding-bottom: 0.3em;
+      }
+      html body h3 {
+        font-size: 1.5em;
+        font-weight: 500;
+      }
+      html body h4 {
+        font-size: 1.25em;
+        font-weight: 600;
+      }
+      html body h5 {
+        font-size: 1.1em;
+        font-weight: 600;
+      }
+      html body h6 {
+        font-size: 1em;
+        font-weight: 600;
+      }
+      html body h1,
+      html body h2,
+      html body h3,
+      html body h4,
+      html body h5 {
+        font-weight: 600;
+      }
+      html body h5 {
+        font-size: 1em;
+      }
+      html body h6 {
+        color: #5c5c5c;
+      }
+      html body strong {
+        color: #000;
+      }
+      html body del {
+        color: #5c5c5c;
+      }
+      html body a:not([href]) {
+        color: inherit;
+        text-decoration: none;
+      }
+      html body a {
+        color: #08c;
+        text-decoration: none;
+      }
+      html body a:hover {
+        color: #00a3f5;
+        text-decoration: none;
+      }
+      html body img {
+        max-width: 100%;
+      }
+      html body > p {
+        margin-top: 0;
+        margin-bottom: 16px;
+        word-wrap: break-word;
+      }
+      html body > ol,
+      html body > ul {
+        margin-bottom: 16px;
+      }
+      html body ol,
+      html body ul {
+        padding-left: 2em;
+      }
+      html body ol.no-list,
+      html body ul.no-list {
+        padding: 0;
+        list-style-type: none;
+      }
+      html body ol ol,
+      html body ol ul,
+      html body ul ol,
+      html body ul ul {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      html body li {
+        margin-bottom: 0;
+      }
+      html body li.task-list-item {
+        list-style: none;
+      }
+      html body li > p {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      html body .task-list-item-checkbox {
+        margin: 0 0.2em 0.25em -1.8em;
+        vertical-align: middle;
+      }
+      html body .task-list-item-checkbox:hover {
+        cursor: pointer;
+      }
+      html body blockquote {
+        margin: 16px 0;
+        font-size: inherit;
+        padding: 0 15px;
+        color: #5c5c5c;
+        background-color: #f0f0f0;
+        border-left: 4px solid #d6d6d6;
+      }
+      html body blockquote > :first-child {
+        margin-top: 0;
+      }
+      html body blockquote > :last-child {
+        margin-bottom: 0;
+      }
+      html body hr {
+        height: 4px;
+        margin: 32px 0;
+        background-color: #d6d6d6;
+        border: 0 none;
+      }
+      html body table {
+        margin: 10px 0 15px 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+        display: block;
+        width: 100%;
+        overflow: auto;
+        word-break: normal;
+        word-break: keep-all;
+      }
+      html body table th {
+        font-weight: 700;
+        color: #000;
+      }
+      html body table td,
+      html body table th {
+        border: 1px solid #d6d6d6;
+        padding: 6px 13px;
+      }
+      html body dl {
+        padding: 0;
+      }
+      html body dl dt {
+        padding: 0;
+        margin-top: 16px;
+        font-size: 1em;
+        font-style: italic;
+        font-weight: 700;
+      }
+      html body dl dd {
+        padding: 0 16px;
+        margin-bottom: 16px;
+      }
+      html body code {
+        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        font-size: 0.85em;
+        color: #000;
+        background-color: #f0f0f0;
+        border-radius: 3px;
+        padding: 0.2em 0;
+      }
+      html body code::after,
+      html body code::before {
+        letter-spacing: -0.2em;
+        content: "\00a0";
+      }
+      html body pre > code {
+        padding: 0;
+        margin: 0;
+        word-break: normal;
+        white-space: pre;
+        background: 0 0;
+        border: 0;
+      }
+      html body .highlight {
+        margin-bottom: 16px;
+      }
+      html body .highlight pre,
+      html body pre {
+        padding: 1em;
+        overflow: auto;
+        line-height: 1.45;
+        border: #d6d6d6;
+        border-radius: 3px;
+      }
+      html body .highlight pre {
+        margin-bottom: 0;
+        word-break: normal;
+      }
+      html body pre code,
+      html body pre tt {
+        display: inline;
+        max-width: initial;
+        padding: 0;
+        margin: 0;
+        overflow: initial;
+        line-height: inherit;
+        word-wrap: normal;
+        background-color: transparent;
+        border: 0;
+      }
+      html body pre code:after,
+      html body pre code:before,
+      html body pre tt:after,
+      html body pre tt:before {
+        content: normal;
+      }
+      html body blockquote,
+      html body dl,
+      html body ol,
+      html body p,
+      html body pre,
+      html body ul {
+        margin-top: 0;
+        margin-bottom: 16px;
+      }
+      html body kbd {
+        color: #000;
+        border: 1px solid #d6d6d6;
+        border-bottom: 2px solid #c7c7c7;
+        padding: 2px 4px;
+        background-color: #f0f0f0;
+        border-radius: 3px;
+      }
+      @media print {
+        html body {
+          background-color: #fff;
+        }
+        html body h1,
+        html body h2,
+        html body h3,
+        html body h4,
+        html body h5,
+        html body h6 {
+          color: #000;
+          page-break-after: avoid;
+        }
+        html body blockquote {
+          color: #5c5c5c;
+        }
+        html body pre {
+          page-break-inside: avoid;
+        }
+        html body table {
+          display: table;
+        }
+        html body img {
+          display: block;
+          max-width: 100%;
+          max-height: 100%;
+        }
+        html body code,
+        html body pre {
+          word-wrap: break-word;
+          white-space: pre;
+        }
+      }
+      .markdown-preview {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      .markdown-preview ul {
+        list-style: disc;
+      }
+      .markdown-preview ul ul {
+        list-style: circle;
+      }
+      .markdown-preview ul ul ul {
+        list-style: square;
+      }
+      .markdown-preview ol {
+        list-style: decimal;
+      }
+      .markdown-preview ol ol,
+      .markdown-preview ul ol {
+        list-style-type: lower-roman;
+      }
+      .markdown-preview ol ol ol,
+      .markdown-preview ol ul ol,
+      .markdown-preview ul ol ol,
+      .markdown-preview ul ul ol {
+        list-style-type: lower-alpha;
+      }
+      .markdown-preview .newpage,
+      .markdown-preview .pagebreak {
+        page-break-before: always;
+      }
+      .markdown-preview pre.line-numbers {
+        position: relative;
+        padding-left: 3.8em;
+        counter-reset: linenumber;
+      }
+      .markdown-preview pre.line-numbers > code {
+        position: relative;
+      }
+      .markdown-preview pre.line-numbers .line-numbers-rows {
+        position: absolute;
+        pointer-events: none;
+        top: 1em;
+        font-size: 100%;
+        left: 0;
+        width: 3em;
+        letter-spacing: -1px;
+        border-right: 1px solid #999;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .markdown-preview pre.line-numbers .line-numbers-rows > span {
+        pointer-events: none;
+        display: block;
+        counter-increment: linenumber;
+      }
+      .markdown-preview pre.line-numbers .line-numbers-rows > span:before {
+        content: counter(linenumber);
+        color: #999;
+        display: block;
+        padding-right: 0.8em;
+        text-align: right;
+      }
+      .markdown-preview .mathjax-exps .MathJax_Display {
+        text-align: center !important;
+      }
+      .markdown-preview:not([data-for="preview"])
+        .code-chunk
+        .code-chunk-btn-group {
+        display: none;
+      }
+      .markdown-preview:not([data-for="preview"]) .code-chunk .status {
+        display: none;
+      }
+      .markdown-preview:not([data-for="preview"]) .code-chunk .output-div {
+        margin-bottom: 16px;
+      }
+      .markdown-preview .md-toc {
+        padding: 0;
+      }
+      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link {
+        display: inline;
+        padding: 0.25rem 0;
+      }
+      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,
+      .markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p {
+        display: inline;
+      }
+      .markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link {
+        font-weight: 800;
+      }
+      .scrollbar-style::-webkit-scrollbar {
+        width: 8px;
+      }
+      .scrollbar-style::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: transparent;
+      }
+      .scrollbar-style::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgba(150, 150, 150, 0.66);
+        border: 4px solid rgba(150, 150, 150, 0.66);
+        background-clip: content-box;
+      }
+      html body[for="html-export"]:not([data-presentation-mode]) {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode])
+        .markdown-preview {
+        position: relative;
+        top: 0;
+        min-height: 100vh;
+      }
+      @media screen and (min-width: 914px) {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          .markdown-preview {
+          padding: 2em calc(50% - 457px + 2em);
+        }
+      }
+      @media screen and (max-width: 914px) {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          .markdown-preview {
+          padding: 2em;
+        }
+      }
+      @media screen and (max-width: 450px) {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          .markdown-preview {
+          font-size: 14px !important;
+          padding: 1em;
+        }
+      }
+      @media print {
+        html
+          body[for="html-export"]:not([data-presentation-mode])
+          #sidebar-toc-btn {
+          display: none;
+        }
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode])
+        #sidebar-toc-btn {
+        position: fixed;
+        bottom: 8px;
+        left: 8px;
+        font-size: 28px;
+        cursor: pointer;
+        color: inherit;
+        z-index: 99;
+        width: 32px;
+        text-align: center;
+        opacity: 0.4;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        #sidebar-toc-btn {
+        opacity: 1;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 300px;
+        height: 100%;
+        padding: 32px 0 48px 0;
+        font-size: 14px;
+        box-shadow: 0 0 4px rgba(150, 150, 150, 0.33);
+        box-sizing: border-box;
+        overflow: auto;
+        background-color: inherit;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc::-webkit-scrollbar {
+        width: 8px;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: transparent;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgba(150, 150, 150, 0.66);
+        border: 4px solid rgba(150, 150, 150, 0.66);
+        background-clip: content-box;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        a {
+        text-decoration: none;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc {
+        padding: 0 16px;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper
+        .md-toc-link {
+        display: inline;
+        padding: 0.25rem 0;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper
+        .md-toc-link
+        div,
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper
+        .md-toc-link
+        p {
+        display: inline;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .md-sidebar-toc
+        .md-toc
+        .md-toc-link-wrapper.highlighted
+        .md-toc-link {
+        font-weight: 800;
+      }
+      html
+        body[for="html-export"]:not(
+          [data-presentation-mode]
+        )[html-show-sidebar-toc]
+        .markdown-preview {
+        left: 300px;
+        width: calc(100% - 300px);
+        padding: 2em calc(50% - 457px - 300px / 2);
+        margin: 0;
+        box-sizing: border-box;
+      }
+      @media screen and (max-width: 1274px) {
+        html
+          body[for="html-export"]:not(
+            [data-presentation-mode]
+          )[html-show-sidebar-toc]
+          .markdown-preview {
+          padding: 2em;
+        }
+      }
+      @media screen and (max-width: 450px) {
+        html
+          body[for="html-export"]:not(
+            [data-presentation-mode]
+          )[html-show-sidebar-toc]
+          .markdown-preview {
+          width: 100%;
+        }
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode]):not(
+          [html-show-sidebar-toc]
+        )
+        .markdown-preview {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      html
+        body[for="html-export"]:not([data-presentation-mode]):not(
+          [html-show-sidebar-toc]
+        )
+        .md-sidebar-toc {
+        display: none;
+      }
+      /* Please visit the URL below for more information: */
+      /*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+    </style>
+    <!-- The content below will be included at the end of the <head> element. -->
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function () {
+        // your code here
+      });
+    </script>
+  </head>
+  <body for="html-export">
+    <div class="crossnote markdown-preview">
+      <h1 id="stage-6--advanced-protocol-engineering">
+        Stage 6 — Advanced Protocol Engineering
+      </h1>
+      <p><code>Stage 6 of 6</code> · Estimated 6–8 weeks</p>
+      <h2 id="stage-overview">Stage Overview</h2>
+      <h3 id="what-this-stage-builds">What This Stage Builds</h3>
+      <p>
+        This is the frontier stage. You will master Zero-Knowledge Proofs from
+        mathematical foundations to practical circuit design, understand the
+        architecture and security models of cross-chain bridges, develop the
+        skills to design and formally reason about new blockchain protocols,
+        model tokenomic systems quantitatively, perform security audits at a
+        professional level, and internalize the secure distributed system design
+        patterns that separate resilient protocols from fragile ones.
+      </p>
+      <p>
+        This stage is deliberately demanding. It requires synthesizing
+        everything from Stages 1–5 and applying it to unsolved problems and
+        cutting-edge research. Engineers who complete this stage are capable of
+        contributing to protocol research, leading audit engagements, and
+        designing novel decentralized systems.
+      </p>
+      <h3 id="why-this-stage-is-critical">Why This Stage Is Critical</h3>
+      <p>
+        The blockchain field generates new attack vectors, new cryptographic
+        primitives, and new protocol designs faster than most other areas of
+        software engineering. Engineers who can only implement established
+        patterns are always one step behind. This stage gives you the
+        theoretical depth and research orientation to stay ahead: to evaluate
+        new claims skeptically, to design systems with explicit security models,
+        and to contribute original work.
+      </p>
+      <h3 id="competence-at-the-end-of-this-stage">
+        Competence at the End of This Stage
+      </h3>
+      <p>
+        You can read and reason about ZK proof system papers. You can evaluate a
+        bridge's security model and identify its trust assumptions. You can
+        design a token incentive system and prove (or disprove) that its Nash
+        equilibrium produces correct system behavior. You can perform a
+        structured security audit of a complex protocol. You can reason about
+        the formal safety and liveness properties of a distributed system under
+        adversarial conditions.
+      </p>
+      <hr />
+      <h2 id="conceptual-map">Conceptual Map</h2>
+      <pre
+        data-role="codeBlock"
+        data-info="text"
+        class="language-text text"
+      ><code>Zero-Knowledge Proofs
+├── Interactive vs non-interactive proofs
+├── SNARKs — Groth16, PLONK
+├── STARKs — FRI, zero-knowledge
+├── Circuits and constraint systems (R1CS, Plonkish)
+├── ZK-EVM design
+└── Applied ZKPs: identity, rollups, auctions
+        │
+        ▼
+Cross-Chain Bridges
+├── Bridge taxonomy (trusted, optimistic, ZK)
+├── Bridge attack surface
+├── Light client bridges
+├── Canonical vs third-party bridges
+└── Inter-Blockchain Communication (IBC)
+        │
+        ▼
+Protocol Design Thinking
+├── Formal specification (TLA+, Alloy)
+├── Safety vs liveness properties
+├── Adversarial reasoning
+├── Gradual decentralization
+└── Upgrade and governance design
+        │
+        ▼
+Tokenomics Modeling (Advanced)
+├── Mechanism design formalisms
+├── cadCAD simulation
+├── Value flow analysis
+├── Token risk vectors
+└── Attack surface of economic systems
+        │
+        ▼
+Smart Contract Auditing
+├── Structured audit methodology
+├── Vulnerability classification
+├── Formal verification (Certora CVL, Halmos)
+├── Audit reporting
+└── Post-deployment monitoring as audit extension
+        │
+        ▼
+Secure Distributed System Design
+├── Security invariants
+├── Fail-safe defaults
+├── Trust minimization patterns
+├── Multi-party computation concepts
+└── Hardware Security Modules (HSMs) and key management
+</code></pre>
+      <hr />
+      <h2 id="topic-1-zero-knowledge-proofs--foundations-to-application">
+        Topic 1: Zero-Knowledge Proofs — Foundations to Application
+      </h2>
+      <h3 id="explanation">Explanation</h3>
+      <p><strong>What is a Zero-Knowledge Proof?</strong></p>
+      <p>
+        A Zero-Knowledge Proof (ZKP) is a cryptographic protocol by which one
+        party (the <strong>prover</strong>) can convince another party (the
+        <strong>verifier</strong>) that a statement is true, without revealing
+        any information beyond the truth of the statement itself.
+      </p>
+      <p>Formal properties:</p>
+      <ol>
+        <li>
+          <strong>Completeness</strong>: If the statement is true, an honest
+          prover can always convince an honest verifier.
+        </li>
+        <li>
+          <strong>Soundness</strong>: If the statement is false, no cheating
+          prover can convince the verifier (except with negligible probability).
+        </li>
+        <li>
+          <strong>Zero-knowledge</strong>: The verifier learns nothing about the
+          witness (secret input) other than the fact that the statement is true.
+        </li>
+      </ol>
+      <p><strong>Interactive vs. Non-Interactive</strong></p>
+      <p>
+        Interactive ZKPs require multiple rounds of communication between prover
+        and verifier. Non-interactive ZKPs (NIZKs) use the Fiat-Shamir heuristic
+        to replace the verifier's random challenges with a hash of the proof
+        transcript, making the proof a single message.
+      </p>
+      <p>
+        Non-interactive proofs (SNARK, STARK) are what blockchains use — the
+        proof is verified by an on-chain contract without interaction.
+      </p>
+      <p>
+        <strong
+          >SNARKs — Succinct Non-Interactive Arguments of Knowledge</strong
+        >
+      </p>
+      <p>
+        <strong>R1CS (Rank-1 Constraint System)</strong>: Programs are compiled
+        into a system of arithmetic constraints over a finite field:
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="text"
+        class="language-text text"
+      ><code>A · w ⊗ B · w = C · w
+</code></pre>
+      <p>
+        where <code>w</code> is the witness vector. Any computation expressible
+        as a circuit can be expressed as an R1CS.
+      </p>
+      <p>
+        <strong>Groth16</strong> (2016): The most efficient SNARK in proof size
+        and verification cost:
+      </p>
+      <ul>
+        <li>Proof size: 3 group elements (~192 bytes on BN254).</li>
+        <li>
+          Verifier cost: O(1) pairings (~3 pairings, ~300k gas on Ethereum).
+        </li>
+        <li>Prover time: O(n log n) FFTs + multi-scalar multiplications.</li>
+        <li>
+          <strong>Trusted setup required</strong>: A "Powers of Tau" ceremony
+          generates structured reference string (SRS). If the toxic waste (the
+          <code>τ</code> secret) from setup is not destroyed, a malicious party
+          can generate false proofs.
+        </li>
+      </ul>
+      <p>
+        <strong>PLONK</strong> (2019): A universal SNARK using polynomial
+        commitments:
+      </p>
+      <ul>
+        <li>
+          Universal (updatable) trusted setup: one setup serves all circuits up
+          to a given size.
+        </li>
+        <li>
+          Proof size: ~400 bytes (larger than Groth16 but the setup is
+          reusable).
+        </li>
+        <li>
+          More flexible arithmetization: "plonkish" constraint systems support
+          custom gates.
+        </li>
+        <li>Used by: zkSync, Polygon zkEVM, Aztec.</li>
+      </ul>
+      <p>
+        <strong>STARKs — Scalable Transparent Arguments of Knowledge</strong>
+      </p>
+      <ul>
+        <li>
+          <strong>No trusted setup</strong>: Transparency is the key advantage —
+          security relies only on hash functions (quantum-resistant).
+        </li>
+        <li>
+          <strong>Proof size</strong>: O(log² n) — much larger than SNARKs
+          (~100KB for typical circuits).
+        </li>
+        <li>
+          <strong>Prover time</strong>: O(n log² n) — faster than Groth16 prover
+          for large circuits.
+        </li>
+        <li>
+          <strong>FRI (Fast Reed-Solomon Interactive Oracle Proof)</strong>: The
+          polynomial commitment scheme at the heart of STARKs. Proves that a
+          function is close to a low-degree polynomial via a recursive folding
+          protocol.
+        </li>
+        <li>Used by: StarkNet, StarkEx.</li>
+      </ul>
+      <p><strong>The ZK Circuit Development Stack</strong></p>
+      <p>
+        Writing ZK proofs requires compiling a program into an arithmetic
+        circuit:
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Language</th>
+            <th>Target</th>
+            <th>Ecosystem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Circom</td>
+            <td>R1CS → Groth16, PLONK</td>
+            <td>Ethereum, Tornado Cash</td>
+          </tr>
+          <tr>
+            <td>Noir</td>
+            <td>PLONK</td>
+            <td>Aztec, Barretenberg</td>
+          </tr>
+          <tr>
+            <td>Cairo</td>
+            <td>AIR (Algebraic Intermediate Representation)</td>
+            <td>StarkNet</td>
+          </tr>
+          <tr>
+            <td>o1js</td>
+            <td>Plonkish</td>
+            <td>Mina Protocol</td>
+          </tr>
+          <tr>
+            <td>Halo2</td>
+            <td>Plonkish (no trusted setup variant)</td>
+            <td>Zcash, Scroll, zkSync</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>ZK-EVM</strong></p>
+      <p>
+        A ZK-EVM proves the correct execution of EVM bytecode within a ZK
+        circuit. This enables ZK rollups that are compatible with Ethereum's
+        smart contract language.
+      </p>
+      <p>Key dimensions (Vitalik's ZK-EVM taxonomy):</p>
+      <ul>
+        <li>
+          <strong>Type 1</strong> (fully Ethereum-equivalent): Proves actual
+          Ethereum blocks. Slowest prover. Goal for Ethereum's stateless
+          validation.
+        </li>
+        <li>
+          <strong>Type 2</strong> (EVM-equivalent, different state tree): Same
+          EVM semantics, different state representation. Scroll, Polygon zkEVM.
+        </li>
+        <li>
+          <strong>Type 3</strong> (mostly EVM-equivalent): Minor EVM
+          differences. Previous zkSync approach.
+        </li>
+        <li>
+          <strong>Type 4</strong> (Solidity-compatible, different VM): Compiles
+          Solidity to a different VM. zkSync Era (ZK Stack), StarkNet (via
+          transpiler).
+        </li>
+      </ul>
+      <p><strong>Applied ZKPs in Practice</strong></p>
+      <ul>
+        <li>
+          <strong>Private transactions</strong>: Tornado Cash uses ZK proofs to
+          prove "I deposited N ETH" without revealing which specific deposit.
+        </li>
+        <li>
+          <strong>Private voting</strong>: Vote without revealing which option
+          was chosen, proving only valid option voted once.
+        </li>
+        <li>
+          <strong>Identity and credentials</strong>: Prove you are over 18
+          without revealing birth date (e.g., Polygon ID).
+        </li>
+        <li>
+          <strong>ZK bridges</strong>: Prove light client state of chain A
+          within a ZK proof verified on chain B (zkBridge, Succinct Protocol).
+        </li>
+        <li>
+          <strong>ZK rollups</strong>: Prove batch execution validity with a
+          single on-chain proof.
+        </li>
+      </ul>
+      <h3 id="why-it-matters">Why It Matters</h3>
+      <p>
+        ZKPs are the most significant cryptographic innovation for blockchain
+        systems in the last decade. ZK rollups will likely power the majority of
+        Ethereum transactions within 5 years. ZK-based identity and privacy
+        systems are the technical foundation for solving the tension between
+        transparency and privacy in public blockchains. Engineers who understand
+        ZKPs will design the next generation of blockchain infrastructure.
+      </p>
+      <h3 id="real-world-context">Real-World Context</h3>
+      <ul>
+        <li>
+          Groth16 trusted setup: The Zcash "Powers of Tau" ceremony involved 87
+          participants. If even one participant destroyed their toxic waste, the
+          setup is secure.
+        </li>
+        <li>
+          StarkWare's STARK prover generates proofs for millions of
+          transactions. Each proof is verified by the SHARP (SHARed Prover)
+          contract on Ethereum mainnet.
+        </li>
+        <li>
+          Polygon's Plonky2 achieved STARK-level transparency with SNARK-like
+          proof sizes by using FRI over small fields (Goldilocks field).
+        </li>
+        <li>
+          The ZK identity space (Worldcoin's World ID, Polygon ID) uses ZK
+          proofs to prove credential ownership without revealing the credential.
+        </li>
+      </ul>
+      <h3 id="tools--technologies">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Circom</td>
+            <td>ZK circuit language for R1CS</td>
+          </tr>
+          <tr>
+            <td>snarkjs</td>
+            <td>JavaScript SNARK prover/verifier for Circom</td>
+          </tr>
+          <tr>
+            <td>Noir</td>
+            <td>ZK circuit language for PLONK (Aztec)</td>
+          </tr>
+          <tr>
+            <td>Halo2</td>
+            <td>Rust ZK library (Zcash)</td>
+          </tr>
+          <tr>
+            <td>Cairo</td>
+            <td>ZK circuit language for STARKs (StarkNet)</td>
+          </tr>
+          <tr>
+            <td>gnark</td>
+            <td>Fast Go SNARK implementation</td>
+          </tr>
+          <tr>
+            <td><code>bellman</code></td>
+            <td>Rust library for groth16</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          A prover claims to know a value <code>x</code> such that
+          <code>H(x) = y</code> (preimage of a hash). How would you construct a
+          ZK proof of this knowledge? What is the witness, what is the public
+          input, and what is the verifier equation?
+        </li>
+        <li>
+          Why does Groth16 require a trusted setup, while STARKs do not? What
+          specific mathematical structure in Groth16 requires the ceremony?
+        </li>
+        <li>
+          Explain FRI (Fast Reed-Solomon IOP) at a high level. What object is
+          being committed to, and what property is being proven?
+        </li>
+        <li>
+          If the trusted setup ceremony for a Groth16 circuit is compromised
+          (toxic waste exposed), what exactly can an attacker do? Can they steal
+          funds? Forge arbitrary proofs?
+        </li>
+        <li>
+          What is the "arithmetization" step in ZK circuit development? Why
+          can't you directly prove arbitrary code — what must be converted
+          first?
+        </li>
+        <li>
+          What is the difference between "zkEVM Type 1" and "zkEVM Type 4" in
+          practical terms for a Solidity developer?
+        </li>
+        <li>
+          Why is proving EVM execution so much harder than proving a simple
+          arithmetic statement? What specific EVM features create complexity in
+          circuit design?
+        </li>
+        <li>
+          How does Tornado Cash use SNARKs to preserve privacy? What is the
+          circuit structure, and what data is on-chain vs. off-chain?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Circom circuit</strong>: Write a Circom circuit that proves
+          you know <code>a</code> and <code>b</code> such that
+          <code>a * b = c</code> (a basic multiplication proof). Compile with
+          <code>circom</code>, generate witness with <code>snarkjs</code>,
+          generate proof, and verify it.
+        </li>
+        <li>
+          <strong>Hash preimage proof</strong>: Write a Circom circuit proving
+          knowledge of a preimage of a Poseidon hash (ZK-friendly hash
+          function). Verify the proof in a Solidity verifier contract.
+        </li>
+        <li>
+          <strong>PLONK circuit with Noir</strong>: Write a Noir circuit that
+          proves a number is greater than 18 (the "age proof"). Generate a proof
+          locally and verify it.
+        </li>
+        <li>
+          <strong>StarkNet circuit in Cairo</strong>: Write a simple Cairo
+          contract (program) that computes a Fibonacci number. Run the prover.
+          Understand the STARK proof output structure.
+        </li>
+        <li>
+          <strong>Trusted setup ceremony simulation</strong>: Participate in or
+          simulate the Phase 2 trusted setup for a small circuit using
+          <code>snarkjs</code> on your local machine.
+        </li>
+      </ol>
+      <h3 id="mini-build-task">Mini Build Task</h3>
+      <p>
+        <strong>Build a ZK-powered Voting System.</strong> Users vote (yes/no)
+        on a proposal. Each vote is a ZK proof proving: (a) the voter holds a
+        valid credential (a Merkle tree membership proof of their identity
+        hash), and (b) they have not voted before (a nullifier derived from
+        their private key and the proposal ID). The on-chain contract verifies
+        proofs and tracks nullifiers. No vote reveals which address voted or
+        what they voted. Implement with Circom + snarkjs + Solidity.
+      </p>
+      <hr />
+      <h2 id="topic-2-cross-chain-bridges--architecture-and-security">
+        Topic 2: Cross-Chain Bridges — Architecture and Security
+      </h2>
+      <h3 id="explanation-1">Explanation</h3>
+      <p><strong>What a Bridge Does</strong></p>
+      <p>
+        A bridge moves assets (or data) between two blockchains that do not
+        share consensus. Conceptually:
+      </p>
+      <ul>
+        <li>
+          "Lock and mint": Lock asset on Chain A → issue a wrapped
+          representation on Chain B.
+        </li>
+        <li>
+          "Burn and release": Burn representation on Chain B → unlock original
+          on Chain A.
+        </li>
+        <li>
+          "Liquidity pools": No locking — rebalance asset pools across chains
+          via arbitrageurs.
+        </li>
+      </ul>
+      <p><strong>Bridge Taxonomy by Trust Model</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Trust Assumption</th>
+            <th>Example</th>
+            <th>Risk</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Multi-sig custodied</strong></td>
+            <td>Trust the multi-sig signers</td>
+            <td>Many bridges (pre-2022)</td>
+            <td>If M-of-N signers are compromised, all assets stolen</td>
+          </tr>
+          <tr>
+            <td><strong>Optimistic</strong></td>
+            <td>Trust at least one honest watcher</td>
+            <td>Nomad (before hack), Across</td>
+            <td>Fraud window delay; relies on active watchers</td>
+          </tr>
+          <tr>
+            <td><strong>ZK light client</strong></td>
+            <td>Trust the ZK proof system + source chain</td>
+            <td>zkBridge, Succinct Protocol</td>
+            <td>Proof system soundness</td>
+          </tr>
+          <tr>
+            <td><strong>Native (IBC)</strong></td>
+            <td>Trust each chain's own consensus</td>
+            <td>Cosmos IBC</td>
+            <td>Validator collusion on either side</td>
+          </tr>
+          <tr>
+            <td><strong>Liquidity pool (intent-based)</strong></td>
+            <td>Trust solver competition</td>
+            <td>Across, deBridge</td>
+            <td>No true bridging; relies on LP liquidity</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Light Client Bridges</strong></p>
+      <p>
+        The most trustless bridge design. The bridge contract on Chain B
+        contains a ZK-verified or fraud-proof-verified light client of Chain A:
+      </p>
+      <ol>
+        <li>Chain A produces a block with a cross-chain message.</li>
+        <li>
+          The message (and block header) is verified by the light client
+          contract on Chain B.
+        </li>
+        <li>If valid, Chain B executes the corresponding action.</li>
+      </ol>
+      <p>
+        Trust assumption: You trust Chain A's and Chain B's consensus
+        mechanisms. No additional trusted parties.
+      </p>
+      <p>Examples:</p>
+      <ul>
+        <li>
+          <strong>Succinct Protocol</strong>: Uses SP1 (a general ZK VM) to
+          generate ZK proofs of Ethereum consensus state. The proof can be
+          verified on any chain with an on-chain verifier.
+        </li>
+        <li>
+          <strong>Herodotus</strong>: ZK proofs of Ethereum storage slots,
+          enabling cross-chain storage reads.
+        </li>
+      </ul>
+      <p><strong>IBC (Inter-Blockchain Communication)</strong></p>
+      <p>
+        The canonical cross-chain protocol for the Cosmos ecosystem. Key
+        components:
+      </p>
+      <ul>
+        <li>
+          <strong>Light clients</strong>: Each chain maintains a light client of
+          the counterparty chain.
+        </li>
+        <li><strong>Channels</strong>: Logical channels for packet routing.</li>
+        <li>
+          <strong>Relayers</strong>: Off-chain nodes that relay packets and
+          proof data between chains.
+        </li>
+        <li>
+          <strong>Finality</strong>: Only supported between chains with fast
+          finality (BFT consensus). IBC + PoW requires probabilistic
+          confirmation.
+        </li>
+      </ul>
+      <p>
+        Security: No external trusted validator set — IBC inherits the security
+        of both connected chains.
+      </p>
+      <p><strong>Bridge Attack Surface</strong></p>
+      <p>Historical bridge exploits by category:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Attack Vector</th>
+            <th>Example Exploit</th>
+            <th>Loss</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Multi-sig key compromise</td>
+            <td>Ronin bridge (2022)</td>
+            <td>$625M</td>
+          </tr>
+          <tr>
+            <td>Smart contract vulnerability</td>
+            <td>Wormhole (2022)</td>
+            <td>$320M</td>
+          </tr>
+          <tr>
+            <td>Logic error in message verification</td>
+            <td>Nomad (2022)</td>
+            <td>$190M</td>
+          </tr>
+          <tr>
+            <td>Replay attack on wrapped assets</td>
+            <td>Poly Network (2021)</td>
+            <td>$611M</td>
+          </tr>
+          <tr>
+            <td>Oracle manipulation for cross-chain price relay</td>
+            <td>Multiple bridges</td>
+            <td>Variable</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>The Nomad Exploit</strong></p>
+      <p>
+        Nomad's bridge used an optimistic verification scheme. A logic error in
+        the Merkle root initialization set the "accepted root" to
+        <code>0x00</code>. Any message could be crafted with a Merkle proof
+        against the zero root — and would be automatically approved. Result:
+        300+ unique attackers drained the bridge within hours. The exploit
+        required no technical sophistication after the initial discovery — it
+        was copy-paste exploitable.
+      </p>
+      <p><strong>Bridge Security Analysis Framework</strong></p>
+      <p>For any bridge, evaluate:</p>
+      <ol>
+        <li>
+          What is the trust assumption? (Multi-sig count, ZK proof system, light
+          client correctness)
+        </li>
+        <li>
+          What is the worst-case attack? (Full asset theft, or just message
+          delay/manipulation?)
+        </li>
+        <li>What is the "attack capital" required?</li>
+        <li>What monitoring and response capabilities exist?</li>
+        <li>
+          What is the upgrade mechanism, and could an upgrade be used to steal
+          assets?
+        </li>
+      </ol>
+      <h3 id="why-it-matters-1">Why It Matters</h3>
+      <p>
+        Cross-chain bridges represent the single largest attack surface in
+        blockchain infrastructure. In 2022, over $2B was stolen from bridges in
+        one year. As the multi-chain ecosystem grows, bridge security becomes
+        more critical. Protocol engineers must understand bridge design deeply
+        enough to evaluate the security claims of any bridge they integrate with
+        — and the implications for their own protocol when assets cross bridge
+        boundaries.
+      </p>
+      <h3 id="real-world-context-1">Real-World Context</h3>
+      <ul>
+        <li>
+          The Ronin bridge hack (Axie Infinity, $625M) used compromised
+          validator keys from 5 of 9 validators (4 from Sky Mavis, 1 from Axie
+          DAO). The attacker controlled all keys needed for the multi-sig
+          threshold.
+        </li>
+        <li>
+          IBC has not been exploited at the protocol level since launch.
+          Exploits on Cosmos chains have been at the application layer, not IBC.
+        </li>
+        <li>
+          LayerZero uses an oracle (Chainlink or custom) + relayer model. Its
+          security is 2-of-2: both the oracle and the relayer must be
+          compromised for an attack.
+        </li>
+        <li>
+          Chainlink's CCIP (Cross-Chain Interoperability Protocol) uses
+          Chainlink's decentralized oracle network for cross-chain message
+          verification.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-1">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>IBC/Cosmos SDK</td>
+            <td>Native cross-chain communication in Cosmos</td>
+          </tr>
+          <tr>
+            <td>Wormhole SDK</td>
+            <td>Multi-chain messaging protocol</td>
+          </tr>
+          <tr>
+            <td>LayerZero SDK</td>
+            <td>Omnichain messaging protocol</td>
+          </tr>
+          <tr>
+            <td>Succinct SP1</td>
+            <td>ZK proof system for light client bridges</td>
+          </tr>
+          <tr>
+            <td>L2Beat bridges</td>
+            <td>Bridge security analysis</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-1">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Explain the exact attack sequence of the Nomad bridge exploit. What
+          assumption in the code was violated? How would you have tested for it?
+        </li>
+        <li>
+          What is the minimum attack cost for a bridge secured by a 5-of-9
+          multi-sig? Compare to a ZK light client bridge.
+        </li>
+        <li>
+          In an IBC channel between Ethereum (PoW/PoS) and a Cosmos chain
+          (Tendermint), what are the security implications of each chain's
+          finality model?
+        </li>
+        <li>
+          Why does a "lock and mint" bridge create a single point of failure for
+          the locked assets? What alternative model avoids concentrating this
+          risk?
+        </li>
+        <li>
+          Describe an attack on an intent-based bridge where the solver/relayer
+          colludes. What assets are at risk?
+        </li>
+        <li>
+          How does a ZK bridge prove that a message was included in a specific
+          block on Chain A without trusting any external party?
+        </li>
+        <li>
+          What is the "long-range attack" problem for bridges between PoS
+          chains, and how do bridges defend against retroactive state forgery?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-1">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>IBC channel setup</strong>: Using local Cosmos testnets (wasmd
+          chains), set up an IBC channel and send a cross-chain token transfer.
+          Observe the relayer process.
+        </li>
+        <li>
+          <strong>Optimistic bridge simulator</strong>: Implement a simplified
+          optimistic bridge with a 10-minute challenge window. Introduce a
+          fraudulent message and simulate a watcher submitting a fraud proof
+          before the window expires.
+        </li>
+        <li>
+          <strong>Bridge security audit</strong>: Analyze the Nomad bridge
+          codebase (post-exploit, the code is public). Identify the
+          vulnerability. Write a test that would have caught it.
+        </li>
+        <li>
+          <strong>ZK light client</strong>: Using Succinct Protocol's SDK,
+          generate a proof of an Ethereum block header on a testnet. Verify the
+          proof in a Solidity contract on a different testnet.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-1">Mini Build Task</h3>
+      <p>
+        <strong>Build a Simplified Optimistic Bridge.</strong> Chain A contract:
+        locks ETH and emits a
+        <code
+          >CrossChainTransfer(bytes32 commitmentHash, address recipient, uint256
+          amount)</code
+        >
+        event. Chain B contract: accepts a commitment hash and recipient. A
+        relayer monitors Chain A events and submits them to Chain B. A watcher
+        monitors Chain B for false submissions and can challenge within a
+        5-minute window. The recipient can claim funds after the challenge
+        window. Demonstrate: legitimate transfer, and a challenge blocking a
+        fraudulent transfer.
+      </p>
+      <hr />
+      <h2 id="topic-3-protocol-design-thinking">
+        Topic 3: Protocol Design Thinking
+      </h2>
+      <h3 id="explanation-2">Explanation</h3>
+      <p><strong>What Protocol Design Is</strong></p>
+      <p>
+        Designing a blockchain protocol is not writing code — it is
+        specification. Before a line of code is written, a protocol engineer
+        must formally define:
+      </p>
+      <ul>
+        <li><strong>State space</strong>: What values can the system be in?</li>
+        <li>
+          <strong>Valid transitions</strong>: What state transitions are
+          allowed?
+        </li>
+        <li>
+          <strong>Safety properties</strong>: What must <em>never</em> happen?
+          (e.g., "two conflicting blocks cannot both be finalized")
+        </li>
+        <li>
+          <strong>Liveness properties</strong>: What must
+          <em>eventually</em> happen? (e.g., "every valid transaction must
+          eventually be included")
+        </li>
+        <li>
+          <strong>Adversarial model</strong>: Who is the adversary, what is
+          their capability, and what do they want?
+        </li>
+      </ul>
+      <p><strong>Formal Specification with TLA+</strong></p>
+      <p>
+        TLA+ (Temporal Logic of Actions) is a formal specification language for
+        concurrent and distributed systems. It allows you to:
+      </p>
+      <ul>
+        <li>Specify the system's state and transitions mathematically.</li>
+        <li>Check safety properties (invariants) using model checking.</li>
+        <li>Identify edge cases that informal reasoning misses.</li>
+      </ul>
+      <p>
+        Used by: AWS engineers (S3, DynamoDB), Microsoft Azure engineers, and
+        several blockchain protocol teams (Tendermint's consensus is specified
+        in TLA+).
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="tla"
+        class="language-tla tla"
+      ><code>---- MODULE SimpleConsensus ----
+EXTENDS FiniteSets, Naturals
+CONSTANTS Validators, Quorums
+VARIABLES decided, votes
+
+Init ==
+    /\ decided = {}
+    /\ votes = [v \in Validators |-&gt; {}]
+
+Vote(v, b) ==
+    /\ b \notin decided
+    /\ votes' = [votes EXCEPT ![v] = votes[v] \cup {b}]
+    /\ IF \E Q \in Quorums: \A v2 \in Q: b \in votes'[v2]
+       THEN decided' = decided \cup {b}
+       ELSE UNCHANGED decided
+
+Next == \E v \in Validators, b \in {0, 1} : Vote(v, b)
+
+SafetyInvariant == Cardinality(decided) &lt;= 1
+====
+</code></pre>
+      <p><strong>Adversarial Reasoning Patterns</strong></p>
+      <p>When designing a protocol, explicitly enumerate:</p>
+      <ul>
+        <li>
+          What can a Byzantine node do? (Send conflicting messages, delay, lie
+          about state)
+        </li>
+        <li>
+          What can a rational (but selfish) node do? (Maximize reward, minimize
+          cost)
+        </li>
+        <li>
+          What can a network-level adversary do? (Delay messages selectively,
+          partition the network)
+        </li>
+        <li>
+          What can a successful attacker achieve? (Create double spends, halt
+          the network, steal funds, violate privacy)
+        </li>
+      </ul>
+      <p>
+        For each capability: is the protocol safe? At what threshold does safety
+        break?
+      </p>
+      <p><strong>Gradual Decentralization</strong></p>
+      <p>
+        New protocols often start centralized (for performance and safety) and
+        progressively decentralize:
+      </p>
+      <ol>
+        <li>
+          <strong>Stage 0</strong>: Centralized with a multi-sig for emergency
+          control.
+        </li>
+        <li>
+          <strong>Stage 1</strong>: Multiple independent validators with fraud
+          proofs.
+        </li>
+        <li>
+          <strong>Stage 2</strong>: Permissionless participation, fully
+          trustless.
+        </li>
+      </ol>
+      <p>
+        This pattern is used by OP Labs (Optimism's staged decentralization
+        roadmap) and Arbitrum (the Security Council is a temporary centralized
+        body transitioning to DAO control).
+      </p>
+      <p><strong>Protocol Upgrade Design</strong></p>
+      <p>
+        Every long-lived protocol needs an upgrade mechanism. Key design
+        questions:
+      </p>
+      <ul>
+        <li>
+          <strong>Who authorizes upgrades?</strong> (Multi-sig, DAO vote,
+          timelocked governance)
+        </li>
+        <li>
+          <strong>How long is the warning period?</strong> (Users must have time
+          to exit if they disagree)
+        </li>
+        <li>
+          <strong>Can an upgrade steal assets?</strong> (A malicious upgrade
+          could drain funds — this must be prevented by the governance
+          mechanism)
+        </li>
+        <li>
+          <strong>What can't be upgraded?</strong> (Some properties should be
+          immutable — e.g., max supply of Bitcoin's 21M cap)
+        </li>
+      </ul>
+      <p><strong>The "Make It Boring" Principle</strong></p>
+      <p>
+        Production blockchain protocols should be exactly as complex as
+        necessary and no more. Every novel mechanism is an untested attack
+        surface. The most secure protocols reuse well-understood cryptographic
+        primitives, consensus algorithms with known guarantees, and
+        battle-tested code. Novelty should be applied only where existing
+        solution is provably insufficient.
+      </p>
+      <h3 id="why-it-matters-2">Why It Matters</h3>
+      <p>
+        Protocol design mistakes cannot be patched after deployment (without a
+        hard fork or an upgrade mechanism with its own governance risk).
+        Thinking in formal specifications — safety properties, liveness
+        properties, adversarial models — prevents the class of bugs that are
+        invisible to unit testing but catastrophic in production. Engineers who
+        can do this are rare and disproportionately valuable.
+      </p>
+      <h3 id="real-world-context-2">Real-World Context</h3>
+      <ul>
+        <li>
+          Ethereum's Casper FFG was specified formally before implementation,
+          enabling rigorous safety proofs.
+        </li>
+        <li>
+          The Ethereum Foundation uses TLA+ to specify consensus changes before
+          implementation.
+        </li>
+        <li>
+          The Merge coordination between client teams required formal
+          specification of the Engine API to ensure all clients interpreted the
+          handoff identically.
+        </li>
+        <li>
+          Bitcoin's protocol changes go through a rigorous BIP (Bitcoin
+          Improvement Proposal) process that includes formal specification of
+          network behavior effects.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-2">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TLA+ / TLC</td>
+            <td>Formal specification and model checking</td>
+          </tr>
+          <tr>
+            <td>Alloy</td>
+            <td>Lightweight formal modeling (simpler than TLA+)</td>
+          </tr>
+          <tr>
+            <td>Prism</td>
+            <td>Probabilistic model checker</td>
+          </tr>
+          <tr>
+            <td>Ivy</td>
+            <td>Protocol verification tool (invented for Paxos)</td>
+          </tr>
+          <tr>
+            <td>Lean / Coq</td>
+            <td>
+              Theorem provers (formal verification of mathematical proofs)
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-2">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Define a safety property and a liveness property for a simple token
+          transfer protocol. How would you check a safety property using TLA+
+          model checking?
+        </li>
+        <li>
+          Why is it insufficient to test a consensus algorithm with a fixed set
+          of scenarios? What does TLA+ model checking provide that testing
+          cannot?
+        </li>
+        <li>
+          What is the difference between "optimistic" and "pessimistic"
+          adversarial models? When is each appropriate?
+        </li>
+        <li>
+          Describe the "gradual decentralization" argument for launching a
+          blockchain with a centralized sequencer. What specific risks does the
+          initial centralization introduce, and what mechanism ensures the
+          promise to decentralize is credible?
+        </li>
+        <li>
+          How would you specify the safety property of a cross-chain bridge
+          using TLA+? What variables and invariants would the model include?
+        </li>
+        <li>
+          Design the upgrade mechanism for a DeFi lending protocol that holds
+          $1B in TVL. Balance: (a) ability to fix critical bugs quickly, (b)
+          protection against malicious upgrades by a compromised admin key. Be
+          specific about time delays, key structures, and emergency mechanisms.
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-2">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>TLA+ specification</strong>: Specify a simplified two-phase
+          commit protocol in TLA+. Check: the safety property that if one node
+          aborts, all abort; and the liveness property that all decisions
+          eventually happen in the absence of failures.
+        </li>
+        <li>
+          <strong>Byzantine generals in TLA+</strong>: Specify the Byzantine
+          generals problem for 4 generals, 1 traitor. Use TLC to verify that
+          consensus is always reached.
+        </li>
+        <li>
+          <strong>Adversarial protocol review</strong>: Take a simple escrow
+          protocol. Enumerate 5 distinct adversarial actors (buyer, seller,
+          oracle, relayer, admin). For each, identify what they can do
+          maliciously and whether the protocol resists it.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-2">Mini Build Task</h3>
+      <p>
+        <strong
+          >Write a formal protocol specification for a cross-chain atomic
+          swap.</strong
+        >
+        Using TLA+ or Alloy: specify the state machine, all valid transitions,
+        the safety invariant (funds are never lost — either Alice gets Bob's
+        asset, or Bob gets Alice's asset, or both get their originals back), and
+        the liveness property (any swap that both parties commit to eventually
+        completes). Run the model checker and verify both properties.
+      </p>
+      <hr />
+      <h2 id="topic-4-smart-contract-auditing-methodology">
+        Topic 4: Smart Contract Auditing Methodology
+      </h2>
+      <h3 id="explanation-3">Explanation</h3>
+      <p><strong>What an Audit Is (and Isn't)</strong></p>
+      <p>
+        An audit is a formal, structured security review of a smart contract
+        system by one or more security experts. An audit is:
+      </p>
+      <ul>
+        <li>
+          A systematic search for vulnerabilities using defined methodology.
+        </li>
+        <li>
+          A documentation of findings with severity, impact, and remediation
+          guidance.
+        </li>
+        <li>
+          A snapshot in time — it does not certify the protocol is secure
+          forever.
+        </li>
+      </ul>
+      <p>An audit is NOT:</p>
+      <ul>
+        <li>A guarantee of security.</li>
+        <li>A replacement for formal verification.</li>
+        <li>Sufficient for protocols that evolve significantly post-audit.</li>
+      </ul>
+      <p><strong>Audit Methodology</strong></p>
+      <p><strong>Phase 1: Scoping and Architecture Review</strong></p>
+      <ul>
+        <li>
+          Understand the protocol's intended behavior (specification,
+          documentation, whitepaper).
+        </li>
+        <li>
+          Map the contract system: which contracts exist, what do they do, how
+          do they interact?
+        </li>
+        <li>
+          Identify: entry points (external/public functions), privileged
+          functions, external dependencies (oracles, other protocols).
+        </li>
+      </ul>
+      <p><strong>Phase 2: Manual Code Review</strong></p>
+      <p>Systematic line-by-line review with focus on:</p>
+      <ul>
+        <li>
+          <strong>Access control</strong>: Is every privileged function properly
+          restricted?
+        </li>
+        <li>
+          <strong>State machine validity</strong>: Are there impossible or
+          dangerous state combinations?
+        </li>
+        <li>
+          <strong>Integer arithmetic</strong>: Can any arithmetic overflow or
+          produce unexpected rounding?
+        </li>
+        <li>
+          <strong>Reentrancy</strong>: Does any function call an external
+          contract before updating state?
+        </li>
+        <li>
+          <strong>Oracle reliance</strong>: Is any critical decision based on a
+          manipulable oracle?
+        </li>
+        <li>
+          <strong>CEI compliance</strong>: Is every function following
+          Checks-Effects-Interactions?
+        </li>
+        <li>
+          <strong>Error handling</strong>: Are all external call return values
+          checked?
+        </li>
+      </ul>
+      <p><strong>Phase 3: Automated Analysis</strong></p>
+      <ul>
+        <li>
+          Run <code>slither</code> — static analyzer. Review all findings.
+          Triage false positives.
+        </li>
+        <li>Run <code>echidna</code> fuzz testing with custom properties.</li>
+        <li>Run <code>mythril</code> — symbolic execution.</li>
+        <li>
+          Run <code>Halmos</code> or Certora for specific invariant proofs.
+        </li>
+      </ul>
+      <p><strong>Phase 4: Adversarial Testing</strong></p>
+      <ul>
+        <li>
+          Build proof-of-concept exploits for all suspected high-severity
+          issues.
+        </li>
+        <li>
+          Test: oracle manipulation, flash loan attacks, reentrancy, governance
+          attacks.
+        </li>
+        <li>Fork mainnet and simulate attack scenarios.</li>
+      </ul>
+      <p><strong>Phase 5: Report Writing</strong></p>
+      <p>Severity levels:</p>
+      <ul>
+        <li>
+          <strong>Critical</strong>: Direct loss of funds or protocol
+          compromise. Must fix before deployment.
+        </li>
+        <li>
+          <strong>High</strong>: Significant financial risk under specific
+          conditions. Must fix.
+        </li>
+        <li>
+          <strong>Medium</strong>: Limited financial risk or significant trust
+          violation. Should fix.
+        </li>
+        <li>
+          <strong>Low</strong>: Minor risk or best practice deviation. Should
+          acknowledge.
+        </li>
+        <li>
+          <strong>Informational</strong>: Non-security improvement suggestions.
+        </li>
+      </ul>
+      <p>For each finding:</p>
+      <pre
+        data-role="codeBlock"
+        data-info="markdown"
+        class="language-markdown markdown"
+      ><code><span class="token title important"><span class="token punctuation">##</span> [CRITICAL] Reentrancy in withdraw() enables fund drainage</span>
+
+<span class="token bold"><span class="token punctuation">**</span><span class="token content">Impact</span><span class="token punctuation">**</span></span>: An attacker can call withdraw() in a loop, draining the entire
+protocol vault before balances are updated.
+
+<span class="token bold"><span class="token punctuation">**</span><span class="token content">Proof of Concept</span><span class="token punctuation">**</span></span>:
+
+<span class="token code"><span class="token punctuation">```</span><span class="token code-language">solidity</span>
+<span class="token code-block language-solidity"><span class="token keyword keyword-contract">contract</span> <span class="token class-name">Attacker</span> <span class="token punctuation">{</span>
+<span class="token keyword keyword-function">function</span> <span class="token function">attack</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-external">external</span> <span class="token punctuation">{</span>
+victim<span class="token punctuation">.</span><span class="token function">withdraw</span><span class="token punctuation">(</span><span class="token number">1</span> ether<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">receive</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword keyword-external">external</span> <span class="token keyword keyword-payable">payable</span> <span class="token punctuation">{</span>
+<span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token builtin">address</span><span class="token punctuation">(</span>victim<span class="token punctuation">)</span><span class="token punctuation">.</span>balance <span class="token operator">&gt;=</span> <span class="token number">1</span> ether<span class="token punctuation">)</span> victim<span class="token punctuation">.</span><span class="token function">withdraw</span><span class="token punctuation">(</span><span class="token number">1</span> ether<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">}</span></span>
+<span class="token punctuation">```</span></span>
+</code></pre>
+      <p>
+        <strong>Recommendation</strong>: Apply Checks-Effects-Interactions
+        pattern. Update<br />
+        <code>balances[msg.sender]</code> before calling
+        <code>msg.sender.call{value: amount}("")</code>.
+      </p>
+      <p><strong>Formal Verification with Certora</strong></p>
+      <p>
+        Certora Prover uses Certora Verification Language (CVL) to write formal
+        specifications:
+      </p>
+      <pre
+        data-role="codeBlock"
+        data-info="cvl"
+        class="language-cvl cvl"
+      ><code>rule noFundsLost(method f, calldataarg args) {
+    uint256 balanceBefore = token.balanceOf(pool);
+    f(e, args);
+    uint256 balanceAfter = token.balanceOf(pool);
+    assert balanceAfter &gt;= balanceBefore, "Funds decreased unexpectedly";
+}
+</code></pre>
+      <p>
+        The Prover performs symbolic execution over all possible inputs and
+        proves (or disproves) the property.
+      </p>
+      <h3 id="why-it-matters-3">Why It Matters</h3>
+      <p>
+        The audit market represents
+        <span class="katex"
+          ><span class="katex-mathml"
+            ><math xmlns="http://www.w3.org/1998/Math/MathML"
+              ><semantics
+                ><mrow
+                  ><mn>200</mn><mi>M</mi><mo>+</mo><mi>p</mi><mi>e</mi><mi>r</mi
+                  ><mi>y</mi><mi>e</mi><mi>a</mi><mi>r</mi><mi>i</mi><mi>n</mi
+                  ><mi>s</mi><mi>p</mi><mi>e</mi><mi>n</mi><mi>d</mi><mi>i</mi
+                  ><mi>n</mi><mi>g</mi><mi>b</mi><mi>y</mi><mi>D</mi><mi>e</mi
+                  ><mi>F</mi><mi>i</mi><mi>p</mi><mi>r</mi><mi>o</mi><mi>t</mi
+                  ><mi>o</mi><mi>c</mi><mi>o</mi><mi>l</mi><mi>s</mi
+                  ><mo separator="true">,</mo><mi>w</mi><mi>i</mi><mi>t</mi
+                  ><mi>h</mi><mi>i</mi><mi>n</mi><mi>d</mi><mi>i</mi><mi>v</mi
+                  ><mi>i</mi><mi>d</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi>a</mi
+                  ><mi>u</mi><mi>d</mi><mi>i</mi><mi>t</mi><mi>s</mi><mi>c</mi
+                  ><mi>o</mi><mi>s</mi><mi>t</mi><mi>i</mi><mi>n</mi
+                  ><mi>g</mi></mrow
+                ><annotation encoding="application/x-tex"
+                  >200M+ per year in spending by DeFi protocols, with individual
+                  audits costing</annotation
+                ></semantics
+              ></math
+            ></span
+          ><span class="katex-html" aria-hidden="true"
+            ><span class="base"
+              ><span
+                class="strut"
+                style="height: 0.7667em; vertical-align: -0.0833em"
+              ></span
+              ><span class="mord">200</span
+              ><span class="mord mathnormal" style="margin-right: 0.10903em"
+                >M</span
+              ><span class="mspace" style="margin-right: 0.2222em"></span
+              ><span class="mbin">+</span
+              ><span class="mspace" style="margin-right: 0.2222em"></span></span
+            ><span class="base"
+              ><span
+                class="strut"
+                style="height: 0.8889em; vertical-align: -0.1944em"
+              ></span
+              ><span class="mord mathnormal">p</span
+              ><span class="mord mathnormal">erye</span
+              ><span class="mord mathnormal">a</span
+              ><span class="mord mathnormal" style="margin-right: 0.02778em"
+                >r</span
+              ><span class="mord mathnormal">in</span
+              ><span class="mord mathnormal">s</span
+              ><span class="mord mathnormal">p</span
+              ><span class="mord mathnormal">e</span
+              ><span class="mord mathnormal">n</span
+              ><span class="mord mathnormal">d</span
+              ><span class="mord mathnormal">in</span
+              ><span class="mord mathnormal" style="margin-right: 0.03588em"
+                >g</span
+              ><span class="mord mathnormal">b</span
+              ><span class="mord mathnormal">yDe</span
+              ><span class="mord mathnormal" style="margin-right: 0.13889em"
+                >F</span
+              ><span class="mord mathnormal">i</span
+              ><span class="mord mathnormal">p</span
+              ><span class="mord mathnormal">ro</span
+              ><span class="mord mathnormal">t</span
+              ><span class="mord mathnormal">oco</span
+              ><span class="mord mathnormal" style="margin-right: 0.01968em"
+                >l</span
+              ><span class="mord mathnormal">s</span
+              ><span class="mpunct">,</span
+              ><span class="mspace" style="margin-right: 0.1667em"></span
+              ><span class="mord mathnormal" style="margin-right: 0.02691em"
+                >w</span
+              ><span class="mord mathnormal">i</span
+              ><span class="mord mathnormal">t</span
+              ><span class="mord mathnormal">hin</span
+              ><span class="mord mathnormal">d</span
+              ><span class="mord mathnormal">i</span
+              ><span class="mord mathnormal" style="margin-right: 0.03588em"
+                >v</span
+              ><span class="mord mathnormal">i</span
+              ><span class="mord mathnormal">d</span
+              ><span class="mord mathnormal">u</span
+              ><span class="mord mathnormal">a</span
+              ><span class="mord mathnormal" style="margin-right: 0.01968em"
+                >l</span
+              ><span class="mord mathnormal">a</span
+              ><span class="mord mathnormal">u</span
+              ><span class="mord mathnormal">d</span
+              ><span class="mord mathnormal">i</span
+              ><span class="mord mathnormal">t</span
+              ><span class="mord mathnormal">scos</span
+              ><span class="mord mathnormal">t</span
+              ><span class="mord mathnormal">in</span
+              ><span class="mord mathnormal" style="margin-right: 0.03588em"
+                >g</span
+              ></span
+            ></span
+          ></span
+        >30K–$500K depending on scope and auditor reputation. Understanding
+        audit methodology enables you to: conduct preliminary self-audits of
+        your own code, communicate effectively with auditors, evaluate the
+        quality of audits on protocols you use, and potentially build a career
+        in blockchain security research.
+      </p>
+      <h3 id="real-world-context-3">Real-World Context</h3>
+      <ul>
+        <li>
+          Trail of Bits, OpenZeppelin, Spearbit, Code4rena, and Cantina are the
+          leading audit firms.
+        </li>
+        <li>
+          Competitive audit platforms (Code4rena, Sherlock) allow multiple
+          independent auditors to review the same codebase and share a reward
+          pool for findings.
+        </li>
+        <li>
+          Immunefi hosts bug bounty programs with payouts up to $10M for
+          critical vulnerabilities in major DeFi protocols.
+        </li>
+        <li>
+          The Euler Finance hack ($197M, 2023) occurred on a protocol that had
+          been audited — demonstrating that audits catch most vulnerabilities
+          but not all.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-3">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>slither</code></td>
+            <td>Static analysis (Python, Trail of Bits)</td>
+          </tr>
+          <tr>
+            <td><code>mythril</code></td>
+            <td>Symbolic execution scanner</td>
+          </tr>
+          <tr>
+            <td><code>echidna</code></td>
+            <td>Property-based fuzzer for Solidity</td>
+          </tr>
+          <tr>
+            <td><code>medusa</code></td>
+            <td>Advanced fuzzer (Go, Trail of Bits)</td>
+          </tr>
+          <tr>
+            <td>Certora Prover</td>
+            <td>Formal verification</td>
+          </tr>
+          <tr>
+            <td>Foundry (<code>forge</code>)</td>
+            <td>PoC exploit scripting</td>
+          </tr>
+          <tr>
+            <td>Tenderly</td>
+            <td>Fork simulation for attack verification</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-3">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          You are auditing a lending protocol. List 10 specific invariants you
+          would formally verify during the audit. For each, describe what would
+          happen if it were violated.
+        </li>
+        <li>
+          <code>slither</code> reports 30 findings on a new protocol. How do you
+          triage them? What process distinguishes false positives from real
+          risks?
+        </li>
+        <li>
+          Why can one successful audit still be insufficient for a protocol that
+          regularly adds new features?
+        </li>
+        <li>
+          Explain the difference in security guarantees between: (a) a fuzz test
+          that ran for 10 hours, (b) Certora Prover proving an invariant, and
+          (c) a manual audit by 3 experienced auditors.
+        </li>
+        <li>
+          A protocol undergoes an audit and receives 2 critical, 5 high, 10
+          medium findings. They fix the criticals and release. Is it safe? What
+          is the remaining risk surface?
+        </li>
+        <li>
+          How would you audit a proxy upgrade mechanism? What specific attack
+          against the governance that controls the proxy would you look for?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-3">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>Audit a known-vulnerable contract</strong>: Take a contract
+          from Damn Vulnerable DeFi. Audit it using the methodology above
+          without looking at the solution. Produce a formal report. Then compare
+          your findings to the published solution.
+        </li>
+        <li>
+          <strong>CVL specification</strong>: Write Certora formal specification
+          for an ERC-20 token: prove total supply invariance, address the
+          monotonicity of minting, and verify allowance arithmetic correctness.
+        </li>
+        <li>
+          <strong>Slither analysis</strong>: Run slither on a real open-source
+          DeFi protocol. Review all findings. Write a report distinguishing true
+          positives from false positives, with severity assessment.
+        </li>
+        <li>
+          <strong>Competitive audit</strong>: Participate in a Code4rena or
+          Sherlock audit contest. Submit at least 3 findings. Analyze the
+          judge's responses.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-3">Mini Build Task</h3>
+      <p>
+        <strong>Conduct a Full Security Audit.</strong> Audit a protocol you
+        built in a previous stage (your stablecoin system or lending protocol
+        from Stage 3/4). Produce a professional audit report including:
+        executive summary, scope, methodology, all findings with severity and
+        PoC, recommendations, and a post-remediation review verifying fixes are
+        correct.
+      </p>
+      <hr />
+      <h2 id="topic-5-secure-distributed-system-design-patterns">
+        Topic 5: Secure Distributed System Design Patterns
+      </h2>
+      <h3 id="explanation-4">Explanation</h3>
+      <p><strong>Security Invariants as First-Class Design Elements</strong></p>
+      <p>
+        Before writing any distributed system, enumerate its security invariants
+        — statements that must be true in every reachable state. In the design
+        phase, ask: "How can each invariant be violated? What conditions would
+        allow violation, and how do we prevent those conditions?"
+      </p>
+      <p>Example invariants for a bridge:</p>
+      <ul>
+        <li>"Total assets on Chain B ≤ Total assets locked on Chain A"</li>
+        <li>"Only messages with valid proofs are executed"</li>
+        <li>"An upgrade cannot change the emergency pause mechanism"</li>
+      </ul>
+      <p><strong>Fail-Safe Defaults</strong></p>
+      <p>A system should fail into a safe state, not a dangerous one:</p>
+      <ul>
+        <li>
+          If an oracle fails, stop accepting new borrows (not continue with
+          stale price).
+        </li>
+        <li>
+          If a contract call reverts unexpectedly, revert the entire transaction
+          (not continue with partial updates).
+        </li>
+        <li>
+          If the sequencer is offline, fall back to L1-forced inclusion (not
+          halt withdrawals).
+        </li>
+        <li>
+          If the bridge's challenge oracle is unreachable, extend the challenge
+          window (not approve the transaction).
+        </li>
+      </ul>
+      <p>Design principle: "Fail closed" rather than "fail open."</p>
+      <p><strong>Trust Minimization Patterns</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Pattern</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Minimal trusted component</strong></td>
+            <td>
+              Identify and isolate the smallest possible trusted component.
+              Everything outside it should be verifiable.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Defense in depth</strong></td>
+            <td>
+              Multiple independent security mechanisms, not relying on any
+              single one.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Separation of concerns</strong></td>
+            <td>
+              Privileged functions physically separate from user-facing
+              functions.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Time-delayed actions</strong></td>
+            <td>
+              Any action by a trusted party takes effect after a delay allowing
+              intervention.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Multi-party authorization</strong></td>
+            <td>
+              Critical actions require agreement from N-of-M independent
+              parties.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Economic bonding</strong></td>
+            <td>
+              Parties who could misbehave post collateral; misbehavior results
+              in slashing.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>Multi-Party Computation (MPC) Concepts</strong></p>
+      <p>
+        MPC allows multiple parties to jointly compute a function of their
+        private inputs without revealing those inputs to each other. In
+        blockchain contexts:
+      </p>
+      <ul>
+        <li>
+          <strong>Threshold signatures (TSS)</strong>: N parties jointly sign a
+          message, requiring M-of-N agreement. The private key is never
+          reconstructed in one place. Used by: Binance's TSS MPC wallet,
+          distributed validators.
+        </li>
+        <li>
+          <strong
+            >Secure Multi-Party Computation for DKG (Distributed Key
+            Generation)</strong
+          >: Generate a shared public key with no single party knowing the full
+          private key.
+        </li>
+        <li>
+          <strong>Homomorphic Encryption</strong>: Compute on encrypted data.
+          Not yet practical for most on-chain use cases but foundational.
+        </li>
+      </ul>
+      <p><strong>Key Management and HSMs</strong></p>
+      <p>
+        Production blockchain systems must manage private keys that control
+        billions of dollars. Security requirements:
+      </p>
+      <ul>
+        <li>
+          <strong>Hardware Security Modules (HSMs)</strong>: Tamper-resistant
+          hardware that stores keys and performs signing operations. The key
+          never leaves the HSM in plaintext.
+        </li>
+        <li>
+          <strong>Key ceremony</strong>: Document and witness the creation of
+          sensitive keys, with cryptographic proof of the process.
+        </li>
+        <li>
+          <strong>Key rotation</strong>: Regularly rotate signing keys. Design
+          systems to accommodate key changes without downtime.
+        </li>
+        <li>
+          <strong>Multi-sig for admin functions</strong>: Every admin action on
+          a live protocol must require multiple signers via a Gnosis Safe or
+          equivalent.
+        </li>
+      </ul>
+      <p><strong>The "Minimal Footprint" Principle</strong></p>
+      <p>Contracts should hold as little value as possible. Design patterns:</p>
+      <ul>
+        <li>
+          <strong>Withdrawal delays</strong>: Don't allow instant, full
+          withdrawal of protocol TVL. Rate-limit withdrawals.
+        </li>
+        <li>
+          <strong>Value caps</strong>: Limit the maximum value in any single
+          smart contract.
+        </li>
+        <li>
+          <strong>Segmented vaults</strong>: Split TVL across multiple contracts
+          so no single contract failure is catastrophic.
+        </li>
+      </ul>
+      <p><strong>Circuit Breakers</strong></p>
+      <p>Automatic pause mechanisms triggered by anomalous behavior:</p>
+      <ul>
+        <li>Oracle price deviation &gt; X% in one block → pause borrowing.</li>
+        <li>
+          Net outflow from protocol &gt; Y% of TVL in 30 minutes → pause
+          withdrawals.
+        </li>
+        <li>Call with unusual gas pattern on sensitive function → pause.</li>
+      </ul>
+      <p>
+        These must be carefully designed to not create DoS vectors themselves —
+        a malicious actor should not be able to trigger a circuit breaker to
+        prevent legitimate users from exiting.
+      </p>
+      <h3 id="why-it-matters-4">Why It Matters</h3>
+      <p>
+        The protocols that have survived longest in DeFi are not the most
+        sophisticated — they are the most thoroughly designed from a security
+        standpoint. Protocol design is an adversarial exercise. For every
+        mechanism you add, there is someone with skin in the game trying to
+        break it. The patterns in this topic represent hard-won lessons from
+        billions of dollars in losses.
+      </p>
+      <h3 id="real-world-context-4">Real-World Context</h3>
+      <ul>
+        <li>
+          The Ronin bridge had no circuit breaker. $625M was drained in a single
+          transaction without triggering any alarm.
+        </li>
+        <li>
+          Aave V3's isolation mode caps the maximum exposure to any single asset
+          — the "minimal footprint" principle applied to lending.
+        </li>
+        <li>
+          Chainlink's Data Feeds include circuit breakers (min/max price checks)
+          that prevented certain oracle manipulations during the Mango Markets
+          exploit.
+        </li>
+        <li>
+          Ethereum's validator withdrawal system (EIP-4895) includes a
+          withdrawal queue with maximum rate limits — a circuit breaker for
+          validator exits.
+        </li>
+      </ul>
+      <h3 id="tools--technologies-4">Tools / Technologies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>OpenZeppelin Defender</td>
+            <td>Automated monitoring and circuit breaking</td>
+          </tr>
+          <tr>
+            <td>Gnosis Safe</td>
+            <td>Multi-sig for admin key management</td>
+          </tr>
+          <tr>
+            <td>AWS CloudHSM / Azure HSM</td>
+            <td>Hardware key management</td>
+          </tr>
+          <tr>
+            <td>Fireblocks</td>
+            <td>MPC-based key management platform for institutions</td>
+          </tr>
+          <tr>
+            <td>TLA+</td>
+            <td>Formal specification of security properties</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 id="deep-mastery-questions-4">Deep Mastery Questions</h3>
+      <ol>
+        <li>
+          Design a "fail-safe" liquidation mechanism for a lending protocol.
+          What conditions should trigger an automatic pause? What should happen
+          to users' funds during the pause?
+        </li>
+        <li>
+          What is the "minimal footprint" principle, and how would you apply it
+          to a yield aggregator that manages multiple LP positions across
+          different protocols?
+        </li>
+        <li>
+          In a threshold signature scheme (3-of-5), what is the adversarial
+          model? How many participants must the attacker compromise to forge a
+          signature?
+        </li>
+        <li>
+          Design the key management architecture for a bridge that holds $500M
+          in locked assets. Who are the key holders? How are keys generated? How
+          are they used? How are they rotated?
+        </li>
+        <li>
+          What is a "circuit breaker" in DeFi, and how would you design one
+          that: (a) prevents losses during anomalous conditions, (b) cannot be
+          triggered by an attacker to prevent legitimate user withdrawals?
+        </li>
+        <li>
+          Explain the security model of Ethereum's validator withdrawal queue.
+          Why is there a queue at all, and what attack does it prevent?
+        </li>
+      </ol>
+      <h3 id="hands-on-exercises-4">Hands-On Exercises</h3>
+      <ol>
+        <li>
+          <strong>TLA+ security invariant</strong>: Specify a simple DeFi
+          protocol (deposit and withdraw) in TLA+. Encode the invariant
+          "totalDeposits &gt;= totalWithdrawals". Run TLC and verify it holds in
+          all reachable states. Then introduce a bug (allow withdrawals without
+          checking balance) and show TLC detects it.
+        </li>
+        <li>
+          <strong>Circuit breaker implementation</strong>: Add a circuit breaker
+          to your lending protocol: if total borrows drops by &gt;20% in one
+          block, the protocol pauses automatically. Any address can trigger the
+          unpause after a 1-hour cooldown and governance vote.
+        </li>
+        <li>
+          <strong>Key ceremony simulation</strong>: Using local cryptographic
+          tools, simulate a 2-of-3 threshold signature ceremony. Generate 3 key
+          shares. Demonstrate that any 2 shares can reconstruct the signature
+          but 1 cannot.
+        </li>
+        <li>
+          <strong>Multi-sig audit</strong>: Review the Gnosis Safe multi-sig
+          code. Identify: how signatures are verified, how transactions are
+          encoded, and what protections exist against replay attacks.
+        </li>
+      </ol>
+      <h3 id="mini-build-task-4">Mini Build Task</h3>
+      <p>
+        <strong>Security Architecture Review.</strong> Take your DeFi lending
+        protocol (or stablecoin) from Stage 4. Write a comprehensive security
+        architecture document including: (a) complete list of security
+        invariants with formal statements; (b) trusted component boundary
+        diagram (what is trusted, what is verified); (c) key management design
+        (who holds which keys, how are they used); (d) circuit breaker
+        specification; (e) incident response runbook (who to notify, what
+        actions to take for each severity level). Present this as if pitching to
+        a team about to deploy $100M in TVL.
+      </p>
+      <hr />
+      <h2 id="mini-projects">Mini Projects</h2>
+      <h3 id="project-1-zk-age-verification-dapp">
+        Project 1: ZK Age Verification dApp
+      </h3>
+      <p>
+        Users prove they hold a government ID credential (simulated) meeting an
+        age threshold, without revealing their exact birthdate or identity.
+        Circuit: Merkle tree membership (credential is in a registry), age check
+        (current date − birth year &gt; threshold), nullifier (prevents
+        double-proving). Verifies on-chain; a token is minted to age-verified
+        addresses.
+      </p>
+      <h3 id="project-2-zk-bridge-light-client-proof-verifier">
+        Project 2: ZK Bridge (Light Client Proof Verifier)
+      </h3>
+      <p>
+        Build a ZK proof verifier contract that can verify Ethereum consensus
+        state proofs (use a test version with mock data). Write a cross-chain
+        message that is accepted only if accompanied by a valid ZK proof of a
+        source chain event. Use gnark or snarkjs to generate the proof
+        off-chain.
+      </p>
+      <h3 id="project-3-protocol-audit--publish-quality-report">
+        Project 3: Protocol Audit — Publish-Quality Report
+      </h3>
+      <p>
+        Choose a mid-complexity open-source DeFi protocol (&lt; 2,000 lines of
+        Solidity) that has not been audited. Conduct a full audit following the
+        methodology from Topic 4. Publish a professional report to GitHub.
+        Optionally, contact the project team with your findings.
+      </p>
+      <h3 id="project-4-tokenomics-simulation-with-cadcad">
+        Project 4: Tokenomics Simulation with cadCAD
+      </h3>
+      <p>
+        Model a new protocol's token economy in cadCAD. Define: agents (LPs,
+        borrowers, governance voters, speculators), state variables (token
+        price, supply, protocol revenue, TVL), and policies (emission schedule,
+        fee distribution, buyback trigger). Run Monte Carlo simulations across
+        100 parameter combinations. Identify: conditions under which the
+        protocol collapses, the emission rate that maximizes long-term protocol
+        health.
+      </p>
+      <hr />
+      <h2
+        id="capstone-project-original-protocol-design--research-paper--reference-implementation"
+      >
+        Capstone Project: Original Protocol Design — Research Paper + Reference
+        Implementation
+      </h2>
+      <p>
+        This is the capstone of the entire 6-stage roadmap. Design a novel (but
+        realistic) blockchain protocol component:
+      </p>
+      <p>
+        <strong>Option A: New Consensus Mechanism Component</strong><br />
+        Design a modification to an existing consensus mechanism (e.g., a fork
+        choice rule that accounts for validator geographic distribution to
+        improve censorship resistance). Provide: formal specification in TLA+,
+        safety and liveness proof sketches, adversarial analysis (at what
+        threshold of Byzantine validators does safety break?), and a simulation.
+      </p>
+      <p>
+        <strong>Option B: Bridge Security Upgrade</strong><br />
+        Design a more secure message verification scheme for an existing bridge
+        architecture (e.g., a ZK light client for an EVM chain to Cosmos chain).
+        Provide: specification, security model, implementation of the ZK
+        circuit, and the Solidity verifier contract.
+      </p>
+      <p>
+        <strong>Option C: Novel DeFi Primitive</strong><br />
+        Design a new financial primitive not yet implemented in DeFi (e.g., a
+        decentralized repo market, a perpetual options protocol, or a dynamic
+        NFT-collateralized lending system). Provide: formal invariants, economic
+        security analysis, reference Solidity implementation with 100% invariant
+        test coverage, and an audit report of your own code.
+      </p>
+      <p><strong>Deliverables (for whichever option):</strong></p>
+      <ol>
+        <li>
+          A 10–20 page research-style paper: motivation, design, security
+          analysis, comparison to alternatives.
+        </li>
+        <li>
+          Reference implementation in Solidity (or Rust/Cairo for non-EVM
+          targets).
+        </li>
+        <li>
+          Comprehensive test suite: unit tests, fuzz tests, invariant tests,
+          formal verification where applicable.
+        </li>
+        <li>Professional audit report of your own implementation.</li>
+        <li>Deployment on a public testnet with documentation.</li>
+      </ol>
+      <hr />
+      <h2 id="common-mistakes--misconceptions">
+        Common Mistakes &amp; Misconceptions
+      </h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Mistake</th>
+            <th>Reality</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>"ZK proof = privacy"</td>
+            <td>
+              ZK proofs provide computational integrity (proving correct
+              execution). Privacy requires hiding inputs, which requires
+              additional design — zero-knowledge property doesn't automatically
+              hide data.
+            </td>
+          </tr>
+          <tr>
+            <td>"Multi-sig is decentralized"</td>
+            <td>
+              Multi-sig is a multi-party authorization mechanism. If the key
+              holders are a known, small set of individuals at one company, it
+              is not meaningfully decentralized.
+            </td>
+          </tr>
+          <tr>
+            <td>"Audited = secure"</td>
+            <td>
+              Audits reduce risk. They do not eliminate it. Novel attack
+              vectors, post-audit code changes, and composability effects can
+              introduce new vulnerabilities after a clean audit report.
+            </td>
+          </tr>
+          <tr>
+            <td>"ZK circuits can't have bugs"</td>
+            <td>
+              ZK circuits are code. They have bugs. Incorrect constraint systems
+              can generate valid proofs for invalid statements. Auditing ZK
+              circuits requires different expertise than contract auditing.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              "The bridge is secure because it's been running for 6 months"
+            </td>
+            <td>
+              Longevity is weak evidence of security. The Ronin bridge ran for a
+              year before losing $625M. Incentive-compatible attacks wait for
+              sufficient TVL.
+            </td>
+          </tr>
+          <tr>
+            <td>"Formal verification proves security"</td>
+            <td>
+              Formal verification proves that a property holds relative to a
+              specification. If the specification is wrong, or the property
+              doesn't capture the real threat, formalization provides false
+              confidence.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <hr />
+      <h2 id="security-considerations">Security Considerations</h2>
+      <p>
+        At this stage, your security mindset must operate at the protocol design
+        level:
+      </p>
+      <ul>
+        <li>
+          <strong>Model the adversary explicitly.</strong> Who are they? What is
+          their budget? What is their objective? What information do they have?
+          Design your security guarantees against this specific adversary, not a
+          vague notion of "attackers."
+        </li>
+        <li>
+          <strong>Economic security is quantifiable.</strong> For every economic
+          mechanism (slashing, bonding, liquidity), compute: what does it cost
+          to break? Is this cost higher than the potential profit?
+        </li>
+        <li>
+          <strong>Composability creates unpredictable attack surfaces.</strong>
+          Your protocol is secure in isolation. What happens when your oracle is
+          called during a flash loan? When a governance proposal is executed
+          during a market crash? Test composability scenarios explicitly.
+        </li>
+        <li>
+          <strong>Upgrade mechanisms are the highest-risk code path.</strong> A
+          protocol that allows admin upgrades has a security model that is only
+          as strong as the key management and governance securing the upgrade
+          authority.
+        </li>
+        <li>
+          <strong
+            >Decentralization is a security property, not an ideology.</strong
+          >
+          Distributed control of critical functions reduces the attack surface.
+          Quantify the decentralization of each trust assumption in your
+          protocol.
+        </li>
+      </ul>
+      <hr />
+      <h2 id="readings--resources">Readings &amp; Resources</h2>
+      <p><strong>Foundational Papers</strong></p>
+      <ul>
+        <li>
+          Goldwasser, Micali, Rackoff —
+          <em>"The Knowledge Complexity of Interactive Proof Systems"</em>
+          (1985) — The original ZKP paper
+        </li>
+        <li>
+          Ben-Sasson et al. —
+          <em
+            >"Succinct Non-Interactive Arguments for a von Neumann
+            Architecture"</em
+          >
+          (2013) — STARK foundations
+        </li>
+        <li>
+          Bowe, Gabizon, Miers —
+          <em
+            >"Groth16: On the Size of Pairing-Based Non-interactive
+            Arguments"</em
+          >
+          (2016)
+        </li>
+        <li>
+          Gabizon, Williamson, Ciobotaru —
+          <em
+            >"PLONK: Permutations over Lagrange-bases for Oecumenical
+            Noninteractive arguments of Knowledge"</em
+          >
+          (2019)
+        </li>
+        <li>
+          Ben-Sasson et al. —
+          <em
+            >"FRI: Fast Reed-Solomon Interactive Oracle Proofs of Proximity"</em
+          >
+          (2017)
+        </li>
+        <li>
+          Lamport —
+          <em
+            >"Specifying Systems: The TLA+ Language and Tools for Hardware and
+            Software Engineers"</em
+          >
+          (book)
+        </li>
+      </ul>
+      <p><strong>Protocol Design</strong></p>
+      <ul>
+        <li>
+          Ethereum consensus specification:
+          <a href="http://github.com/ethereum/consensus-specs"
+            >github.com/ethereum/consensus-specs</a
+          >
+        </li>
+        <li>
+          Tendermint specification:
+          <a href="http://arxiv.org/abs/1807.04938">arxiv.org/abs/1807.04938</a>
+        </li>
+        <li>
+          IBC specification:
+          <a href="http://github.com/cosmos/ibc">github.com/cosmos/ibc</a>
+        </li>
+      </ul>
+      <p><strong>Security</strong></p>
+      <ul>
+        <li>Rekt News post-mortems: rekt.news</li>
+        <li>
+          Trail of Bits publications:
+          <a href="http://github.com/trailofbits/publications"
+            >github.com/trailofbits/publications</a
+          >
+        </li>
+        <li>
+          SWC Registry: <a href="http://swcregistry.io">swcregistry.io</a>
+        </li>
+        <li>Secureum: secureum.xyz (audit training)</li>
+        <li>Damn Vulnerable DeFi v3: damnvulnerabledefi.xyz / v3</li>
+      </ul>
+      <p><strong>Books</strong></p>
+      <ul>
+        <li>
+          <em>Modern Cryptography</em> by Boneh &amp; Shoup (free,
+          <a href="http://cryptography.stanford.edu/~dabo/cryptobook/"
+            >cryptography.stanford.edu/~dabo/cryptobook/</a
+          >)
+        </li>
+        <li>
+          <em>Proofs, Arguments, and Zero-Knowledge</em> by Justin Thaler (free:
+          <a href="http://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf"
+            >people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.pdf</a
+          >) — Most comprehensive ZKP textbook
+        </li>
+        <li>
+          <em>Protocol Design: A Practitioner's Guide</em> (various, search for
+          current editions)
+        </li>
+      </ul>
+      <p><strong>Courses</strong></p>
+      <ul>
+        <li>ZK Hack (zkhack.dev) — Applied ZKP challenges</li>
+        <li>zkSecurity training (zksecurity.xyz)</li>
+        <li>Secureum Epoch0 (Ethereum security)</li>
+        <li>
+          Paradigm CTF examples —
+          <a href="http://github.com/paradigmxyz/paradigm-ctf-2022"
+            >github.com/paradigmxyz/paradigm-ctf-2022</a
+          >
+        </li>
+      </ul>
+      <hr />
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 14px 0;
+          margin-top: 48px;
+        "
+      >
+        <a
+          href="./05_Full_Stack_dApp_Development.html"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #8b949e;
+            font-size: 0.875rem;
+            padding: 6px 10px;
+            border-radius: 6px;
+          "
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M9.78 12.78a.75.75 0 0 1-1.06 0L4.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 1.06L6.06 8l3.72 3.72a.75.75 0 0 1 0 1.06z"
+            ></path>
+          </svg>
+          <span style="display: flex; flex-direction: column; line-height: 1.3">
+            <span
+              style="
+                font-size: 0.7rem;
+                opacity: 0.55;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+              "
+              >Previous</span
+            >
+            <span style="font-weight: 500">05 · Full-Stack dApp</span>
+          </span>
+        </a>
+        <span
+          style="
+            font-size: 0.7rem;
+            color: #8b949e;
+            opacity: 0.5;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+          "
+          >Stage 6 of 6 · Advanced Protocol</span
+        >
+        <a
+          href="../index.html"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #8b949e;
+            font-size: 0.875rem;
+            padding: 6px 10px;
+            border-radius: 6px;
+          "
+        >
+          <span
+            style="
+              display: flex;
+              flex-direction: column;
+              line-height: 1.3;
+              text-align: right;
+            "
+          >
+            <span
+              style="
+                font-size: 0.7rem;
+                opacity: 0.55;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+              "
+              >Back to</span
+            >
+            <span style="font-weight: 500">README</span>
+          </span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06z"
+            ></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
