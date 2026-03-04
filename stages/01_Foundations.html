@@ -3,9 +3,95 @@
   <head>
     <title>Learn Blockchain | Foundations</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+      integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
+      crossorigin="anonymous"
+    />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../assets/blocknova-logo.png" />
+
+    <!-- Social / OG Preview -->
+    <meta
+      property="og:image"
+      content="https://blocknova.pages.dev/assets/blocknova-preview.png"
+    />
+    <meta property="og:title" content="BlockNova" />
+    <meta
+      property="og:description"
+      content="Blockchain Engineering Mastery Roadmap"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:image"
+      content="https://blocknova.pages.dev/assets/blocknova-preview.png"
+    />
 
     <style>
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid #e8e8e8;
+      }
+      .nav-inner {
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 0 32px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .nav-logo {
+        font-size: 15px;
+        font-weight: 700;
+        color: #000;
+        text-decoration: none;
+        margin-right: 24px;
+        letter-spacing: -0.02em;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2px;
+        list-style: none;
+        flex: 1;
+        margin: 0;
+        padding: 0;
+      }
+      .nav-links a {
+        padding: 5px 12px;
+        border-radius: 5px;
+        font-size: 13px;
+        color: #666;
+        text-decoration: none;
+      }
+      .nav-links a:hover {
+        background: #f5f5f5;
+        color: #000;
+      }
+      .nav-links a.active {
+        background: #f0f0f0;
+        color: #000;
+      }
+      .nav-cta {
+        margin-left: auto;
+        padding: 7px 16px;
+        border-radius: 5px;
+        background: #000;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-decoration: none;
+      }
+      .nav-cta:hover {
+        background: #222;
+      }
       code[class*="language-"],
       pre[class*="language-"] {
         color: #333;
@@ -810,6 +896,30 @@
     </script>
   </head>
   <body for="html-export">
+    <style></style>
+
+    <nav>
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">BlockNova</a>
+        <ul class="nav-links">
+          <li>
+            <a href="./01_Foundations.html" class="active">Foundations</a>
+          </li>
+          <li><a href="./02_Blockchain_Core.html">Core</a></li>
+          <li><a href="./03_Smart_Contracts_and_EVM.html">EVM</a></li>
+          <li>
+            <a href="./04_Ecosystem_Scaling_and_Crypto_Economics.html"
+              >Ecosystem</a
+            >
+          </li>
+          <li><a href="./05_Full_Stack_dApp_Development.html">dApp</a></li>
+          <li>
+            <a href="./06_Advanced_Protocol_Engineering.html">Advanced</a>
+          </li>
+        </ul>
+        <a href="../index.html" class="nav-cta">← Home</a>
+      </div>
+    </nav>
     <div class="crossnote markdown-preview">
       <h1 id="stage-1--foundations-the-bedrock-of-decentralized-systems">
         Stage 1 — Foundations: The Bedrock of Decentralized Systems
